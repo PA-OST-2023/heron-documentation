@@ -1,2 +1,2 @@
-# audio-beamformer-thesis
-This repository contains the Bachelor's Thesis
+# heron-documentation
+This repository contains the documentation for Project Heron.
