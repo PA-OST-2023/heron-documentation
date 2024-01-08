@@ -147,22 +147,23 @@
 %% The abstract of your thesis.  Edit the file as needed.
 \input{sections/0_abstract}
 \input{sections/0_acknowledgement}
+\input{sections/4_design}
 %% reset acronym usage:
 
 %% TOC with the proper setup, do not change.
 \cleartorecto
 {
-    \linespread{1.03}\selectfont{}
-    \tableofcontents*       % This asterisk is important to prevent listing "Contents" in the table of contents
+  \linespread{1.03}\selectfont{}
+  \tableofcontents*       % This asterisk is important to prevent listing "Contents" in the table of contents
 }
 \mainmatter
 \renewcommand{\thefigure}{\thechapter.\arabic{figure}}
 
 \input{sections/acro}
 {
-    \linespread{0.7}\selectfont{}
-    \glsnogroupskiptrue
-    \printglossary[type=\acronymtype]
+  \linespread{0.7}\selectfont{}
+  \glsnogroupskiptrue
+  \printglossary[type=\acronymtype]
 }
 \printglossary
 
