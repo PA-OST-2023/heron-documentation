@@ -25,14 +25,95 @@ In the following sections, each part of the project is explained in detail.
 Blabla
 
 
+
+
 \newpage
 \section{Hardware Design}
 Blabla
 
+\subsection{Block Diagram}
+
+\subsection{Power Supply}
+
+% TODO: Add power supply block diagram
+
+\subsubsection{Power over Ethernet (PoE)}
+
+
+\subsection{Microcontroller Unit (MCU)}
+
+%  TODO: Write about external PSRAM
+
+\subsection{Audio Input}
+
+\subsubsection{GNSS}
+
+\subsection{Human Machine Interface (HMI)}
+
+%  TODO: Wite about LEDs and Buzzer
+
+\subsubsection{LCD Display}
+
+\subsubsection{RGB LEDs}
+
+\subsection{Sensors}
+
+\subsubsection{Magnetometer \& Accelerometer Sensor}
+
+\subsubsection{Ambient Pressure \& Temperature Sensor}
+
+\subsubsection{Angle Sensor}
+
+\subsection{Printed Circuit Board (PCB)}
+
+\subsubsection{Mainboard}
+
+\subsubsection{Microphone Arms}
+
+\subsubsection{Angle Sensor}
 
 \newpage
 \section{Firmware Design}
 Blabla
+
+\subsection{Overview}
+The firmware is written in C++ and is based on the Arduino framework that has been addopted to the Teensy microcontroller environment.
+As an IDE, the VS Code extension PlatfromIO was used, as it provides powerful development tools and a great integration of the Arduino framework.
+
+
+The firmware is divided into modules running in individual threads, facilitated by TeensyThreads on the Teensy 4.1 microcontroller.
+This lightweight multitasking library allows for concurrent execution of multiple threads, optimizing system performance and resource utilization.
+TeensyThreads' minimal memory footprint and efficient CPU usage are critical in embedded systems where resources are constrained.
+
+%  table of all threads and their purpose
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+	\hline
+	Thread                     & Purpose                          \\ \hline
+	\texttt{Console Interface} & Handles USB virtual COM-Port     \\ \hline
+	\texttt{Console Streaming} & Handles queing of messages       \\ \hline
+
+	\texttt{main}              & Main thread                  & 0 \\ \hline
+\end{tabular}
+\caption{Overview of all threads and their purpose}
+\label{tab:threads}
+
+
+\subsection{Audio Streaming}
+
+\subsubsection{Remote Configuration}
+
+\subsection{Sensor Calibration}
+
+
+
+\subsection{Grphical User Interface (GUI)}
+
+\subsubsection{Light and Versatile Embedded Graphics Library (LVGL)}
+
+
+
 
 \newpage
 \section{Software Design}
