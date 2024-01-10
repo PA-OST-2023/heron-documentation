@@ -35,28 +35,52 @@ two microphones $\bm{M_n}$ and $\bm{M_m}$ is defined as
 \end{equation}
 With this equation $\bm{S}$ can be interbreted as the set of points that lie on a hyperbola
 which fixed points are the Microphones and the vertices are $c t_{n,m}$m appart.
-With this approach a minimum of four microphones are now needed to find the $\bm{S}$.
-
-
-\todo{Differences}
+To find the location of $\bm{S}$ a minimum of four microphones is now needed.
+This approach works only if we can assume that the curvature of the incomming sound waves
+at the microphones is big enough. Figure \ref{ssl:fig:near field} shows such a arrangement
+which is genrally known as the near-field scenario. 
+It is generally said, that the near-field assumption holds when the distance from the source
+to the array isn't much greater than the size of the array.
+In Figure \ref{ssl:fig:hyperbola} it can be seen how the resulting hyperbolas from the 
+\acrshort{tdoa} intersect at the point $\bm{S}$.
 
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{NearField.pdf}
-    \caption{Near-Field Case}
-    \label{fig:y equals x}
+    \caption{Accousitc model used for the near field \acrshort{ssl}.}
+    \label{ssl:fig:near field}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.45\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{FarField.pdf}
-    \caption{Far-field Case}
-    \label{fig:three sin x}
+    \includegraphics[width=\textwidth]{hyperbola.pdf}
+    \caption{A selection of the hyperbolas resulting from the time-delays $t_{m,n}$.}
+    \label{ssl:fig:hyperbola}
   \end{subfigure}
-  \caption{Three simple graphs}
+  \caption{Near field \acrshort{ssl} with a linear microphone Array. 
+  Since the microphones are distributed on a straight line a degree of freedom is lost and
+  $\bm{S}$ mirrored at this line is also a possible solution.}
   \label{fig:three graphs}
+\end{figure}
+
+When the source is much further away than the size of the Array, as depicted
+in Figure \ref{ssl:fig:far field}, the curvature of the sound wave at the array is negligible.
+This is genraly known as the far-field case.
+Now the sound waves aren't modeled as spherical waves but rather as planar waves.
+
+
+
+\todo{Differences}
+
+\begin{figure}
+  \centering
+  %    \includegraphics[width=0.25\textwidth]{mesh}
+  \includegraphics[]{FarField.pdf}
+  \caption{Far-Field case. The Curvature of the sound-waves from S at the array
+  is almost zero.}
+  \label{ssl:fig:far field}
 \end{figure}
 
 
