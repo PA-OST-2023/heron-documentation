@@ -8,23 +8,36 @@ This section shows some underling fundamentals on which the following described 
 \acrfull{ssl} \todo{Abbr Verzwichnis} is a well researched area with many applications.
 \cite{nat_skript}
 The basic system can be brought into two categories, time based or power based methods.
-\subsection{Power based \acrshort{ssl}}
+\subsection{Power based SSL}
 The idea of power based SSL is based of the known propagation properties of sound waves in air.
 BlaBlaBla \todo{short text}
 However for this method to work some properties of the sound source have to be known.
 Additionally the sensors that measure the sound power levels have to be calibrated \dots
 
-\subsection{Time Based \acrshort{ssl}}
+\subsection{Time Based SSL}
 Another group of \acrshort*{ssl} is based on the time when the
 signal is received by the microphones.
-Given a source at a location $S = (x_S,y_S)^T$ and $N$ microphones at locations
-$M_n = (x_n,y_n)^T$ the time it takes for a accoustic signal from the source to reach a microphone is
+Given a source at a location $\bm{S} = (x_S,y_S)^T$ and $N$ microphones at locations
+$\bm{M_n} = (x_n,y_n)^T$ the time it takes for a accoustic signal from the source to reach a microphone is
 \begin{equation}
-  t_n = \frac{\lVert S - M_n\rVert}{c}
+  t_n = \frac{\lVert \bm{S} - \bm{M_n}\rVert}{c}
   = \frac{\sqrt{\left(x_S - x_n\right) + \left(y_S - y_n\right)}}{c} .
 \end{equation}
 So if $t_n$ is known for a microphone, the location of the source can be limited to point on a circle
 around $M_n$ with a radius of $t_n c$.
+Given three or more microphones the intersection of these circles will show th location of the source.
+However in many cases this approach is not realistic since $t_n$ is genrally not know. 
+It would require some sort of a synchronization between the microphones and the sources.
+The next time property that could be used is the \acrfull{tdoa} which between 
+two microphones $\bm{M_n}$ and $\bm{M_m}$ is defined as 
+\begin{equation}
+  t_{n, m} = t_m - t_n = \frac{\lVert \bm{S} - \bm{M_m}\rVert - \lVert \bm{S} - \bm{M_n}\rVert}{c}.
+\end{equation}
+With this equation $\bm{S}$ can be interbreted as the set of points that lie on a hyperbola
+which fixed points are the Microphones and the vertices are $c t_{n,m}$m appart.
+With this approach a minimum of four microphones are now needed to find the $\bm{S}$.
+
+
 \todo{Differences}
 
 \begin{figure}
