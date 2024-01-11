@@ -74,8 +74,8 @@ This is generally known as the far-field case.
 Now the sound waves aren't modeled as spherical waves but rather as planar waves.
 Given such a planar wave only the direction in which the source is placed can be determined with the TDOAs.
 
-
-\todo{Differences}
+\todo{Decission why this}
+\todo{literature}
 
 \begin{figure}
   \centering
@@ -86,16 +86,35 @@ Given such a planar wave only the direction in which the source is placed can be
   \label{ssl:fig:far field}
 \end{figure}
 
+\subsection{Direction of arrival estimation}
+Lots of research has been made on how to estimate the \acrfull*{doa} of a source
+with appropriate sensors.
 
+\todo{brief lierature study}
 
 \begin{figure}
   \centering
   %    \includegraphics[width=0.25\textwidth]{mesh}
   \includegraphics[]{beamforming_1.pdf}
-  \caption{a nice plot}
-  \label{fig:mesh1}
+  \caption{Phase differences between the array elements create positive interference at the red lines.}
+  \label{ssl:fig:beamforming1}
 \end{figure}
 
 \newpage
 \section{Simulator}
-Blabla
+In order to experiment with different microphone arrangements and algorithms a simulator was developed.
+Since the simulator wasn't the main focus of this Thesis, its functionality was kept simple.
+The simulator lets you place acoustic sources and microphones in a $\mathbb{R}^3$ space and calculates
+the measured signals at each microphone.
+
+\subsection{Physical Model}
+For sake of simplicity the sources were modeled as omnidirectional point-sources. 
+Their Sound Pressure Level is defined at one meter distance from their position and decreases 
+squarely with the distance.
+The signal at position $P$ is \dots
+Since the simulator runs discreetly on a computer
+
+
+
+
+
