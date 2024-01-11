@@ -18,7 +18,7 @@ Additionally the sensors that measure the sound power levels have to be calibrat
 Another group of \acrshort*{ssl} is based on the time when the
 signal is received by the microphones.
 Given a source at a location $\bm{S} = (x_S,y_S)^T$ and $N$ microphones at locations
-$\bm{M_n} = (x_n,y_n)^T$ the time it takes for a accoustic signal from the source to reach a microphone is
+$\bm{M_n} = (x_n,y_n)^T$ the time it takes for a acoustic signal from the source to reach a microphone is
 \begin{equation}
   t_n = \frac{\lVert \bm{S} - \bm{M_n}\rVert}{c}
   = \frac{\sqrt{\left(x_S - x_n\right) + \left(y_S - y_n\right)}}{c} .
@@ -26,30 +26,32 @@ $\bm{M_n} = (x_n,y_n)^T$ the time it takes for a accoustic signal from the sourc
 So if $t_n$ is known for a microphone, the location of the source can be limited to point on a circle
 around $M_n$ with a radius of $t_n c$.
 Given three or more microphones the intersection of these circles will show th location of the source.
-However in many cases this approach is not realistic since $t_n$ is genrally not know. 
+However in many cases this approach is not realistic since $t_n$ is generally not know. 
 It would require some sort of a synchronization between the microphones and the sources.
+\subsubsection{Near-Field}
 The next time property that could be used is the \acrfull{tdoa} which between 
 two microphones $\bm{M_n}$ and $\bm{M_m}$ is defined as 
 \begin{equation}
   t_{n, m} = t_m - t_n = \frac{\lVert \bm{S} - \bm{M_m}\rVert - \lVert \bm{S} - \bm{M_n}\rVert}{c}.
 \end{equation}
-With this equation $\bm{S}$ can be interbreted as the set of points that lie on a hyperbola
-which fixed points are the Microphones and the vertices are $c t_{n,m}$m appart.
+With this equation $\bm{S}$ can be interpreted as the set of points that lie on a hyperbola
+which fixed points are the Microphones and the vertices are $c t_{n,m}$m apart.
 To find the location of $\bm{S}$ a minimum of four microphones is now needed.
-This approach works only if we can assume that the curvature of the incomming sound waves
+This approach works only if we can assume that the curvature of the incoming sound waves
 at the microphones is big enough. Figure \ref{ssl:fig:near field} shows such a arrangement
-which is genrally known as the near-field scenario. 
+which is generally known as the near-field scenario. 
 It is generally said, that the near-field assumption holds when the distance from the source
 to the array isn't much greater than the size of the array.
 In Figure \ref{ssl:fig:hyperbola} it can be seen how the resulting hyperbolas from the 
 \acrshort{tdoa} intersect at the point $\bm{S}$.
 
-\begin{figure}
+
+\begin{figure}[h]
   \centering
   \begin{subfigure}[b]{0.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{NearField.pdf}
-    \caption{Accousitc model used for the near field \acrshort{ssl}.}
+    \caption{Acoustic model used for the near field \acrshort{ssl}.}
     \label{ssl:fig:near field}
   \end{subfigure}
   \hfill
@@ -65,11 +67,12 @@ In Figure \ref{ssl:fig:hyperbola} it can be seen how the resulting hyperbolas fr
   \label{fig:three graphs}
 \end{figure}
 
+\subsubsection{Far-Field}
 When the source is much further away than the size of the Array, as depicted
 in Figure \ref{ssl:fig:far field}, the curvature of the sound wave at the array is negligible.
-This is genraly known as the far-field case.
+This is generally known as the far-field case.
 Now the sound waves aren't modeled as spherical waves but rather as planar waves.
-
+Given such a planar wave only the direction in which the source is placed can be determined with the TDOAs.
 
 
 \todo{Differences}
