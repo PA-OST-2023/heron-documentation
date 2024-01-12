@@ -153,24 +153,25 @@
 %% TOC with the proper setup, do not change.
 \cleartorecto
 {
-  \linespread{1.03}\selectfont{}
-  \tableofcontents*       % This asterisk is important to prevent listing "Contents" in the table of contents
+	\linespread{1.03}\selectfont{}
+	\tableofcontents*       % This asterisk is important to prevent listing "Contents" in the table of contents
 }
 \mainmatter
 \renewcommand{\thefigure}{\thechapter.\arabic{figure}}
 
 \input{sections/acro}
 {
-  \linespread{0.7}\selectfont{}
-  \glsnogroupskiptrue
-  \printglossary[type=\acronymtype]
+	\linespread{0.7}\selectfont{}
+	\glsnogroupskiptrue
+	\printglossary[type=\acronymtype]
 }
 \printglossary
 
 
 %% Your real content!
-\input{sections/2_introduction}
-\input{sections/3_source_localization}
+% \input{sections/1_acknowledgement.tex}
+\input{sections/2_introduction.tex}
+\input{sections/3_source_localization.tex}
 \input{sections/4_design_acquisition_system.tex}
 \input{sections/5_array_evaluation.tex}
 \input{sections/6_design_final.tex}
