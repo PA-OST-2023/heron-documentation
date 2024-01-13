@@ -5,7 +5,7 @@ This section shows some underling fundamentals on which the following described 
 \todo{Schribe}
 
 \section{Sound Source Localization Methods}
-\acrfull{ssl} \todo{Abbr Verzwichnis} is a well researched area with many applications.
+\acrfull{ssl} is a well researched area with many applications.
 \cite{nat_skript}
 The basic system can be brought into two categories, time based or power based methods.
 \subsection{Power based SSL}
@@ -74,8 +74,7 @@ This is generally known as the far-field case.
 Now the sound waves aren't modeled as spherical waves but rather as planar waves.
 Given such a planar wave only the direction in which the source is placed can be determined with the TDOAs.
 
-\todo{Decission why this}
-\todo{literature}
+% Beamforming_general_S1110865703212038
 
 \begin{figure}
   \centering
@@ -86,11 +85,27 @@ Given such a planar wave only the direction in which the source is placed can be
   \label{ssl:fig:far field}
 \end{figure}
 
+\todo{Decission why this}
+In this thesis the focus is set on the far-field case, due 
+\todo{literature}
+
 \subsection{Direction of arrival estimation}
 Lots of research has been made on how to estimate the \acrfull*{doa} of a source
 with appropriate sensors.
 
 \todo{brief lierature study}
+
+In this thesis the focus was set on beamforming techniques considering that the
+goal is to detect drones which are usually several meters above ground.
+%Constructing a microphone array 
+
+\subsection{Beamforming}
+Beamforming is a popular method for estimating the \acrshort{doa} of a signal.
+Its fundamental principles are best shown in a visualization like 
+figure \ref{ssl:fig:beamforming1}. 
+The figure shows an array with 
+
+
 
 \begin{figure}
   \centering
@@ -107,13 +122,28 @@ Since the simulator wasn't the main focus of this Thesis, its functionality was 
 The simulator lets you place acoustic sources and microphones in a $\mathbb{R}^3$ space and calculates
 the measured signals at each microphone.
 
-\subsection{Physical Model}
-For sake of simplicity the sources were modeled as omnidirectional point-sources. 
-Their Sound Pressure Level is defined at one meter distance from their position and decreases 
+\subsection{Simulation Model}
+For sake of simplicity the sources were modeled as omnidirectional point-sources and the 
+microphones are omnidirectional as well.
+The Sound Pressure Level of a source is defined at one meter distance from their position and decreases 
 squarely with the distance.
-The signal at position $P$ is then calculated with \dots
-
-
-
+The perceived sound at any point $P$ can now be described as
+\begin{equation}
+  \label[type]{ssl:eq:simcont}
+  y(P, t) = \sum_{I} \frac{x_i(t - \lVert P - S_i\rVert/c)}{\lVert P - S_i\rVert}.
+\end{equation}
+Where $S_i$ is the position of the nth Source and $x_i(t)$ is its output sound.
+Since the simulation is done numerically and with pre recorded audio files with a given
+samplingrate $f_s$ \eqref{ssl:eq:simcont} has to be discretized.
+Simply replacing $x_i(t - \lVert P - S_i\rVert/c)$ with 
+$x_i(n - f_s \lVert P - S_i\rVert/c)$ with
+$n \in \mathbb{N}$ doesn't work because 
+$f_s \lVert P - S_i\rVert/c \not \in \mathbb{N}$ in most cases.
+To implement this $f_s \lVert P - S_i\rVert/c$ is rounded to
+its nearest integer $d_{P,S_i}$.
+Now the delayed signal is $x_i(n - d_{P,S_i})$.
+To achieve sub sample delays this signal is then filtered
+with a Fractional Delay FIR Filter with a delay of 
+$f_s \lVert P - S_i\rVert/c - d_{P,S_i}$.
 
 

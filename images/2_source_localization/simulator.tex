@@ -1,0 +1,48 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{bbox}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows.meta,decorations.pathmorphing,backgrounds,positioning,fit,petri}
+
+\def\b{0.05}
+\def\centerarc[#1](#2)(#3:#4:#5)% Syntax: [draw options] (center) (initial angle:final angle:radius)
+    { \draw[#1] ($(#2)+({(#5)*cos(#3)},{(#5)*sin(#3)})$) arc (#3:#4:#5); }
+
+\def\beamline[#1](#2)(#3:#4)% Syntax: [draw options] (radius) (initial angle:final angle:radius)
+    {  \draw[#1] ({(#2-2*\b)*cos(#4)},-#3/2 * sin(#4)) -- ({(#2-2*\b)*cos(#4)},#3/2 * sin(#4)); 
+    \draw ({(1-2*0.05)*cos(90)},{-1/2 * sin(90)}) -- ({(1-2*0.05)*cos(90)},{1/2 * sin(90)});
+    }
+
+
+\begin{document}
+
+\begin{tikzpicture}
+    [wave/.style={white!80!black,thin},
+    wave1/.style={white!25!red,thick},
+    wave2/.style={white!50!black,thick}]
+%    \coordinate[label={S}] (origin) at (0,2.5);
+%   \fill[red] (origin) circle (2pt);
+
+%   \centerarc[wave](origin)(0:360:0.5)
+%    \centerarc[wave](origin)(0:360:1)
+%    \centerarc[wave](origin)(0:360:1.5)
+%    \centerarc[wave](origin)(0:360:2.0)
+%    \centerarc[wave](origin)(0:360:2.5)
+%    \centerarc[wave](origin)(0:360:3)
+%    \centerarc[wave](origin)(0:360:3.5)
+%    \centerarc[wave](origin)(0:360:4)
+%    \centerarc[wave](origin)(0:360:4.5)
+%    \centerarc[wave](origin)(0:360:5.0)
+%    \centerarc[wave](origin)(0:360:5.5)
+
+    \coordinate[label={M}] (m1) at (0, -1);
+    \coordinate[label={S}] (m2) at (8, 2);
+    \fill[red] (m1) circle (3pt);
+    \fill (m2) circle (3pt);
+
+
+    \pgfresetboundingbox
+%    \useasboundingbox(-2.6,-2.6)rectangle(2.6,3.6);
+    \useasboundingbox(-4,-3.5)rectangle(10,3.5);
+\end{tikzpicture}
+\end{document}
