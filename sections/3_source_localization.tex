@@ -5,7 +5,7 @@ This section shows some underling fundamentals on which the following described 
 \todo{Schribe}
 
 \section{Sound Source Localization Methods}
-\acrfull{ssl} \todo{Abbr Verzwichnis} is a well researched area with many applications.
+\acrfull{ssl} is a well researched area with many applications.
 \cite{nat_skript}
 The basic system can be brought into two categories, time based or power based methods.
 \subsection{Power based SSL}
@@ -92,6 +92,9 @@ with appropriate sensors.
 
 \todo{brief lierature study}
 
+In this thesis the focus was set on beamforming techniques.
+
+
 \begin{figure}
   \centering
   %    \includegraphics[width=0.25\textwidth]{mesh}
@@ -107,13 +110,28 @@ Since the simulator wasn't the main focus of this Thesis, its functionality was 
 The simulator lets you place acoustic sources and microphones in a $\mathbb{R}^3$ space and calculates
 the measured signals at each microphone.
 
-\subsection{Physical Model}
-For sake of simplicity the sources were modeled as omnidirectional point-sources. 
-Their Sound Pressure Level is defined at one meter distance from their position and decreases 
+\subsection{Simulation Model}
+For sake of simplicity the sources were modeled as omnidirectional point-sources and the 
+microphones are omnidirectional as well.
+The Sound Pressure Level of a source is defined at one meter distance from their position and decreases 
 squarely with the distance.
-The signal at position $P$ is then calculated with \dots
-
-
-
+The perceived sound at any point $P$ can now be described as
+\begin{equation}
+  \label[type]{ssl:eq:simcont}
+  y(P, t) = \sum_{I} \frac{x_i(t - \lVert P - S_i\rVert/c)}{\lVert P - S_i\rVert}.
+\end{equation}
+Where $S_i$ is the position of the nth Source and $x_i(t)$ is its output sound.
+Since the simulation is done numerically and with pre recorded audio files with a given
+samplingrate $f_s$ \eqref{ssl:eq:simcont} has to be discretized.
+Simply replacing $x_i(t - \lVert P - S_i\rVert/c)$ with 
+$x_i(n - f_s \lVert P - S_i\rVert/c)$ with
+$n \in \mathbb{N}$ doesn't work because 
+$f_s \lVert P - S_i\rVert/c \not \in \mathbb{N}$ in most cases.
+To implement this $f_s \lVert P - S_i\rVert/c$ is rounded to
+its nearest integer $d_{P,S_i}$.
+Now the delayed signal is $x_i(n - d_{P,S_i})$.
+To achieve sub sample delays this signal is then filtered
+with a Fractional Delay FIR Filter with a delay of 
+$f_s \lVert P - S_i\rVert/c - d_{P,S_i}$.
 
 
