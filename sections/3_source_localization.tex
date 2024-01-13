@@ -95,7 +95,7 @@ with appropriate sensors.
 
 \todo{brief lierature study}
 
-In this thesis the focus was set on beamforming techniques considering that the
+In this thesis the focus was set on far-field techniques considering that the
 goal is to detect drones which are usually several meters above ground.
 %Constructing a microphone array 
 
@@ -103,15 +103,37 @@ goal is to detect drones which are usually several meters above ground.
 Beamforming is a popular method for estimating the \acrshort{doa} of a signal.
 Its fundamental principles are best shown in a visualization like 
 figure \ref{ssl:fig:beamforming1}. 
-The figure shows an array with 
-
-
+For now the theory are shown in $\mathbb{R}^2$ and later expanded to $\mathbb{R}^3$.
+The figure shows an source array where each source is emitting a
+sine wave $x_n(t) = sin(\omega t + \phi_n)$ at a set point in time but each with a different
+pre defined phase $\phi_n$.
+By carefully selecting these phases the points where the waves positively
+interfere form a beam.
+Given this example with a narrow band signal, the signal at each source
+can be written as
+\begin{equation}
+  x_n(t) = \Re(sin(\omega t) e^{j\omega \phi_n})
+\end{equation}
+and more generalized
+\begin{equation}
+  X(t) = 
+  \Re\left(
+    sin(\omega t)
+    \underbrace{\begin{pmatrix} e^{j\omega \phi_0} \\ 
+                    e^{j\omega \phi_1} \\
+                    \vdots \\ 
+                    e^{j\omega \phi_{N-1}} 
+      \end{pmatrix}}_{W(\theta)}
+  \right).
+\end{equation}
+The vector $W(\theta)$ is commonly known as the steering vector.
 
 \begin{figure}
   \centering
   %    \includegraphics[width=0.25\textwidth]{mesh}
   \includegraphics[]{beamforming_1.pdf}
-  \caption{Phase differences between the array elements create positive interference at the red lines.}
+  \caption{Phase differences between the array elements create positive interference at the red lines.
+  The gray circles correspond the waves' local maxima}
   \label{ssl:fig:beamforming1}
 \end{figure}
 
