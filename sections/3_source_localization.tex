@@ -101,22 +101,25 @@ goal is to detect drones which are usually several meters above ground.
 
 \subsection{Beamforming}
 Beamforming is a popular method for estimating the \acrshort{doa} of a signal.
-Its fundamental principles are best shown in a visualization like 
-figure \ref{ssl:fig:beamforming1}. 
-For now the theory are shown in $\mathbb{R}^2$ and later expanded to $\mathbb{R}^3$.
-The figure shows an source array where each source is emitting a
-sine wave $x_n(t) = sin(\omega t + \phi_n)$ at a set point in time but each with a different
-pre defined phase $\phi_n$.
-By carefully selecting these phases the points where the waves positively
+To better show the fundamental principles of beamforming an example is used
+where the goal isn't to estimate a \acrshort{doa} but to send a signal
+in a desired directon using microphones.
+Figure ref{ssl:fig:beamforming1} shows such a case in $\mathbb{R}^2$
+where a linear array of N sound sources beam a sine wave $x(t) = \sin(\omega t)$ 
+in the direction of $\theta$.
+This is achieved by adding a pahse shift to the sine wave
+at each microphone resulting in $x_n(t) = sin(\omega t + \phi_n)$.
+When the phase shifts are properly selected the points where the waves positively
 interfere form a beam.
 Given this example with a narrow band signal, the signal at each source
 can be written as
 \begin{equation}
   x_n(t) = \Re(sin(\omega t) e^{j\omega \phi_n})
 \end{equation}
-and more generalized
+and more generalized as 
 \begin{equation}
-  X(t) = 
+  \label{ssl:eq:beamSteerOut}
+  X(t, \theta) = 
   \Re\left(
     sin(\omega t)
     \underbrace{\begin{pmatrix} e^{j\omega \phi_0} \\ 
@@ -127,7 +130,10 @@ and more generalized
   \right).
 \end{equation}
 The vector $W(\theta)$ is commonly known as the steering vector.
-
+It can be seen that the steering vector is dependent on $\omega$ and 
+will therfore only have the desired oeffect on signals with frequencies 
+close to $\omega$.
+How to use beamforming with wider band signals will be shown later in this chapter.
 \begin{figure}
   \centering
   %    \includegraphics[width=0.25\textwidth]{mesh}
@@ -136,6 +142,46 @@ The vector $W(\theta)$ is commonly known as the steering vector.
   The gray circles correspond the waves' local maxima}
   \label{ssl:fig:beamforming1}
 \end{figure}
+
+If the goal is to estimate the direction of a sound signal with microphones 
+$x_n(t)$ is now defined as the signal measured by the nth microphone.
+Now \eqref{ssl:eq:beamSteerOut} is rewritten to 
+\begin{equation}
+  \label{ssl:eq:beamSteerIn}
+  Y(t, \theta) = 
+    \underbrace{\begin{pmatrix} x_0(t) \\ 
+      x_1(t) \\
+      \vdots \\ 
+      x_{N-1}(t)
+    \end{pmatrix}}_{X(t)}
+    \odot
+    \underbrace{\begin{pmatrix} e^{j\omega \phi_0} \\ 
+                    e^{j\omega \phi_1} \\
+                    \vdots \\ 
+                    e^{j\omega \phi_{N-1}} 
+      \end{pmatrix}}_{W(\theta)}
+\end{equation}
+where depending on the method used either $Y(t, \theta)$ is further processed, or the 
+method directly uses $X(t)$ for the \acrshort*{doa} estimation.
+
+\subsubsection{Steering Vector}
+The calculation of the Steering Vector is dependent on different factors.
+The two main factor can be broken down to the geometry of the microphone array
+and the direction in which the source lies. 
+Again the formulas are derived for a circular array in $\mathbb{R}^2$ and are then expanded into $\mathbb{R}^3$.
+A circular array where all the microphones are 
+placed on a circle is convinient for the use of polar coordinates and the 
+formulas can also be used for any other array described in polar coordinates.
+Figure \ref*{ssl:fig:steering} shows such an array with five equally spaced microphones.
+To calculate the \dots
+\begin{figure}
+  \centering
+  %    \includegraphics[width=0.25\textwidth]{mesh}
+  \includegraphics[]{steering_vector.pdf}
+  \caption{BalaBula}
+  \label{ssl:fig:steering}
+\end{figure}
+
 
 \newpage
 \section{Simulator}
