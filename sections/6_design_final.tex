@@ -159,7 +159,7 @@ Each frame starts with a 20-byte header.
 	\begin{tabular}{|l|l|l|l|}
 		\hline
 		\textbf{Byte Offset} & \textbf{Data Format}    & \textbf{Description} & \textbf{Example Value} \\ \hline
-		0-7                  & String                  & Magic Sequence       & "HERON666"             \\ \hline
+		0-7                  & String                  & Magic Sequence       & \codeword{HERON666}    \\ \hline
 		8-11                 & Integer (Little Endian) & Packet Index         & 12345                  \\ \hline
 		12-19                & Integer (Little Endian) & Timestamp (ns)       & 1616929134054668023    \\ \hline
 	\end{tabular}
