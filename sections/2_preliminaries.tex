@@ -1,4 +1,3 @@
-% Some commands used in this file
 \chapter{Preliminaries}
 \section{MEMS Microphones}
 \acrfull{mems} microphones represent a significant evolution in acoustic technology.
@@ -78,14 +77,23 @@ For bottom-port microphones, the sound must travel through a hole in the \acrsho
 
 
 \section{Pulse Density Modulation (PDM)}
-\acrfull{pdm} is a form of modulation used to represent an analog signal with a binary sequence.
-In \acrshort{mems} microphones, \acrshort{pdm} is particularly popular due to its simplicity and efficiency.
-The microphone's diaphragm movements modulate a high-frequency carrier signal,
-resulting in a digital output with a density of pulses corresponding to the amplitude of the input signal.
-The main advantage of PDM in \acrshort{mems} microphones is its resilience to noise and interference,
-making it ideal for long cable runs and complex electronic environments.
-Additionally, \acrshort{pdm} simplifies the microphone's design, allowing for smaller and more power-efficient microphones.
+\acrfull{pdm} is a modulation technique used to represent an analog signal with a binary sequence.
+In \acrshort{mems} microphones, the diaphragm movements modulate a high-frequency carrier signal,
+resulting in a digital output where the density of pulses corresponds to the amplitude of the input signal.
+\acrshort{pdm} simplifies the microphone design, allowing for smaller and more power-efficient devices.
 However, it requires a decimation filter in the signal processing chain to convert the high-frequency pulse sequence into a usable digital audio signal.
+The \acrshort{pdm} bitstream is encoded from an analog signal through the process of 1-bit delta-sigma (\(\Delta \Sigma\)) modulation.
+This process uses a one-bit quantizer that outputs either a 1 or 0 depending on the amplitude of the analog signal.
+Due to the nature of real-world analog signals, a quantization error occurs, representing the difference between the 1 or 0 and the actual amplitude it represents.
+This error is negatively fed back in the \(\Delta \Sigma\) process loop, influencing every subsequent quantization measurement and its error.
+This feedback mechanism averages out the quantization error, enhancing the accuracy of the \acrshort{pdm} representation.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1.0\textwidth]{images/2_preliminaries/pdm_modulation.pdf}
+	\caption{PDM Modulation Example}
+	\label{fig:pdm_modulation}
+\end{figure}
+
 
 \section{Time Division Multiplexing (TDM)}
 \acrfull{tdm} is a method of transmitting and receiving independent signals over a common signal path by means of synchronized switches at each end of the transmission line.
@@ -95,3 +103,23 @@ such as in surround sound systems or multi-microphone arrays, need to be transmi
 \acrshort{tdm}'s main advantage is its ability to efficiently handle multiple audio streams without the need for multiple physical connections.
 This makes it particularly useful in professional audio applications, broadcast systems, and complex audio setups.
 However, \acrshort{tdm} systems can be more complex to implement and require precise synchronization to ensure that the timing of the different channels is maintained.
+Figure \ref{fig:tdm_example} shows an example of a TDM-16 system with 16 bits sample width.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1.0\textwidth, trim={0.5cm 0 0 0}]{images/2_preliminaries/tdm_signals.pdf}
+	\caption{Example of TDM-16 with 16 bits sample width}
+	\label{fig:tdm_example}
+\end{figure}
+
+\acrfull{tdm} systems introduces tristate outputs, enabling multiple devices to share the same physical bus without interference.
+The \acrshort{tdm} bus consists of three signals: \textit{fsync}, \textit{bclk} and \textit{data}.
+\begin{itemize}
+	\item \textbf{FSYNC (Frame Sync)}: This signal marks the start of a frame in the TDM stream.
+	      It acts as a reference point for aligning the data across all channels.
+	      In a TDM-16 system, FSYNC indicates the beginning of a sequence of 16 channels (slots).
+	\item \textbf{BCLK (Bit Clock)}: This clock signal dictates the timing for data transmission.
+	      Each edge of the BCLK corresponds to a bit position in the data stream.
+	      For 16-bit samples, there are 16 BCLK pulses per channel, hence 256 BCLK pulses per frame.
+	\item \textbf{Data}: The actual audio data is transmitted in a series of bits.
+	      In a 16-channel, 16-bit TDM system, each channel's data is represented by 16 bits (Left Justified).
+\end{itemize}
