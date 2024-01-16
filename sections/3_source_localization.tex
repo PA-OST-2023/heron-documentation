@@ -222,7 +222,7 @@ described in polar coordinates.
 To expand this idea into $\mathbb{R}^3$ the spherical coordinate system is now used.
 This adds the angle $\theta$ as the inclination.
 When $\theta = \pi/2$ it is the same situation that has already been looked at.
-But as $\theta$ aproaches 0 the speed of the wavefront projectet onto the
+But as $\theta$ approaches 0 the speed of the wavefront projected onto the
 surface of the array increases. 
 This adds a term to \eqref{ssl:eq:beamr2}
 \begin{equation}
@@ -233,7 +233,7 @@ This adds a term to \eqref{ssl:eq:beamr2}
 \end{equation}
 
 \subsubsection{Delay and Sum Beamformer}
-The basic beamformer is the delay and sum Beamformer
+The basic beamformer is the delay and sum beamformer
 \begin{equation}
 	\label{ssl:eq:delAndSum}
 	y(t, \varphi, \theta) = 
@@ -253,12 +253,12 @@ The basic beamformer is the delay and sum Beamformer
 			e^{-j\omega_0 t_{N-1}(\varphi, \theta)} 
 		\end{pmatrix}}_{W(\varphi, \theta)}.
 \end{equation}
-Notice how intead of the Hadamard product, the scalar product is now used.
+Notice how instead of the Hadamard product, the scalar product is now used.
 $y(t, \varphi, \theta)$ is therefor the sum of the delayed signals.
 If the angles of the steering vector point towards a source its 
 signal will be amplified.
 By using the delays calculated for the steering vector $X(t)$ can
-be calculated to simulate a source in a specifig direction
+be calculated to simulate a source in a specific direction
 \begin{equation}
 	X(t, \varphi_s, \theta_s) = 
 	e^{j\omega_0 t}
@@ -279,11 +279,11 @@ now be calculated with
 		N
 	}.
 \end{equation}
-The response is normalized with the ammount of microphones to ensure a maximum
+The response is normalized with the amount of microphones to ensure a maximum
 gain of 1.
-In Figure \ref*{ssl:fig:CircBmResponse} two such repsonses with can be seen.
+In Figure \ref*{ssl:fig:CircBmResponse} two such responses with can be seen.
 The main lobe of $G(\phi, \theta)$ clearly shows in the direction of the source
-however there are also side lobes pointing to directions whithout sources.
+however there are also side lobes pointing to directions without sources.
 How they behave is later discussed in \todo{chapter reference}.
 
 \begin{figure}[h]
@@ -310,18 +310,28 @@ How they behave is later discussed in \todo{chapter reference}.
 	\label{ssl:fig:CircBmResponse}
 \end{figure}
 
+
+\begin{figure}
+  \centering
+  %    \includegraphics[width=0.25\textwidth]{mesh}
+  \includegraphics[]{circ_f_sweep.pdf}
+  \caption{Guhhl}
+  \label{ssl:fig:steering}
+\end{figure}
+
+
 Until now the formulas are only useful for narrow band signals. 
-This theroy is now expanded to be applicable for wide band signals.
+This theory is now expanded to be applicable for wide band signals.
 The narrow band delay and sum beamformer has the property, that it behaves
-the same in the freqeuncy domain
+the same in the frequency domain
 \begin{equation}
 	e^{-j\omega_0 t_n} x_n(t) = \mathscr{F}^{-1}(e^{-j\omega_0 t_n} \mathscr{F}(x_n(t)))
 \end{equation}
 since it's just a multiplication with a scalar,. 
 The summation could also be done in the frequency domain due to the 
 linearity of the Fourier transform.
-However in the frequency domain a IIR Filter can be consructed, to 
-make a different phaseshift for every frequency 
+However in the frequency domain a IIR Filter can be constructed, to 
+make a different phase shift for every frequency 
 \begin{equation}
 	\label[type]{ssl:eq:iirbeam1}
 	Y_n(t) = \mathscr{F}^{-1}(e^{-j\omega t_n} X_n(\omega)).
@@ -377,7 +387,7 @@ $f_s \lVert P - S_i\rVert/c - d_{P,S_i}$.
 
 \subsubsection{Reflections}
 The simulator also allows the reflective surfaces to be placed into the room.
-These surfaces are defined with \todo{wiauimeer} and have a infintie size.
+These surfaces are defined with \todo{wiauimeer} and have a infinite size.
 Additionally a dampening factor can be defined which defines how much 
 a reflecting sound signal is damped when getting reflected.
 By this stage the simulator can only handle single reflective path. 
