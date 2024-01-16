@@ -105,37 +105,37 @@ Beamforming is a popular method for estimating the \acrshort{doa} of a signal.
 To better show the fundamental principles of beamforming an example is used
 where the goal isn't to estimate a \acrshort{doa} but to send a signal
 in a desired direction using microphones.
-Figure ref{ssl:fig:beamforming1} shows such a case in $\mathbb{R}^2$
-where a linear array of N sound sources beam a sine wave $x(t) = \sin(\omega t)$ 
+Figure \ref{ssl:fig:beamforming1} shows such a case in $\mathbb{R}^2$
+where a linear array of N sound sources beam a sine wave $x(t) = \sin(\omega_0 t)$ 
 in the direction of $\varphi$.
 This is achieved by adding a phase shift to the sine wave
-at each microphone resulting in $x_n(t) = sin(\omega t + \alpha_n)$.
+at each microphone resulting in $x_n(t) = sin(\omega_0 t + \omega_0t_n)$.
 When the phase shifts are properly selected the points where the waves positively
 interfere form a beam.
 Given this example with a narrow band signal, the signal at each source
 can be written as
 \begin{equation}
-	x_n(t) = \Re(sin(\omega t) e^{j\omega \alpha_n})
+	x_n(t) = \Re(sin(\omega_0 t) e^{j\omega t_n})
 \end{equation}
 and more generalized as 
 \begin{equation}
   \label{ssl:eq:beamSteerOut}
   X(t, \varphi) = 
   \Re\left(
-    sin(\omega t)
+    sin(\omega_0 t)
     \underbrace{
       \begin{pmatrix} 
-        e^{-j\alpha_0(\omega, \varphi)} \\ 
-        e^{-j\alpha_1(\omega, \varphi)} \\
+        e^{-j\omega_0 t_0(\varphi)} \\ 
+        e^{-j\omega_0 t_1(\varphi)} \\
         \vdots \\ 
-        e^{-j\alpha_{N-1}(\omega, \varphi)} 
-      \end{pmatrix}}_{W(\varphi, \omega)}
+        e^{-j\omega_0 t_{N-1}(\varphi)} 
+      \end{pmatrix}}_{W(\varphi)}
   \right).
 \end{equation}
-The vector $W(\varphi, \omega)$ is commonly known as the steering vector.
-It can be seen that the steering vector is dependent on $\omega$ and 
+The vector $W(\varphi)$ is commonly known as the steering vector.
+It can be seen that the steering vector is dependent on $\omega_0$ and 
 will therefore only have the desired effect on signals with frequencies 
-close to $\omega$.
+close to $\omega_0$.
 How to use beamforming with wider band signals will be shown later in this chapter.
 \begin{figure}
 	\centering
@@ -151,7 +151,7 @@ $x_n(t)$ is now defined as the signal measured by the nth microphone.
 Now \eqref{ssl:eq:beamSteerOut} is rewritten to 
 \begin{equation}
   \label{ssl:eq:beamSteerIn}
-  Y(t, \varphi) = 
+  \bm{Y(t, \varphi)} = 
     \underbrace{
       \begin{pmatrix} 
         x_0(t) \\ 
@@ -162,11 +162,11 @@ Now \eqref{ssl:eq:beamSteerOut} is rewritten to
     \odot
     \underbrace{
       \begin{pmatrix} 
-        e^{-j\alpha_0(\omega, \varphi)} \\ 
-        e^{-j\alpha_1(\omega, \varphi)} \\
+        e^{-j\omega_0 t_0(\varphi)} \\ 
+        e^{-j\omega_0 t_1(\varphi)} \\
         \vdots \\ 
-        e^{-j\alpha_{N-1}(\omega, \varphi)} 
-      \end{pmatrix}}_{W(\varphi, \omega)}
+        e^{-j\omega_0 t_{N-1}(\varphi)} 
+      \end{pmatrix}}_{W(\varphi)}
 \end{equation}
 where depending on the method used either $Y(t, \varphi)$ is further processed, or the 
 method directly uses $X(t)$ for the \acrshort*{doa} estimation.
@@ -189,9 +189,9 @@ to its propagation direction.
 With the magenta line as the reference line, each measured signal from the microphones must be
 phase shifted with 
 \begin{equation}
-  \alpha_n = 
-  \frac{
-    \lVert\bm{d}_n(\varphi_s)\rVert \omega}
+  \omega_0 t_n = 
+  \omega_0 \frac{
+    \lVert\bm{d}_n(\varphi_s)\rVert}
     {c} 
     \hat{\bm{d}}_n(\varphi_s) \cdot \hat{\bm{d}}_s.
 \end{equation}
@@ -203,9 +203,9 @@ Using the trigonometric properties of a right triangle
 \end{equation}
 and therefore
 \begin{equation}
-  \alpha_n = 
+  t_n = 
   r_{m_n} \cos(\varphi_s - \varphi_{m_n})
-  \frac{\omega}{c}.
+  \frac{1}{c}.
   \label{ssl:eq:beamr2}
 \end{equation}
 This formula can be used for any microphone with polar coordinates
@@ -226,7 +226,7 @@ But as $\theta$ aproaches 0 the speed of the wavefront projectet onto the
 surface of the array increases. 
 This adds a term to \eqref{ssl:eq:beamr2}
 \begin{equation}
-	\alpha_n = 
+	t_n = 
 	r_{m_n} \cos(\varphi_s - \varphi_{m_n})
 	\frac{\omega \sin(\theta)}{c}.
   \label{ssl:eq:beamr3}
@@ -247,11 +247,11 @@ The basic beamformer is the delay and sum Beamformer
 	  \cdot
 	  \underbrace{
 		\begin{pmatrix} 
-			e^{-j\alpha_0(\omega, \varphi, \theta)} \\ 
-			e^{-j\alpha_1(\omega, \varphi, \theta)} \\
+			e^{-j\omega_0 t_0(\varphi, \theta)} \\ 
+			e^{-j\omega_0 t_1(\varphi, \theta)} \\
 			\vdots \\ 
-			e^{-j\alpha_{N-1}(\omega, \varphi, \theta)} 
-		\end{pmatrix}}_{W(\varphi, \theta, \omega)}.
+			e^{-j\omega_0 t_{N-1}(\varphi, \theta)} 
+		\end{pmatrix}}_{W(\varphi, \theta)}.
 \end{equation}
 Notice how intead of the Hadamard product, the scalar product is now used.
 $y(t, \varphi, \theta)$ is therefor the sum of the delayed signals.
@@ -261,41 +261,45 @@ By using the delays calculated for the steering vector $X(t)$ can
 be calculated to simulate a source in a specifig direction
 \begin{equation}
 	X(t, \varphi_s, \theta_s) = 
-	e^{j\omega t}
+	e^{j\omega_0 t}
 	\begin{pmatrix} 
-		e^{j\alpha_0(\omega, \varphi_s, \theta_s)} \\ 
-		e^{j\alpha_1(\omega, \varphi_s, \theta_s)} \\
+		e^{j\omega_0 t_0(\varphi_s, \theta_s)} \\ 
+		e^{j\omega_0 t_1(\varphi_s, \theta_s)} \\
 		\vdots \\ 
-		e^{j\alpha_{N-1}(\omega, \varphi_s, \theta_s)} 
+		e^{j\omega_0 t_{N-1}(\varphi_s, \theta_s)} 
 	\end{pmatrix}
 \end{equation}
 The amplitude response of an array using delay and sum beamforming can
 now be calculated with
 \begin{equation}
-	G(\phi, \theta, \omega) = 
+	G(\phi, \theta) = 
 	\frac{
 		\lvert X(0, \phi_s, \theta_s) \cdot W(\phi, \theta) \rvert}
 	{
 		N
 	}.
 \end{equation}
-In Figure \ref*{ssl:fig:CircBmResponse} two such repsonses with different 
-frequencies can be seen.
-
+The response is normalized with the ammount of microphones to ensure a maximum
+gain of 1.
+In Figure \ref*{ssl:fig:CircBmResponse} two such repsonses with can be seen.
+The main lobe of $G(\phi, \theta)$ clearly shows in the direction of the source
+however there are also side lobes pointing to directions whithout sources.
+How they behave is later discussed in \todo{chapter reference}.
 
 \begin{figure}[h]
 	\centering
 	\begin{subfigure}[t]{0.45\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{radial_1200_circ.pdf}
-		\caption{\(G(\phi, \theta, \omega)\) with $\theta = \pi/2$ for three different frequencies}
+		\includegraphics[width=\textwidth]{radial_1200_circ_single.pdf}
+		\caption{\(G(\phi, \theta, \omega)\) with $\theta = \pi/2$ for $\omega_0 = 2\pi 1000$.
+		The source is placed in the direction of $(\phi=0, \theta = \pi/2)$}
 		\label{ssl:fig:CircBmPhi}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[t]{0.45\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{radial_1200_circ_theta.pdf}
-		\caption{\(G(\phi, \theta, \omega)\) with $\phi = 0$ for three different frequencies. 
+		\includegraphics[width=\textwidth]{radial_1200_circ_theta_single.pdf}
+		\caption{\(G(\phi, \theta, \omega)\) with $\phi = 0$ for for $\omega_0 = 2\pi 1000$. 
 		$(\phi= 0, \theta = -45^\circ)$ is the same as $(\phi= 180^\circ, \theta = 45^\circ)$.
 		The mirror along the horizontal axis comes from the flat geometry of the array which makes
 		it impossible to distinguish if a sound comes from $\theta$ or $180 + \theta$.} 
@@ -306,6 +310,40 @@ frequencies can be seen.
 	\label{ssl:fig:CircBmResponse}
 \end{figure}
 
+Until now the formulas are only useful for narrow band signals. 
+This theroy is now expanded to be applicable for wide band signals.
+The narrow band delay and sum beamformer has the property, that it behaves
+the same in the freqeuncy domain
+\begin{equation}
+	e^{-j\omega_0 t_n} x_n(t) = \mathscr{F}^{-1}(e^{-j\omega_0 t_n} \mathscr{F}(x_n(t)))
+\end{equation}
+since it's just a multiplication with a scalar,. 
+The summation could also be done in the frequency domain due to the 
+linearity of the Fourier transform.
+However in the frequency domain a IIR Filter can be consructed, to 
+make a different phaseshift for every frequency 
+\begin{equation}
+	\label[type]{ssl:eq:iirbeam1}
+	Y_n(t) = \mathscr{F}^{-1}(e^{-j\omega t_n} X_n(\omega)).
+\end{equation}
+By using a discrete fourier transform the beamformer can be written
+in matrix form
+\todo{Indexchaos lösen}
+\begin{equation}
+	Y(\omega, \phi, \theta) = 
+	\begin{pmatrix}
+		X_0(\omega_l) & \hdots & X_0(\omega_h)\\
+		\vdots & \ddots & \vdots \\
+		X_{N-1}(\omega_l) & \hdots & X_{N-1}(\omega_h)
+	\end{pmatrix}^T
+	\odot
+	\begin{pmatrix}
+		e^{-j\omega_l t_0} & \hdots & e^{-j\omega_h t_0}\\
+		\vdots & \ddots & \vdots \\
+		e^{-j\omega_l t_{N-1}} & \hdots & e^{-j\omega_h t_{N-1}}
+	\end{pmatrix}^T.
+\end{equation}
+\subsection{Other beamforming techniques}
 \newpage
 \section{Simulator}
 In order to experiment with different microphone arrangements and algorithms a simulator was developed.
@@ -336,5 +374,13 @@ Now the delayed signal is $x_i(n - d_{P,S_i})$.
 To achieve sub sample delays this signal is then filtered
 with a Fractional Delay FIR Filter with a delay of
 $f_s \lVert P - S_i\rVert/c - d_{P,S_i}$.
+
+\subsubsection{Reflections}
+The simulator also allows the reflective surfaces to be placed into the room.
+These surfaces are defined with \todo{wiauimeer} and have a infintie size.
+Additionally a dampening factor can be defined which defines how much 
+a reflecting sound signal is damped when getting reflected.
+By this stage the simulator can only handle single reflective path. 
+An already reflected sound signal can not be reflected by a second surface.
 
 
