@@ -123,3 +123,29 @@ The \acrshort{tdm} bus consists of three signals: \textit{fsync}, \textit{bclk} 
 	\item \textbf{Data}: The actual audio data is transmitted in a series of bits.
 	      In a 16-channel, 16-bit TDM system, each channel's data is represented by 16 bits (Left Justified).
 \end{itemize}
+
+
+\section{GNSS Real-Time Kinematic (RTK)}
+The \acrfull{gnss} \acrfull{rtk} is an advanced technique used in geodesy and navigation
+that enhances the precision of position data derived from satellite-based positioning systems.
+\acrshort{rtk} uses differential techniques to improve the accuracy of position information obtained from satellite systems like
+\acrshort{gps}, GLONASS, Galileo, or BeiDou.
+This method is particularly useful in applications requiring high precision,
+such as surveying, construction, and precision agriculture.
+
+\subsection{Custom Node as an Anchor}
+One method to utilize \acrshort{rtk} for achieving enhanced position accuracy involves using a custom node as an anchor.
+This method requires setting up a fixed \acrshort{rtk} base station at a known location.
+The base station calculates error values for satellite signals by comparing the expected signal (based on its known location) with the received signal.
+These error values, which account for various factors like atmospheric interference and satellite orbit errors,
+are then transmitted to a mobile \acrshort{rtk} receiver.
+The mobile receiver uses these corrections to adjust its own satellite signal measurements, significantly improving its positional accuracy.
+
+\subsection{Using Data from a Public Provider}
+Alternatively, \acrshort{rtk} corrections can be obtained from a public provider.
+In this approach, the user does not set up a custom anchor node but instead subscribes to a service that provides \acrshort{rtk} correction data.
+These services operate a network of \acrshort{rtk} base stations and compute correction factors for different regions.
+The correction data is typically transmitted via the internet directly to the user's \acrshort{rtk} receiver.
+This method is convenient for users who do not have the resources to establish and maintain their own \acrshort{rtk} base station.
+By applying these corrections, which include compensating for atmospheric drift and other errors,
+the user's receiver can achieve a similar level of enhanced positional accuracy as with a custom anchor node.
