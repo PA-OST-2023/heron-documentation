@@ -125,14 +125,14 @@ and more generalized as
     sin(\omega t)
     \underbrace{
       \begin{pmatrix} 
-        e^{j\omega \alpha_0} \\ 
-        e^{j\omega \alpha_1} \\
+        e^{-j\alpha_0(\omega, \varphi)} \\ 
+        e^{-j\alpha_1(\omega, \varphi)} \\
         \vdots \\ 
-        e^{j\omega \alpha_{N-1}} 
-      \end{pmatrix}}_{W(\varphi)}
+        e^{-j\alpha_{N-1}(\omega, \varphi)} 
+      \end{pmatrix}}_{W(\varphi, \omega)}
   \right).
 \end{equation}
-The vector $W(\varphi)$ is commonly known as the steering vector.
+The vector $W(\varphi, \omega)$ is commonly known as the steering vector.
 It can be seen that the steering vector is dependent on $\omega$ and 
 will therefore only have the desired effect on signals with frequencies 
 close to $\omega$.
@@ -162,11 +162,11 @@ Now \eqref{ssl:eq:beamSteerOut} is rewritten to
     \odot
     \underbrace{
       \begin{pmatrix} 
-        e^{j\omega \alpha_0} \\ 
-        e^{j\omega \alpha_1} \\
+        e^{-j\alpha_0(\omega, \varphi)} \\ 
+        e^{-j\alpha_1(\omega, \varphi)} \\
         \vdots \\ 
-        e^{j\omega \alpha_{N-1}} 
-      \end{pmatrix}}_{W(\varphi)}
+        e^{-j\alpha_{N-1}(\omega, \varphi)} 
+      \end{pmatrix}}_{W(\varphi, \omega)}
 \end{equation}
 where depending on the method used either $Y(t, \varphi)$ is further processed, or the 
 method directly uses $X(t)$ for the \acrshort*{doa} estimation.
@@ -204,7 +204,9 @@ Using the trigonometric properties of a right triangle
 and therefore
 \begin{equation}
   \alpha_n = 
-  \frac{r_{m_n} \cos(\varphi_s - \varphi_{m_n}) \omega}{c}.
+  r_{m_n} \cos(\varphi_s - \varphi_{m_n})
+  \frac{\omega}{c}.
+  \label{ssl:eq:beamr2}
 \end{equation}
 This formula can be used for any microphone with polar coordinates
 $(\varphi_{m_n}, r_{m_n})$ and can therefore be used for any array configuration
@@ -216,41 +218,92 @@ described in polar coordinates.
   \caption{BalaBula}
   \label{ssl:fig:steering}
 \end{figure}
+
 To expand this idea into $\mathbb{R}^3$ the spherical coordinate system is now used.
-This introduces the angle $\theta$ as the inclination.
-\todo{End this.} 
+This adds the angle $\theta$ as the inclination.
+When $\theta = \pi/2$ it is the same situation that has already been looked at.
+But as $\theta$ aproaches 0 the speed of the wavefront projectet onto the
+surface of the array increases. 
+This adds a term to \eqref{ssl:eq:beamr2}
+\begin{equation}
+	\alpha_n = 
+	r_{m_n} \cos(\varphi_s - \varphi_{m_n})
+	\frac{\omega \sin(\theta)}{c}.
+  \label{ssl:eq:beamr3}
+\end{equation}
 
 \subsubsection{Delay and Sum Beamformer}
-The basic beamformer is the delay and sum beamformer.
-As the name already tells, it delays the measured signals with the steering
-vector and then sums the resulting signals \dots
-\begin{figure}
-  \centering
-  %    \includegraphics[width=0.25\textwidth]{mesh}
-  \includegraphics[]{radial_f.pdf}
-  \caption{BalaBula}
-  \label{ssl:fig:gurke}
-\end{figure}
+The basic beamformer is the delay and sum Beamformer
+\begin{equation}
+	\label{ssl:eq:delAndSum}
+	y(t, \varphi, \theta) = 
+	  \underbrace{
+		\begin{pmatrix} 
+		  x_0(t) \\ 
+		  x_1(t) \\
+		  \vdots \\ 
+		  x_{N-1}(t)
+	  \end{pmatrix}}_{X(t)}
+	  \cdot
+	  \underbrace{
+		\begin{pmatrix} 
+			e^{-j\alpha_0(\omega, \varphi, \theta)} \\ 
+			e^{-j\alpha_1(\omega, \varphi, \theta)} \\
+			\vdots \\ 
+			e^{-j\alpha_{N-1}(\omega, \varphi, \theta)} 
+		\end{pmatrix}}_{W(\varphi, \theta, \omega)}.
+\end{equation}
+Notice how intead of the Hadamard product, the scalar product is now used.
+$y(t, \varphi, \theta)$ is therefor the sum of the delayed signals.
+If the angles of the steering vector point towards a source its 
+signal will be amplified.
+By using the delays calculated for the steering vector $X(t)$ can
+be calculated to simulate a source in a specifig direction
+\begin{equation}
+	X(t, \varphi_s, \theta_s) = 
+	e^{j\omega t}
+	\begin{pmatrix} 
+		e^{j\alpha_0(\omega, \varphi_s, \theta_s)} \\ 
+		e^{j\alpha_1(\omega, \varphi_s, \theta_s)} \\
+		\vdots \\ 
+		e^{j\alpha_{N-1}(\omega, \varphi_s, \theta_s)} 
+	\end{pmatrix}
+\end{equation}
+The amplitude response of an array using delay and sum beamforming can
+now be calculated with
+\begin{equation}
+	G(\phi, \theta, \omega) = 
+	\frac{
+		\lvert X(0, \phi_s, \theta_s) \cdot W(\phi, \theta) \rvert}
+	{
+		N
+	}.
+\end{equation}
+In Figure \ref*{ssl:fig:CircBmResponse} two such repsonses with different 
+frequencies can be seen.
+
 
 \begin{figure}[h]
 	\centering
 	\begin{subfigure}[t]{0.45\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{radial_1200_circ.pdf}
-		\caption{Acoustic model used for the near field \acrshort{ssl}.}
-		\label{ssl:fig:gurke1}
+		\caption{\(G(\phi, \theta, \omega)\) with $\theta = \pi/2$ for three different frequencies}
+		\label{ssl:fig:CircBmPhi}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[t]{0.45\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{radial_1200_circ_theta.pdf}
-		\caption{A selection of the hyperbolas resulting from the time-delays $t_{m,n}$.}
-		\label{ssl:fig:gurke2}
+		\caption{\(G(\phi, \theta, \omega)\) with $\phi = 0$ for three different frequencies. 
+		$(\phi= 0, \theta = -45^\circ)$ is the same as $(\phi= 180^\circ, \theta = 45^\circ)$.
+		The mirror along the horizontal axis comes from the flat geometry of the array which makes
+		it impossible to distinguish if a sound comes from $\theta$ or $180 + \theta$.} 
+		\label{ssl:fig:CircBmTheta}
 	\end{subfigure}
-	\caption{Near field \acrshort{ssl} with a linear microphone Array.
-		the  are distributed on a straight line a degree of freedom is lost and
-		$\bm{S}$ mirrored at this line is also a possible solution.}
-	\label{fig:gurken}
+	\caption{Delay and Sum Beamformer response for a circular array with $N=16$ microphones 
+	and a radius $r = 0.25$m. }
+	\label{ssl:fig:CircBmResponse}
 \end{figure}
 
 \newpage
