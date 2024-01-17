@@ -206,14 +206,31 @@ They can convenient be mounted on the backside of the \texttt{Teensy 4.1} board 
 \newpage
 
 \subsection{Audio Input}
+As mentioned in section \ref{sec:pdm_microphones}, the use of \acrshort{pdm} microphones requires a digital decimation filter to convert their bitstream into a usable audio format.
+The Teensy 4.1, despite having built-in hardware \acrshort{pdm} decimation, is limited to two channels, requiring external decimation for systems with more audio channels.
 
-\subsection{Headphone Output}
+To overcome this limitation, the \textit{ADAU7118} from Analog Devices is employed.
+This \acrfull{ic} is specialized in handling \acrshort{pdm} signals, offering four \acrshort{pdm} inputs and two clock outputs, which collectively can drive up to eight microphones in a multiplexed configuration.
+It outputs audio data in the \acrshort{tdm} protocol.
+\acrshort{tdm}-16, being capable of handling up to 16 channels, allows two \textit{ADAU7118} \acrshort{ic}s to share the same physical bus.
+Hence, individual configuration is necessary to ensure that each converter accesses the correct \acrshort{tdm} slots (lower or upper 8 channels).
+In total, four \textit{ADAU7118} \acrshort{ic}s are used, providing 32 microphone channels.
 
-To prelisten the individual audio channels, a headphone output is implemented.
+The \textit{ADAU7118} is also equipped with an \acrshort{i2c} interface, enabling the configuration of various parameters such as the decimation ratio,
+\acrshort{tdm} bus settings, and signal drive impedances.
 
-% description of headphones jack
-The headphone output is a standard 3.5mm stereo jack.
 
+\subsection{Headphones Output}
+The addition of a headphones output to the acquisition system introduces the capability for live monitoring of microphone inputs.
+This feature allows a user to connect standard headphones with a 3.5\,mm jack directly to the device, enabling real-time audio feedback.
+
+The system employs the \textit{WM8904} audio \acrshort{codec} as its \acrfull{dac}.
+This choice is strategic, as the \textit{WM8904} not only supports digital audio input streams like \acrshort{i2s} and \acrshort{tdm},
+but also includes a built-in headphones amplifier, making it particularly suitable for this application.
+Additionally, its \acrshort{i2c} interface enables configuration adjustments, including device setup and volume control.
+
+However, it is important to note that, as of this writing, this headphones output feature has not been implemented in the firmware.
+Consequently, the hardware designed to support this functionality has not yet undergone testing.
 
 
 \newpage

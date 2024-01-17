@@ -16,7 +16,7 @@ Their small footprint also enables design flexibility in increasingly miniaturiz
 	\label{fig:mems_microphone}
 \end{figure}
 
-\subsection{Analog Microphones}
+\subsection{Analog Microphones} \label{sec:analog_microphones}
 Analog \acrshort{mems} microphones convert sound into an analog electrical signal.
 They are simple and easy to integrate in analog circuits but may require additional signal amplification components.
 A disadvantage of analog microphones is that they are susceptible to noise and interference, making them unsuitable for long-distance transmission.
@@ -28,7 +28,7 @@ A disadvantage of analog microphones is that they are susceptible to noise and i
 	\label{fig:mems_microphone_types_analog}
 \end{figure}
 
-\subsection{PDM Microphones}
+\subsection{PDM Microphones} \label{sec:pdm_microphones}
 \acrshort{pdm} microphones output a digital signal representing the acoustic waveform.
 Their digital format is noise-resistant and supports long-distance transmission, making them ideal for multiplexed, multi-microphone setups.
 These microphone types require a high-frequency clock signal to operate (typically 1.5\,MHz to 3.25\,MHz),
@@ -42,7 +42,7 @@ A dedicated channel select pin is used to select the microphone's output channel
 	\label{fig:mems_microphone_types_pdm}
 \end{figure}
 
-\subsection{PCM Microphones}
+\subsection{PCM Microphones} \label{sec:pcm_microphones}
 \acrshort{pcm} microphones provide a digital output using the \acrlong{pcm} format, most often interfaced via the \acrshort{i2s} protocol.
 Compared to \acrshort{pdm} microphones, \acrshort{pcm} microphones have a build-in decimation filter, which simplifies the signal processing chain, as the host no longer needs to perform this task.
 However, \acrshort{pcm} microphones are more complex, costly and less common in the industry than \acrshort{pdm} microphones.
