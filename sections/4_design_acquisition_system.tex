@@ -1,35 +1,56 @@
 \chapter{Acquisition-System Design}
 \section{Overview}
-This section covers the development process including the hardware and firmware design of the audio acquisition system.
+The first step after understanding the basic theory behind microphone arrays and beamforming is to apply this knowledge in a practical setting.
+The primary goal is to record and analyze real-world audio data from a variety of microphones.
+This involves the evaluation of different microphone types and array configurations.
+Understanding these differences is critical for further development and refinement of beamforming algorithms.
+
+The approach extended to the development of a specialized hardware system, necessary for recording multiple audio channels simultaneously.
+This capability was not found in existing hardware solutions, leading to the design and development of a new system, supporting up to 32 microphones.
+The channel limit was chosen due to practical constraints while keeping the system complexity manageable.
+
+Once the audio data is captured, the next phase involves applying algorithms to analyze these recordings.
+Applying these algorithms to the captured audio data facilitates a detailed comparison between real-world microphone performance and theoretical simulation results.
+This comparison is substantial for understanding the differences between practical microphone use and simulated scenarios, thus being crucial for further algorithm development and refinement.
+
+In addition to its primary purpose, this system enables possibilities for various other applications where recording a large number of microphones is needed.
+Its ability to handle multiple channels simultaneously and processing them in real-time makes it a versatile tool for various use cases.
+
+The subsequent sections describe the development process, including the hardware and firmware design of the audio acquisition system.
+
+\newpage
+\subsection{Key Requirements}
 The goal of the acquisition system is to provide a flexible microphone recording infrastructure to easily aquiring audio signals from multiple microphones.
 
-
-\subsection{Key Requirements}
-% The main focus of the development is to design a professional looking, easy to use and eye-catching device for demonstration purposes.
-% The project name \textit{Audio-Beamformer} has been chosen as it is easy to remember and has potential to be seen as a trademark.
-
 The following key requirements have been set:
-% \begin{itemize}
-% 	\item Single power adapter or power cable (e.g. no need of labor power supplies)
-% 	\item Easy to install (e.g. montage on a camera tripod)
-% 	\item Intuitive to operate via state-of-the-art graphical user interface
-% 	\item Multiple audio streaming sources such as Bluetooth and USB input devices
-% 	\item Great scalability and flexibility of the hardware and software design
-% \end{itemize}
+\begin{itemize}
+	\item Simultaneous recording of up to 32 microphone channels
+	\item High-quality audio recording with 16-bit resolution and 44.1\,kHz sampling rate (\acrshort{cd}-Quality)
+	\item Recording to a removable \acrshort{sd}-Card in lossless WAV format
+	\item Real-time monitoring of individual microphone channels
+	\item Easy to use \acrshort{ui} for configuration and operation
+	\item Compact and portable design to enable mobile use
+\end{itemize}
 
-\subsection{Key Decisions}
+\section{Key Decisions}
+The following section describes the key decisions made during the development of the acquisition system.
 
+\begin{enumerate}
+	\item \textbf{MCU Selection}: As a main \acrfull{mcu} the \texttt{Teensy 4.1} was chosen due to its ability providing two TDM-16 audio interfaces, enabling support for up to 32 audio channels.
+	      Its computational performance and extensive software support in audio applications were key factors in this decision.
+	      Additionally, the \texttt{Teensy 4.1} includes a fast \acrshort{sdio} \acrshort{sd}-Card interface with a built-in card holder, ideal for this application.
+	\item \textbf{Focus on PDM Microphones}: Preference was given to \acrshort{pdm} microphones due to their wide availability and suitability for use with longer cables, in comparison to other microphones types mentioned in section \ref{sec:mems_microphones}.
+	\item \textbf{USB Cable Power Source}: The system is powered via a single \acrshort{usb} cable to ensure portability and ease of use in various settings, adhering to the requirement for a compact and mobile design.
+	\item \textbf{Addition of RJ45 Ethernet Port}: An RJ45 ethernet port was incorporated for future development opportunities, such as streaming audio data over ethernet.
+	\item \textbf{Inclusion of a Touch LCD Display}: A touch \acrshort{tft} display was integrated to offer an easy-to-use \acrshort{ui}, facilitating efficient system configuration, operation, and real-time monitoring.
+	\item \textbf{Use of Multiple RGB LEDs}: \acrshort{rgb} \acrshort{led}s were employed for visual feedback on the audio levels of each microphone channel.
+	\item \textbf{Headphone Jack for Monitoring}: The addition of a headphone jack allows for real-time auditory monitoring of individual microphone channels, essential for troubleshooting.
+	\item \textbf{Integration of a Real-Time Clock (RTC)}: An \acrshort{rtc} was integrated to tag each recording with the current time and date, simplifying the comparison of measurement results in post.
+\end{enumerate}
 
 
 \newpage
 \section{Hardware Design}
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=1.0\textwidth]{images/4_design_acquisition_system/Acquisition_System_Front.png}
-	\caption{Front view of the Acquisition System}
-	\label{fig:acquisition_system_front}
-\end{figure}
 
 
 \subsection{Block Diagram}
@@ -41,14 +62,24 @@ The following key requirements have been set:
 	\label{fig:acquisition_system_design_block_diagram}
 \end{figure}
 
+\subsection{Microphone Evaluation}
+
+\subsection{Mainboard}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1.0\textwidth]{images/4_design_acquisition_system/Acquisition_System_Front.png}
+	\caption{Front view of the Acquisition System}
+	\label{fig:acquisition_system_front}
+\end{figure}
+
+
+
 \subsection{Microcontroller Unit (MCU)}
 
 %  TODO: Write about external PSRAM
 
 
 \subsection{Audio Input}
-
-\subsection{Audio Processing}
 
 \subsection{Headphone Output}
 
