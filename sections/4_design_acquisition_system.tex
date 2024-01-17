@@ -170,22 +170,40 @@ Moreover, each corner of the \acrshort{pcb} is equipped with M3 surface-mounted 
 
 \subsection{Block Diagram}
 In figure \ref{fig:acquisition_system_design_block_diagram} the system block diagram is shown.
+\vspace{-0.2cm}
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=1.0\textwidth]{images/4_design_acquisition_system/acquisition_system_design_block_diagram.pdf}
+	\includegraphics[width=1.0\textwidth, trim={0 0 0 0.1cm}]{images/4_design_acquisition_system/acquisition_system_design_block_diagram.pdf}
 	\caption{System Block Diagram of Acquisition-System}
 	\label{fig:acquisition_system_design_block_diagram}
 \end{figure}
-
-
-
-
-
+\vspace{-0.4cm}
 
 \subsection{Microcontroller Unit (MCU)}
-
-%  TODO: Write about external PSRAM
-
+As a main \acrshort{mcu} the \texttt{Teensy 4.1} was chosen due to its powerful \acrshort{arm} Cortex-M7 processor, running at 600\,MHz.
+The \texttt{Teensy 4.1} is a small form-factor development board, manufactured by \textit{PJRC}.
+It provides a build-in programming interface, which allows to program the \acrshort{mcu} directly via \acrshort{usb} without the need for an external programmer.
+Compared to the smaller formfactor \texttt{Teensy 4.0}, the \texttt{Teensy 4.1} includes a built-in \acrshort{sd}-Card holder and additional flash memory of 8\,MB.
+Although the IMXRT1060 \acrshort{soc} provides 1\,MB of \acrshort{ram}, for this application, two additional 8\,MB \acrshort{psram} memory chips are required.
+They can convenient be mounted on the backside of the \texttt{Teensy 4.1} board as shown in figure \ref{fig:teensy_psram}.
+\begin{figure}[h!]
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=3.7cm]{images/4_design_acquisition_system/teensy_image.png}
+		\vspace{-0.2cm}
+		\caption{Teensy 4.1}
+		\label{fig:teensy_4_1}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=3.7cm]{images/4_design_acquisition_system/teensy_psram.png}
+		\vspace{-0.2cm}
+		\caption{Mounting of External PSRAM}
+		\label{fig:teensy_psram}
+	\end{minipage}
+\end{figure}
+\newpage
 
 \subsection{Audio Input}
 
