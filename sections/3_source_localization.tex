@@ -310,14 +310,58 @@ How they behave is later discussed in \todo{chapter reference}.
 	\label{ssl:fig:CircBmResponse}
 \end{figure}
 
+Beamforming can be seen as spatial sampling, where the microphones
+are the samplingpoints.
+So some of the concepts used in digital sampling such as 
+the samplingtheorem and the uncertainty principle can also 
+occur in some way in beamforming.
+Figure \ref{ssl:fig:f_deps} shows $G(\phi, \pi/2)$ for different frequencies.
+The array used in Figure \ref{ssl:fig:f_dep0} is the same array
+as in Figure \ref*{ssl:fig:CircBmResponse} whereas Figure \ref{ssl:fig:f_dep0}
+uses a circular array with $r = 0.5$m and also 16 microphones. 
+It can be seen that at around 1500hz more side lobes with a 
+high amplitude start to appear. 
+With this array geometry the smallest distance between two 
+microphones is $\approx 0.25 \pi/8 \approx 0.098$m, which is the wavelenght
+of a sound wave with a frequency of approximately 3500hz.
+So the effect seen in Figure \ref*{ssl:fig:CircBmResponse} is 
+a kind of aliasing.
+This results from ambiguity in the phases of the steering vector.
+Ideally the phase shift between two neighboring microphones is unique
+for each angle of the steering vector. 
+However when they are more than $\lambda/2$ apart, phase shifts start to 
+repeat for different steering directions.
 
-\begin{figure}
-  \centering
-  %    \includegraphics[width=0.25\textwidth]{mesh}
-  \includegraphics[]{circ_f_sweep.pdf}
-  \caption{Guhhl}
-  \label{ssl:fig:steering}
+Another effect seen in Figure \ref*{ssl:fig:CircBmResponse} is the increase
+of the main lobe width when the frequency approaches 0.
+This is consequence of a too small array. 
+In the used array the maximal distance between two microphones is 0.5m.
+For lower frequencies the phase difference between the first microphone and 
+the last microphone in the array is too small to get destructive
+interferences when the steering vector is not focused on the source.
+
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[t]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{circ_f_sweep_0.pdf}
+		\caption{Salat}
+		\label{ssl:fig:f_dep0}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{circ_f_sweep_1.pdf}
+		\caption{Gurkensaft} 
+		\label{ssl:fig:f_dep1}
+	\end{subfigure}
+	\caption{Delay and Sum Beamformer response for a circular array with $N=16$ microphones 
+	and a radius $r = 0.25$m. }
+	\label{ssl:fig:f_deps}
 \end{figure}
+
+
 
 
 Until now the formulas are only useful for narrow band signals. 
