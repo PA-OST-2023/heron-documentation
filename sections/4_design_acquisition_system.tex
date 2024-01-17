@@ -41,8 +41,8 @@ The following section describes the key decisions made during the development of
 	      Additionally, the \texttt{Teensy 4.1} includes a fast \acrshort{sdio} \acrshort{sd}-Card interface with a built-in card holder, ideal for this application.
 	\item \textbf{Microphones}: Preference was given to \acrshort{pdm} microphones due to their wide availability and suitability for use with longer cables, in comparison to other microphones types mentioned in section \ref{sec:mems_microphones}.
 	\item \textbf{Power Source}: The system is powered via a single \acrshort{usb} cable to ensure portability and ease of use in various settings, adhering to the requirement for a compact and mobile design.
-	\item \textbf{Ethernet Port}: An RJ45 ethernet port was incorporated for future development opportunities, such as streaming audio data over ethernet.
-	\item \textbf{Touch LCD Display}: A touch \acrshort{tft} display was integrated to offer an easy-to-use \acrshort{ui}, facilitating efficient system configuration, operation, and real-time monitoring.
+	\item \textbf{Ethernet Port}: An RJ45 ethernet port was added for future development opportunities, such as streaming audio data over ethernet.
+	\item \textbf{Touch Display}: A touch \acrshort{tft} display was integrated to offer an easy-to-use \acrshort{ui}, facilitating efficient system configuration, operation, and real-time monitoring.
 	\item \textbf{RGB LEDs}: \acrshort{rgb} \acrshort{led}s were employed for visual feedback on the audio levels of each microphone channel.
 	\item \textbf{Headphone Jack}: The addition of a headphone jack allows for real-time auditory monitoring of individual microphone channels, essential for troubleshooting.
 	\item \textbf{Real-Time Clock (RTC)}: An \acrshort{rtc} was integrated to tag each recording with the current time and date, simplifying the comparison of measurement results in post.
@@ -52,7 +52,7 @@ The following section describes the key decisions made during the development of
 \newpage
 \section{Microphone Evaluation}
 \label{sec:microphone_evaluation}
-Although a variety of microphone technologies such as condenser, dynamic, and electret are available, the focus has been set on \acrshort{mems} microphones due to several compelling reasons.
+Although a variety of microphone technologies exists, such as condenser, dynamic, and electret, the focus has been set on \acrshort{mems} microphones due to several compelling reasons.
 Primarily, their widespread availability and ease of manufacturing, allowing \acrshort{pcb} manufacturers to assemble them, make \acrshort{mems} microphones a practical choice.
 Their compact size is advantageous in space-constrained applications, while the integrated analog frontend simplifies audio system design.
 Notably, \acrshort{mems} microphones deliver excellent audio quality and wide bandwidth, essential for high quality sound reproduction.
@@ -61,22 +61,23 @@ Moreover, their cost-effectiveness makes them suitable for microphone arrays wit
 \subsection{Microphone Types}
 In the evaluation process, four different \acrshort{mems} microphones were selected.
 Two of them are top-ported, while the other two are bottom-ported.
-All four microphone types are available in large quantities at \textit{JLC-PCB}, a popular \acrshort{pcb} manufacturer.
+All four microphone types are available in large quantities at \textit{JLCPCB}, a popular \acrshort{pcb} manufacturer.
 Comparing the datasheets of the different microphones, only small differences in the specifications were found.
 Consequently, it was all the more intriguing to compare these microphones and to determine effective differences in audio quality and \acrfull{snr}.
 
 \begin{table}[h]
 	\centering
-	\begin{tabular}{ l l l p{5cm}}
+	\small
+	\begin{tabular}{ l l l l}
 		\textbf{Microphone Type} & \textbf{Port} & \textbf{Manufacturer} & \textbf{Similar Types} \vspace{0.1cm} \\
 		\hline
-		MP34DT05TR-A             & Top           & ST Micro.             &                                       \\
+		MP34DT05TR-A             & Top           & ST Microelectronics   & -                                     \\
 		\hline
 		GMA4030H11-F26           & Top           & INGHAi                & \textit{Knowles SPK0415HM4H-B-7}      \\
 		\hline
 		GMA3526H10-B26           & Bottom        & INGHAi                & \textit{Knowles SPH0641LU4H-1}        \\
 		\hline
-		SD18OB261-060            & Bottom        & Goertek               &                                       \\
+		SD18OB261-060            & Bottom        & Goertek               & -                                     \\
 		\hline
 	\end{tabular}
 	\caption{Evaluated MEMS Microphone Types}
@@ -84,14 +85,66 @@ Consequently, it was all the more intriguing to compare these microphones and to
 \end{table}
 
 \subsection{Microphone Breakout Boards}
-Blabla
+To test the four evaluated microphone types, a carrier \acrshort{pcb} was designed and manufactured.
+A panalized design was chosen to simplify the manufacturing process and reduce assembly costs.
+One panel consists of 8 breakout boards for each microphone type, resulting in a total of 32 breakout boards per panel.
+In total, 5 panels were manufactured, which leads to 40 microphone breakout boards per type.
+Each breakout board is separated by a V-groove, a common technique used in \acrshort{pcb} manufacturing.
+This allows the individual breakout boards to be easily separated from each other.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=10.0cm]{images/4_design_acquisition_system/Microphone_Boards_Front.png}
+	\includegraphics[width=0.8\textwidth]{images/4_design_acquisition_system/Microphone_Boards_Front.png}
 	\caption{Front view of the microphone breakout boards}
 	\label{fig:microphone_boards_front}
 \end{figure}
 
+Every microphone board is equipped with a slide switch for the channel selection, allowing to toggle between the left and right \acrshort{pdm} channel.
+Additionally, a dual-color \acrshort{led} is integrated, serving as a power indicator. It lights up red if the right channel is selected or white if the left channel is selected.
+To enhance the ease of mounting, each board includes a threaded surface-mounted standoff nut for an M3 screw, enabling straightforward attachment to a frame.
+
+For connectivity, a standard SH\,4-Pin JST
+\footnote{JST refers to Japan Solderless Terminal, a leading manufacturer of a diverse range of connectors, including wire-to-board, board-to-board, and wire-to-wire types.}
+connector with a 1\,mm pin pitch was used.
+This connector type is commonly found in \gls{adafruit} \textit{STEMMA QT / Qwiic JST} \acrshort{i2c}-Sensor boards.
+By using this specific type, a wide range of pre-assembled cables with different lengths are available, simplifying the connection between the breakout boards and the acquisition system.
+The microphone carrier \acrshort{pcb} follows the same pinout as \gls{adafruit}'s own \acrshort{pdm}-Microphone breakout board (\gls{adafruit} part number: 4346), facilitating compatibility.
+The connector also supplies power (3.3V) to the microphones, allowing multiple units to be connected with a single cable.
+For the testing setup, cables measuring 40 cm in length were used (\gls{adafruit} part number: 5385).
+\begin{figure}[h!]
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=4.0cm]{images/4_design_acquisition_system/adafruit_pdm_microphone.png}
+		\caption{Adafruit PDM Microphone (4364)}
+		\label{fig:adafruit_pdm_microphone}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[height=4.0cm]{images/4_design_acquisition_system/stemma_qt_qwiic_cable.png}
+		\caption{STEMMA QT / Qwiic Cable (5385)}
+		\label{fig:stemma_qt_qwiic_cable}
+	\end{minipage}
+\end{figure}
+
+The table below outlines the pinout used for these microphone breakout boards:
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|l|}
+		\hline
+		\textbf{Pin Number} & \textbf{Function}                    \\
+		\hline
+		1                   & GND                                  \\
+		\hline
+		2                   & 3V3                                  \\
+		\hline
+		3                   & PDM Data (provided by the host)      \\
+		\hline
+		4                   & PDM Clock (microphone output signal) \\
+		\hline
+	\end{tabular}
+	\caption{Microphone Breakout Board Pinout}
+	\label{tab:mic_breakout_pinout}
+\end{table}
 
 \newpage
 \section{Hardware Design}

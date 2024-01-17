@@ -23,11 +23,11 @@
 
 \makepagestyle{headerWPageNr}% Create headerWPageNr style
 \if@twoside
-  \copypagestyle{headerWPageNr}{Ruled}
-  \copypagestyle{chapter}{Ruled}
+	\copypagestyle{headerWPageNr}{Ruled}
+	\copypagestyle{chapter}{Ruled}
 \else
-  \copypagestyle{headerWPageNr}{ruled}
-  \copypagestyle{chapter}{ruled}
+	\copypagestyle{headerWPageNr}{ruled}
+	\copypagestyle{chapter}{ruled}
 \fi
 % chapter pages have no header and center page number in footer:
 \makeoddhead{chapter}{}{}{}
@@ -45,36 +45,36 @@
 
 
 \makechapterstyle{bianchimod}{%
-  \copypagestyle{abstract}{empty}
-  \copypagestyle{acknowledgement}{empty}
-  \chapterstyle{default}
-  \renewcommand*{\chapnamefont}{\normalfont\Large\sffamily}
-  \renewcommand*{\chapnumfont}{\normalfont\Large\sffamily}
-  \renewcommand*{\printchaptername}{%
-    \chapnamefont\centering\@chapapp}
-  \renewcommand*{\printchapternum}{\chapnumfont {\thechapter}}
-  \renewcommand*{\chaptitlefont}{\normalfont\huge\sffamily}
-  \renewcommand*{\printchaptertitle}[1]{%
-    \hrule\vskip\onelineskip \centering \chaptitlefont\textbf{\vphantom{gyM}##1}\par}
-  \renewcommand*{\afterchaptertitle}{\vskip\onelineskip \hrule\vskip
-    \afterchapskip}
-  \renewcommand*{\printchapternonum}{%
-    \vphantom{\chapnumfont {9}}\afterchapternum}}
-  
+	\copypagestyle{abstract}{empty}
+	\copypagestyle{acknowledgement}{empty}
+	\chapterstyle{default}
+	\renewcommand*{\chapnamefont}{\normalfont\Large\sffamily}
+	\renewcommand*{\chapnumfont}{\normalfont\Large\sffamily}
+	\renewcommand*{\printchaptername}{%
+		\chapnamefont\centering\@chapapp}
+	\renewcommand*{\printchapternum}{\chapnumfont {\thechapter}}
+	\renewcommand*{\chaptitlefont}{\normalfont\huge\sffamily}
+	\renewcommand*{\printchaptertitle}[1]{%
+		\hrule\vskip\onelineskip \centering \chaptitlefont\textbf{\vphantom{gyM}##1}\par}
+	\renewcommand*{\afterchaptertitle}{\vskip\onelineskip \hrule\vskip
+		\afterchapskip}
+	\renewcommand*{\printchapternonum}{%
+		\vphantom{\chapnumfont {9}}\afterchapternum}}
+
 \makechapterstyle{bianchimod2}{%
-  \renewenvironment{abstract}{\chapter*{\abstractname}}{}
-  \newenvironment{acknowledgement}{\chapter*{Acknowledgement}}{}
-  \chapterstyle{default}
-  \definecolor{ChapGrey}{rgb}{0.6,0.6,0.6}
-  \newcommand{\LargeFont}{% Needs a ’stretchable’ font
-  	\usefont{\encodingdefault}{\sfdefault}{b}{n}%
-    \fontsize{100}{0}\selectfont\color{ChapGrey}}
-  \renewcommand*{\chapnumfont}{\LargeFont}
-  \renewcommand*{\printchaptername}{\raggedleft}
-  \renewcommand*{\printchapternum}{\chapnumfont {\thechapter}}
-  \renewcommand*{\chaptitlefont}{\normalfont\Huge\sffamily\color{black}}
-  \renewcommand*{\printchaptertitle}[1]{%
-    \raggedleft \chaptitlefont\textbf{\vphantom{gyM}##1}\par}}
+	\renewenvironment{abstract}{\chapter*{\abstractname}}{}
+	\newenvironment{acknowledgement}{\chapter*{Acknowledgement}}{}
+	\chapterstyle{default}
+	\definecolor{ChapGrey}{rgb}{0.6,0.6,0.6}
+	\newcommand{\LargeFont}{% Needs a ’stretchable’ font
+		\usefont{\encodingdefault}{\sfdefault}{b}{n}%
+		\fontsize{100}{0}\selectfont\color{ChapGrey}}
+	\renewcommand*{\chapnumfont}{\LargeFont}
+	\renewcommand*{\printchaptername}{\raggedleft}
+	\renewcommand*{\printchapternum}{\chapnumfont {\thechapter}}
+	\renewcommand*{\chaptitlefont}{\normalfont\Huge\sffamily\color{black}}
+	\renewcommand*{\printchaptertitle}[1]{%
+		\raggedleft \chaptitlefont\textbf{\vphantom{gyM}##1}\par}}
 
 % Use the newly defined style
 \chapterstyle{bianchimod2}
@@ -121,31 +121,31 @@
 	% default title page from cadmo template
 	\newcommand{\maketitlepage}{
 		\begin{titlingpage}
-  			\calccentering{\unitlength}
-  			\begin{adjustwidth*}{\unitlength-24pt}{-\unitlength-24pt}
-    		\maketitle
-  			\end{adjustwidth*}
+			\calccentering{\unitlength}
+			\begin{adjustwidth*}{\unitlength-24pt}{-\unitlength-24pt}
+				\maketitle
+			\end{adjustwidth*}
 		\end{titlingpage}
 	}
 	\pretitle{\vspace{0pt plus 0.7fill}\begin{center}\HUGE\sffamily\bfseries}
-	\posttitle{\end{center}\par}
+			\posttitle{\end{center}\par}
 	\preauthor{\par\begin{center}\let\and\\\Large\sffamily}
-	\postauthor{\end{center}}
+			\postauthor{\end{center}}
 	\predate{\par\begin{center}\Large\sffamily}
-	\postdate{\end{center}}
+			\postdate{\end{center}}
 
 	\renewcommand{\maketitlehooka}{\noindent\ETHlogo[2in]}
 
 	\renewcommand{\maketitlehookb}{\vspace{1in}%
-  		\par\begin{center}\Large\sffamily\@thesistype\end{center}}
+		\par\begin{center}\Large\sffamily\@thesistype\end{center}}
 
 	\renewcommand{\maketitlehookd}{%
-  		\vfill\par
-  			\begin{flushright}
-    			\sffamily
-    			Advisors: \@supervisor, \@advisor\par
-    			\@department, \@school
-  			\end{flushright}
+		\vfill\par
+		\begin{flushright}
+			\sffamily
+			Advisors: \@supervisor, \@advisor\par
+			\@department, \@school
+		\end{flushright}
 	}
 
 \else
@@ -160,7 +160,7 @@
 		\begin{minipage}[c]{0.35\linewidth}
 			\vspace{0pt}
 			\hfuzz=5.0pt
-			\includegraphics[width=0.9\linewidth]{images/ost_logo_de_rgb-eps-converted-to}
+			\includegraphics[width=0.9\linewidth]{images/ost_logo.pdf}
 		\end{minipage}
 		%
 		\begin{minipage}[c]{0.4\linewidth}
@@ -169,42 +169,42 @@
 		\end{minipage}
 		%
 		\begin{minipage}[c]{0.25\linewidth}
-			\vspace{0pt}
+			\vspace{0.1cm}
 			\hfuzz=6.0pt
-			    \hspace*{-1.7cm} 
-			        \includegraphics[width=1.5\linewidth]{images/icai_logo}
+			\hspace*{-1.6cm}
+			\includegraphics[width=1.5\linewidth]{images/icai_logo}
 		\end{minipage}
 		\vspace{2cm}
 		\sffamily
 		\vspace*{\stretch{6}}
 		\begin{flushright}
-		{\Huge\sffamily\bfseries\@title\par}
-		\par\noindent\rule[-1ex]{\linewidth}{2pt}\par
-		\vspace{0.5cm}
-		\emph{\huge\sffamily\@thesistype}
-		\vspace{2cm}\par
-		{\LARGE\sffamily\bfseries Florian Baumgartner}\par
-		{\sffamily\ \href{mailto:florian.baumgartner@ost.ch}{florian.baumgartner@ost.ch}}\par
-		\vspace{0.5cm}
-		{\LARGE\sffamily\bfseries Alain Keller}\par
-		{\sffamily\ \href{mailto:alain.keller@ost.ch}{alain.keller@ost.ch}}\par
-		\vspace{1cm}
-    	{\large\textbf{Advisor}\par
-    		\@advisor\par}
-    	\vspace{0.5cm}
-    	{\large\textbf{Examiner}\par
-    		\@supervisor\par}
-    	\vspace{1cm}
-    	{\@institute\par
-        	\@school\par}
-    	\vspace{1cm}
-    	{\normalsize\@date\par}
+			{\Huge\sffamily\bfseries\@title\par}
+			\par\noindent\rule[-1ex]{\linewidth}{2pt}\par
+			\vspace{0.5cm}
+			\emph{\huge\sffamily\@thesistype}
+			\vspace{2cm}\par
+			{\LARGE\sffamily\bfseries Florian Baumgartner}\par
+			{\sffamily\ \href{mailto:florian.baumgartner@ost.ch}{florian.baumgartner@ost.ch}}\par
+			\vspace{0.5cm}
+			{\LARGE\sffamily\bfseries Alain Keller}\par
+			{\sffamily\ \href{mailto:alain.keller@ost.ch}{alain.keller@ost.ch}}\par
+			\vspace{1cm}
+			{\large\textbf{Advisor}\par
+				\@advisor\par}
+			\vspace{0.5cm}
+			{\large\textbf{Examiner}\par
+				\@supervisor\par}
+			\vspace{1cm}
+			{\@institute\par
+				\@school\par}
+			\vspace{1cm}
+			{\normalsize\@date\par}
 		\end{flushright}
 		\vspace{\stretch{1}}
 		\noindent
-		\pagebreak 
-    	\sffamily
-    	\thispagestyle{empty} 
+		\pagebreak
+		\sffamily
+		\thispagestyle{empty}
 	}
 \fi
 
