@@ -16,10 +16,10 @@ This comparison is substantial for understanding the differences between practic
 In addition to its primary purpose, this system enables possibilities for various other applications where recording a large number of microphones is needed.
 Its ability to handle multiple channels simultaneously and processing them in real-time makes it a versatile tool for various use cases.
 
-The subsequent sections describe the development process, including the hardware and firmware design of the audio acquisition system.
+The subsequent sections describe the microphone evaluation and the development process, including hardware and firmware design of the audio acquisition system.
 
 \newpage
-\subsection{Key Requirements}
+\section{Key Requirements}
 The goal of the acquisition system is to provide a flexible microphone recording infrastructure to easily aquiring audio signals from multiple microphones.
 
 The following key requirements have been set:
@@ -39,18 +39,69 @@ The following section describes the key decisions made during the development of
 	\item \textbf{MCU Selection}: As a main \acrfull{mcu} the \texttt{Teensy 4.1} was chosen due to its ability providing two TDM-16 audio interfaces, enabling support for up to 32 audio channels.
 	      Its computational performance and extensive software support in audio applications were key factors in this decision.
 	      Additionally, the \texttt{Teensy 4.1} includes a fast \acrshort{sdio} \acrshort{sd}-Card interface with a built-in card holder, ideal for this application.
-	\item \textbf{Focus on PDM Microphones}: Preference was given to \acrshort{pdm} microphones due to their wide availability and suitability for use with longer cables, in comparison to other microphones types mentioned in section \ref{sec:mems_microphones}.
-	\item \textbf{USB Cable Power Source}: The system is powered via a single \acrshort{usb} cable to ensure portability and ease of use in various settings, adhering to the requirement for a compact and mobile design.
-	\item \textbf{Addition of RJ45 Ethernet Port}: An RJ45 ethernet port was incorporated for future development opportunities, such as streaming audio data over ethernet.
-	\item \textbf{Inclusion of a Touch LCD Display}: A touch \acrshort{tft} display was integrated to offer an easy-to-use \acrshort{ui}, facilitating efficient system configuration, operation, and real-time monitoring.
-	\item \textbf{Use of Multiple RGB LEDs}: \acrshort{rgb} \acrshort{led}s were employed for visual feedback on the audio levels of each microphone channel.
-	\item \textbf{Headphone Jack for Monitoring}: The addition of a headphone jack allows for real-time auditory monitoring of individual microphone channels, essential for troubleshooting.
-	\item \textbf{Integration of a Real-Time Clock (RTC)}: An \acrshort{rtc} was integrated to tag each recording with the current time and date, simplifying the comparison of measurement results in post.
+	\item \textbf{Microphones}: Preference was given to \acrshort{pdm} microphones due to their wide availability and suitability for use with longer cables, in comparison to other microphones types mentioned in section \ref{sec:mems_microphones}.
+	\item \textbf{Power Source}: The system is powered via a single \acrshort{usb} cable to ensure portability and ease of use in various settings, adhering to the requirement for a compact and mobile design.
+	\item \textbf{Ethernet Port}: An RJ45 ethernet port was incorporated for future development opportunities, such as streaming audio data over ethernet.
+	\item \textbf{Touch LCD Display}: A touch \acrshort{tft} display was integrated to offer an easy-to-use \acrshort{ui}, facilitating efficient system configuration, operation, and real-time monitoring.
+	\item \textbf{RGB LEDs}: \acrshort{rgb} \acrshort{led}s were employed for visual feedback on the audio levels of each microphone channel.
+	\item \textbf{Headphone Jack}: The addition of a headphone jack allows for real-time auditory monitoring of individual microphone channels, essential for troubleshooting.
+	\item \textbf{Real-Time Clock (RTC)}: An \acrshort{rtc} was integrated to tag each recording with the current time and date, simplifying the comparison of measurement results in post.
 \end{enumerate}
 
 
 \newpage
+\section{Microphone Evaluation}
+\label{sec:microphone_evaluation}
+Although a variety of microphone technologies such as condenser, dynamic, and electret are available, the focus has been set on \acrshort{mems} microphones due to several compelling reasons.
+Primarily, their widespread availability and ease of manufacturing, allowing \acrshort{pcb} manufacturers to assemble them, make \acrshort{mems} microphones a practical choice.
+Their compact size is advantageous in space-constrained applications, while the integrated analog frontend simplifies audio system design.
+Notably, \acrshort{mems} microphones deliver excellent audio quality and wide bandwidth, essential for high quality sound reproduction.
+Moreover, their cost-effectiveness makes them suitable for microphone arrays with a large number of channels.
+
+\subsection{Microphone Types}
+In the evaluation process, four different \acrshort{mems} microphones were selected.
+Two of them are top-ported, while the other two are bottom-ported.
+All four microphone types are available in large quantities at \textit{JLC-PCB}, a popular \acrshort{pcb} manufacturer.
+Comparing the datasheets of the different microphones, only small differences in the specifications were found.
+Consequently, it was all the more intriguing to compare these microphones and to determine effective differences in audio quality and \acrfull{snr}.
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{ l l l p{5cm}}
+		\textbf{Microphone Type} & \textbf{Port} & \textbf{Manufacturer} & \textbf{Similar Types} \vspace{0.1cm} \\
+		\hline
+		MP34DT05TR-A             & Top           & ST Micro.             &                                       \\
+		\hline
+		GMA4030H11-F26           & Top           & INGHAi                & \textit{Knowles SPK0415HM4H-B-7}      \\
+		\hline
+		GMA3526H10-B26           & Bottom        & INGHAi                & \textit{Knowles SPH0641LU4H-1}        \\
+		\hline
+		SD18OB261-060            & Bottom        & Goertek               &                                       \\
+		\hline
+	\end{tabular}
+	\caption{Evaluated MEMS Microphone Types}
+	\label{tab:mems_microphones}
+\end{table}
+
+\subsection{Microphone Breakout Boards}
+Blabla
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=10.0cm]{images/4_design_acquisition_system/Microphone_Boards_Front.png}
+	\caption{Front view of the microphone breakout boards}
+	\label{fig:microphone_boards_front}
+\end{figure}
+
+
+\newpage
 \section{Hardware Design}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1.0\textwidth]{images/4_design_acquisition_system/Acquisition_System_Front.png}
+	\caption{Front view of the Acquisition System}
+	\label{fig:acquisition_system_front}
+\end{figure}
 
 
 \subsection{Block Diagram}
@@ -62,15 +113,8 @@ The following section describes the key decisions made during the development of
 	\label{fig:acquisition_system_design_block_diagram}
 \end{figure}
 
-\subsection{Microphone Evaluation}
 
-\subsection{Mainboard}
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=1.0\textwidth]{images/4_design_acquisition_system/Acquisition_System_Front.png}
-	\caption{Front view of the Acquisition System}
-	\label{fig:acquisition_system_front}
-\end{figure}
+
 
 
 
