@@ -4,7 +4,7 @@
 \usetikzlibrary{calc}
 \usetikzlibrary{arrows.meta,decorations.pathmorphing,backgrounds,positioning,fit,petri}
 
-\def\b{0.05}
+\def\b{0.1}
 \def\centerarc[#1](#2)(#3:#4:#5)% Syntax: [draw options] (center) (initial angle:final angle:radius)
     { \draw[#1] ($(#2)+({(#5)*cos(#3)},{(#5)*sin(#3)})$) arc (#3:#4:#5); }
 
@@ -35,13 +35,11 @@
 %    \centerarc[wave](origin)(0:360:5.0)
 %    \centerarc[wave](origin)(0:360:5.5)
 
-    \coordinate[] (m1) at (0, -0.5);
-    \coordinate[] (m2) at (0, -2/8);
-    \coordinate[] (m21) at (0, -3/8);
-    \coordinate[] (m22) at (0, -1/8);
+    \coordinate[] (m1) at (0, -8/8);
+    \coordinate[] (m2) at (0, -4/8);
     \coordinate[] (m3) at (-0.0,0);
-    \coordinate[] (m4) at (0, 2/8);
-    \coordinate[] (m5) at (0, 0.5);
+    \coordinate[] (m4) at (0, 4/8);
+    \coordinate[] (m5) at (0, 8/8);
     \fill (m1) circle (1pt);
     \fill (m2) circle (1pt);
     \fill (m3) circle (1pt);
@@ -148,6 +146,6 @@
 
     \pgfresetboundingbox
 %    \useasboundingbox(-2.6,-2.6)rectangle(2.6,3.6);
-    \useasboundingbox(-4,-3.5)rectangle(10,3.5);
+    \useasboundingbox(-15,-10.5)rectangle(15,13.5);
 \end{tikzpicture}
 \end{document}
