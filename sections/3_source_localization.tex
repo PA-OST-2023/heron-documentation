@@ -284,7 +284,6 @@ gain of 1.
 In Figure \ref*{ssl:fig:CircBmResponse} two such responses with can be seen.
 The main lobe of $G(\phi, \theta)$ clearly shows in the direction of the source
 however there are also side lobes pointing to directions without sources.
-How they behave is later discussed in \todo{chapter reference}.
 
 \begin{figure}[h]
 	\centering
@@ -322,7 +321,7 @@ uses a circular array with $r = 0.5$m and also 16 microphones.
 It can be seen that at around 1500hz more side lobes with a 
 high amplitude start to appear. 
 With this array geometry the smallest distance between two 
-microphones is $\approx 0.25 \pi/8 \approx 0.098$m, which is the wavelenght
+microphones is $\approx 0.25 \pi/8 \approx 0.098$m, which is the wavelength
 of a sound wave with a frequency of approximately 3500hz.
 So the effect seen in Figure \ref*{ssl:fig:CircBmResponse} is 
 a kind of aliasing.
@@ -362,8 +361,6 @@ interferences when the steering vector is not focused on the source.
 \end{figure}
 
 
-
-
 Until now the formulas are only useful for narrow band signals. 
 This theory is now expanded to be applicable for wide band signals.
 The narrow band delay and sum beamformer has the property, that it behaves
@@ -384,19 +381,22 @@ By using a discrete fourier transform the beamformer can be written
 in matrix form
 \todo{Indexchaos lösen}
 \begin{equation}
-	Y(\omega, \phi, \theta) = 
+	Y(\phi, \theta) = 
 	\begin{pmatrix}
 		X_0(\omega_l) & \hdots & X_0(\omega_h)\\
 		\vdots & \ddots & \vdots \\
 		X_{N-1}(\omega_l) & \hdots & X_{N-1}(\omega_h)
-	\end{pmatrix}^T
+	\end{pmatrix}
 	\odot
 	\begin{pmatrix}
 		e^{-j\omega_l t_0} & \hdots & e^{-j\omega_h t_0}\\
 		\vdots & \ddots & \vdots \\
 		e^{-j\omega_l t_{N-1}} & \hdots & e^{-j\omega_h t_{N-1}}
-	\end{pmatrix}^T.
+	\end{pmatrix},
 \end{equation}
+where $\omega_l$ is the lowest and $\omega_h$ the highest
+frequency of interest.
+
 \subsection{Other beamforming techniques}
 \newpage
 \section{Simulator}
