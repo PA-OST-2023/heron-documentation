@@ -62,7 +62,7 @@ Moreover, their cost-effectiveness makes them suitable for microphone arrays wit
 In the evaluation process, four different \acrshort{mems} microphones were selected.
 Two of them are top-ported, while the other two are bottom-ported.
 All four microphone types are available in large quantities at \textit{JLCPCB}, a popular \acrshort{pcb} manufacturer.
-Comparing the datasheets of the different microphones, only small differences in the specifications were found.
+Comparing the datasheets of the different microphones, only small differences in there specifications were found.
 Consequently, it was all the more intriguing to compare these microphones and to determine effective differences in audio quality and \acrfull{snr}.
 
 \begin{table}[h]
@@ -85,16 +85,16 @@ Consequently, it was all the more intriguing to compare these microphones and to
 \end{table}
 
 \subsection{Microphone Breakout Boards}
-To test the four evaluated microphone types, a carrier \acrshort{pcb} was designed and manufactured.
+To test the four evaluated microphone types, a two-layer carrier \acrshort{pcb} was designed and manufactured.
 A panalized design was chosen to simplify the manufacturing process and reduce assembly costs.
 One panel consists of 8 breakout boards for each microphone type, resulting in a total of 32 breakout boards per panel.
 In total, 5 panels were manufactured, which leads to 40 microphone breakout boards per type.
-Each breakout board is separated by a V-groove, a common technique used in \acrshort{pcb} manufacturing.
+Each breakout board has a size of 14.0\,mm x 22.0\,mm and is separated by a V-groove, a common technique used in \acrshort{pcb} manufacturing.
 This allows the individual breakout boards to be easily separated from each other.
-\begin{figure}[h]
+\begin{figure}
 	\centering
-	\includegraphics[width=0.8\textwidth]{images/4_design_acquisition_system/Microphone_Boards_Front.png}
-	\caption{Front view of the microphone breakout boards}
+	\includegraphics[width=0.85\textwidth]{images/4_design_acquisition_system/Microphone_Boards_Front.png}
+	\caption{Front View of the Microphone Breakout-Boards}
 	\label{fig:microphone_boards_front}
 \end{figure}
 
@@ -105,7 +105,7 @@ To enhance the ease of mounting, each board includes a threaded surface-mounted 
 For connectivity, a standard SH\,4-Pin JST
 \footnote{JST refers to Japan Solderless Terminal, a leading manufacturer of a diverse range of connectors, including wire-to-board, board-to-board, and wire-to-wire types.}
 connector with a 1\,mm pin pitch was used.
-This connector type is commonly found in \gls{adafruit} \textit{STEMMA QT / Qwiic JST} \acrshort{i2c}-Sensor boards.
+This connector type is commonly found in \gls{adafruit} \textit{STEMMA QT / Qwiic JST} \acrshort{i2c} accessories boards.
 By using this specific type, a wide range of pre-assembled cables with different lengths are available, simplifying the connection between the breakout boards and the acquisition system.
 The microphone carrier \acrshort{pcb} follows the same pinout as \gls{adafruit}'s own \acrshort{pdm}-Microphone breakout board (\gls{adafruit} part number: 4346), facilitating compatibility.
 The connector also supplies power (3.3V) to the microphones, allowing multiple units to be connected with a single cable.
@@ -148,21 +148,32 @@ The table below outlines the pinout used for these microphone breakout boards:
 
 \newpage
 \section{Hardware Design}
-
+The hardware of the acquisition system is centralized around a 4-Layer \acrshort{pcb} with a size of 111.0\,mm x 136.0\,mm.
+The connectors for the microphone breakout boards are located on the left and right side of the \acrshort{pcb} (16 channels on each side).
+Each microphone channel is equipped with a pair of \acrshort{rgb} \acrshort{led}s.
+The \acrshort{led} near the connector visually represents the audio level for its respective channel.
+Another \acrshort{led}, situated on the white silk screen marking, indicates the active routing of the channel to the monitor headphones output.
+A \textit{Monitor Selection} push button enables navigation through the microphone channels.
+Each button press cycles through the channel numbers, directing the selected channel to the headphones output.
+Additionally, a potentiometer is available for adjusting the volume of the headphones output.
+On the lower segment of the \acrshort{pcb}, a 1.44" \acrshort{tft} touch display is embedded, serving as an interactive interface for controlling the acquisition system.
+Adjacent to this display is the \textit{Record} button, which is used to start and stop the recording process.
+The upper part of the device houses a \acrshort{usb} Type-C and an RJ45 connector, providing data connectivity to external devices.
+Moreover, each corner of the \acrshort{pcb} is equipped with M3 surface-mounted standoff nuts, allowing for easy mounting of the acquisition system onto a microphone array frame.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=1.0\textwidth]{images/4_design_acquisition_system/Acquisition_System_Front.png}
-	\caption{Front view of the Acquisition System}
+	\includegraphics[width=0.92\textwidth, trim={0 0.5cm 0 0}]{images/4_design_acquisition_system/Acquisition_System_Front.png}
+	\caption{Front View of the Acquisition System}
 	\label{fig:acquisition_system_front}
 \end{figure}
-
+\newpage
 
 \subsection{Block Diagram}
-
+In figure \ref{fig:acquisition_system_design_block_diagram} the system block diagram is shown.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1.0\textwidth]{images/4_design_acquisition_system/acquisition_system_design_block_diagram.pdf}
-	\caption{System block diagram of acquisition system}
+	\caption{System Block Diagram of Acquisition-System}
 	\label{fig:acquisition_system_design_block_diagram}
 \end{figure}
 
@@ -230,7 +241,7 @@ Next, the individual pages are described in detail.
 	\end{wrapfigure}
 	\subsubsection{Channel Settings}
 	After the boot process is finished, the channel settings page is displayed.
-	In the header bar located at the top of the page, the current time, \acrshort{usb} interface status, SD-Card status and headphones volume are displayed.
+	In the header bar located at the top of the page, the current time, \acrshort{usb} interface status, \acrshort{sd}-Card status and headphones volume are displayed.
 	A list of all 32 microphone inputs is shown in the center of the page.
 	Each input channel can be enabled or disabled by clicking on the corresponding switch.
 	When an input is enabled, its associated channel number of the WAV file is displayed.
