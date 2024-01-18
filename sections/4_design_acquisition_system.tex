@@ -235,17 +235,84 @@ Consequently, the hardware designed to support this functionality has not yet un
 
 \newpage
 \section{Firmware Design}
-Blabla
+The firmware is written in C++ and is based on the \gls{arduino} framework that has been addopted to the Teensy microcontroller environment.
+As an \acrshort{ide}, the \acrshort{vscode} extension \textit{PlatfromIO} was used, as it provides powerful development tools and a great integration of the \gls{arduino} framework.
 
+The firmware is divided into modules running in individual threads, facilitated by \textit{TeensyThreads} on the Teensy 4.1 microcontroller.
+This lightweight multitasking library allows for concurrent execution of multiple threads, optimizing system performance and resource utilization.
+\textit{TeensyThreads} has a minimal memory footprint and is optimized for efficient \acrshort{cpu} usage, making it ideal for embedded systems.
+In total, 6 threads are running in parallel, as shown in table \ref{tab:acquisition_system_threads}.
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		Thread                     & Purpose                      \\ \hline
+		\texttt{Console Interface} & Handles USB virtual COM-Port \\ \hline
+		\texttt{Console Streaming} & Handles queuing of messages  \\ \hline
+		\texttt{AudioUtils}        & Audio Processing             \\ \hline
+		\texttt{HMI}               & LED Control \& RTC           \\ \hline
+		\texttt{Application}       & Main Application Logic       \\ \hline
+		\texttt{Main}              & Main Thread (Background)     \\ \hline
+	\end{tabular}
+	\caption{Overview of all Threads and their Purpose}
+	\label{tab:acquisition_system_threads}
+\end{table}
+
+\subsection{Audio Recording}
+The multichannel audio recording is achieved by a dual-context approach, focusing on capturing audio data and storing it on the \acrshort{sd}-Card.
+While the capturing process is very time-critical and therefore runs at high priority, storing data on the \acrshort{sd}-Card can be done in the background.
+
+\subsubsection{Audio Processing Pipeline}
+The audio data is processed in blocks, where each block consists of 128 samples from each of the 32 microphone channels.
+Upon capturing a new block, an \acrfull{irq} service routine is called by the Teensy Audio Library.
+A critical step in processing is the interleaving of audio samples, as this is necessary to comply with the WAV file format.
+This process rearranges the data from individual channels into a sequential stream, as visualized in Figure \ref{fig:audio_interleaving}.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1.0\textwidth]{images/4_design_acquisition_system/audio_interleaving.pdf}
+	\caption{Interleaving of Audio Samples}
+	\label{fig:audio_interleaving}
+\end{figure}
+
+\newpage
+\subsubsection{SD-Card File Handling}
+The interleaved audio data is then stored in a 12\,MB circular buffer located in the external \acrshort{psram}.
+A background event handler regularly checks the buffer for new data, which, upon availability, is read and subsequently written to the current audio file on the \acrshort{sd}-Card.
+Each writing operation also involves updating the WAV file header, a necessary step to maintain a valid file structure.
+
+Given the complexities of \acrshort{sd}-Card operations, including variable access times and internal cache structures, the system is designed to verify each write operation.
+In the event of incomplete data transfer, the process is reiterated until all data chunks are successfully written to the file.
+Figure \ref{fig:acquisition_system_audio_recording_flow_diagram} shows a flow diagram of the audio recording process.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1.0\textwidth, trim={0 0 0 0.5cm}]{images/4_design_acquisition_system/acquisition_system_audio_recording_flow_diagram.pdf}
+	\caption{Flow Diagram of the Audio Recording Process}
+	\label{fig:acquisition_system_audio_recording_flow_diagram}
+\end{figure}
+
+\subsubsection{File Naming Convention}
+The convention for naming audio files is as follows:  \smallskip \newline
+\texttt{YYMMDD\_HHMMSS\_<CH\_COUNT>\_<CH\_CONF>.wav} \smallskip \newline
+This format incorporates the date and time of the recording, along with the channel count and configuration, thereby a straightforward file identification and organization is possible.
+The chanel count is represented in decimal format, while the channel configuration is a 32-bit hexadecimal number, where each bit corresponds to a channel.
+The \acrfull{lsb} represents channel 1, while the \acrfull{msb} represents channel 32.
+If the bit is set to 1, the channel is active and therefore included in the recording.
+The following file name example illustrates a 16 channel recording with channels 8 - 24 active:
+\texttt{240118\_122417\_16\_00FFFF00.wav}
+
+
+\newpage
 \subsection{Graphical User Interface (GUI)}
+The \acrshort{gui} provides a user-friendly interface for configuring the device and monitoring its status.
+It is based on the \acrshort{lvgl} framework, which is described in detail in the next section.
 
 \subsubsection{Light and Versatile Embedded Graphics Library (LVGL)}
-LVGL (Light and Versatile Graphics Library) is a free and open-source graphics library, primarily used for creating embedded GUIs (Graphical User Interfaces).
+\acrfull{lvgl} is a free and open-source graphics library, primarily used for creating embedded \acrshort{gui}s.
 It's designed to be lightweight, consuming minimal memory and processing power, which is essential in embedded systems where resources are limited.
 
-The decision to use LVGL in conjunction with the NXP GuiGuider, a graphical design tool, enables a rich set of features and enables rapid development.
-GuiGuider provides a user-friendly interface for designing GUIs, significantly simplifying the process of creating complex, visually appealing interfaces for embedded systems.
-It also provides a code generator, which generates the necessary code to initialize and use the GUI in the firmware.
+The decision to use \acrshort{lvgl} in conjunction with the \textit{NXP GuiGuider}, a graphical design tool, enables a rich set of features and enables rapid development.
+\textit{GuiGuider} provides a user-friendly interface for designing \acrshort{gui}s, significantly simplifying the process of creating complex, visually appealing interfaces for embedded systems.
+It provides a code generator, which generates the necessary C-Code to translate the graphic design into \acrshort{lvgl} \acrshort{api} calls.
 
 \subsection{GUI Pages}
 The \acrshort{gui} is minimalisticly designed and straight forward to use.
@@ -257,14 +324,14 @@ Next, the individual pages are described in detail.
 		\vspace{-0.6cm}
 		\includegraphics[width=4cm]{images/4_design_acquisition_system/gui/01_splash_screen.png}
 		\centering
-		\caption{Splash screen}
+		\caption{Splash Screen}
 		\label{fig:acquisition_system_gui_splash_screen}
 	\end{wrapfigure}
 	\subsubsection{Splash Screen}
 	When the device is powered on, the splash screen is displayed until the boot process is finished.
 	On average this takes about 5 seconds.
 \end{minipage}
-\vspace{2.2cm}
+\vspace{2.9cm}
 
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{l}{4.5cm}
@@ -279,10 +346,10 @@ Next, the individual pages are described in detail.
 	In the header bar located at the top of the page, the current time, \acrshort{usb} interface status, \acrshort{sd}-Card status and headphones volume are displayed.
 	A list of all 32 microphone inputs is shown in the center of the page.
 	Each input channel can be enabled or disabled by clicking on the corresponding switch.
-	When an input is enabled, its associated channel number of the WAV file is displayed.
+	When an input is enabled, its associated channel number on the WAV file is displayed.
 	A speaker symbol shows if the channel is currently routed to the headphones monitor output (green means active, grey means inactive).
 \end{minipage}
-\vspace{0.0cm}
+\newpage
 
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{l}{4.5cm}
@@ -298,7 +365,7 @@ Next, the individual pages are described in detail.
 	Due to the limited amount of memory, only the first 100 files and folders are displayed.
 	This is however sufficient for most use cases.
 \end{minipage}
-\vspace{1.8cm}
+\vspace{1.2cm}
 
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{l}{4.5cm}
@@ -315,7 +382,7 @@ Next, the individual pages are described in detail.
 	When the recording is stopped, the panel overlay disappears.
 	While the device is recording, all \acrshort{ui} elements and the navigation are disabled.
 \end{minipage}
-\vspace{1.8cm}
+\vspace{0.7cm}
 
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{l}{4.5cm}
@@ -331,7 +398,4 @@ Next, the individual pages are described in detail.
 	After clicking on the \textit{Update} button, the new time is set and the page is closed.
 	To abort the process, the user can click on the arrow in the header bar.
 \end{minipage}
-\vspace{1.8cm}
-
-
-
+\clearpage
