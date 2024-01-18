@@ -10,10 +10,17 @@ Then the real data were compared to the simulated data to
 confirm the validity of the simulation.
 In the next step the findings of the prototypes and simulations
 were used to come up with a final array design.
-
+\todo[inline]{\@Alain: Add more information here}
 \newpage
+
+
 \section{Mechanical Design}
-Mechanical drawings of testarrays
+The mechanical design of the array prototypes was centered around the objective of testing a wide range of array configurations.
+To achieve this, two flexible microphone array frames were developed.
+A significant aspect of the design process involved determining the overall size of the arrays.
+While larger arrays typically offer better performance, practicality and manufacturability had to be considered as well.
+In practice, a maximal outer diamater of 60\,cm was chosen for the array prototypes.
+Based on simulation results, two specific array types were explored: The Multi-Circular Array and the Archimedean Spiral Array, as described in the next sections.
 
 \subsection{Multi-Circular Array}
 \begin{minipage}{\linewidth}
@@ -27,15 +34,33 @@ Mechanical drawings of testarrays
 	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
 	At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-	At vero eos et accusam et justo duo dolores et ea rebum
+	At vero eos et accusam et justo duo dolores et ea rebum.
 	\todo[inline]{\@Alain: Add explanation of the array geometry here}
 \end{minipage}
 \vspace{0.5cm}    % Adjust this depending on the length of the text above
 
 \subsection{Archimedean Spiral Array}
+\begin{minipage}{\linewidth}
+	\begin{wrapfigure}{r}{7.5cm}
+		\vspace{-0.8cm}
+		\includegraphics[width=7cm]{images/5_array_evaluation/prototype_array_archimedian_spiral.pdf}
+		\centering
+		\caption{Archimedean Spiral Array}
+		\label{fig:prototype_array_archimedian_spiral}
+	\end{wrapfigure}
+	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+	At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+	At vero eos et accusam et justo duo dolores et ea rebum.
+	\todo[inline]{\@Alain: Add explanation of the array geometry here}
+\end{minipage}
+\newpage
+
 
 \subsection{Wooden Prototype Arrays}
-
+Two wooden prototypes, a multi-circular array and an Archimedean spiral array, were manufactured by laser-cutting 5\,mm plywood.
+Both arrays had to be split into several pieces due to the limited size of the laser-cutter and were later glued together.
+In the centre of each array, a mechanical mount for the Acquisition-System hardware was integrated.
 \begin{figure}[h!]
 	\centering
 	\begin{minipage}{0.49\textwidth}
@@ -51,8 +76,6 @@ Mechanical drawings of testarrays
 		\label{fig:wooden_archimedean_spiral_array}
 	\end{minipage}
 \end{figure}
-\newpage
-
 
 \section{Metrics}
 TO evaluate the performance of an array several metrics are used.
