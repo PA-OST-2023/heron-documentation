@@ -21,3 +21,13 @@
 %% Also set the alternate phi as default.
 \let\oldphi\phi
 \renewcommand{\phi}{\ensuremath{\varphi}}
+
+\makeatletter
+\newcommand{\thickhline}{%
+    \noalign {\ifnum 0=`}\fi \hrule height 2pt
+    \futurelet \reserved@a \@xhline
+}
+\newcolumntype{"}{@{\hskip\tabcolsep\vrule width 2pt\hskip\tabcolsep}}
+\makeatother
+
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
