@@ -1,25 +1,61 @@
 \chapter{Final Design}
 \section{Overview}
-This section covers the complete development process including the hardware, gateware, software and mechanical design of the project. It is important to note that the following documentation concentrates only on the final version of the device. Earlier hardware prototypes are not covered due to the lack of relevance.
+Now that a wealth of valuable experience has been gathered through simulations and extensive testing,
+a specific microphone type has been selected and an optimal array geometry for this project's use case has been identified.
+This selection process was critical for achieving the project's goal of designing a fully functional, professional end product.
+This chapter outlines the final design of the sound source localization system.
+
+In the research detailed in section \ref{sec:array_prototype_measurements},
+a key hypothesis emerged regarding the potential for improved sound source localization with a three-dimensional array structure as compared to a planar geometry.
+This led to the development of a new mechanical concept, which is detailed later in this chapter.
+
+For the system to function independently, it was essential to incorporate all necessary components within the design.
+However, due to the computational intensity of beamforming algorithms, they cannot be processed on a microcontroller like the Teensy 4.1.
+Consequently, the design had to accommodate external processing capabilities.
+
+Another significant consideration was that a single microphone array could only provide a directional vector of located sound sources without information about the distance to these sources.
+To pinpoint an object's location accurately, multiple microphone arrays are needed.
+This requirement necessitated a design that allows for easy integration with a centralized computer or server, capable of connecting to multiple microphone arrays.
+
+The optimal solution was to design a system that could stream all lossless audio data from each microphone array to the server in real-time.
+Such a design ensures maximal flexibility, as it allows to apply basically any sort of localization algorithm on the server side.
+In addition, it enables the usage of multiple microphone arrays, which can be placed at different locations, thus increasing the overall accuracy of the system.
+\newpage
 
 \subsection{Key Requirements}
-
-% The following key requirements have been set:
-% \begin{itemize}
-% 	\item Single power adapter or power cable (e.g. no need of labor power supplies)
-% 	\item Easy to install (e.g. montage on a camera tripod)
-% 	\item Intuitive to operate via state-of-the-art graphical user interface
-% 	\item Multiple audio streaming sources such as Bluetooth and USB input devices
-% 	\item Great scalability and flexibility of the hardware and software design
-% \end{itemize}
+The following key requirements have been set:
+\begin{itemize}
+	\item Simultaneous streaming of 32 microphone channels in real-time
+	\item Lossless audio transmission with a sampling rate of 44.1\,kHz and 16\,bit resolution
+	\item \acrshort{gnss} \acrshort{rtk} receiver for accurate positioning and timing information
+	\item \acrshort{imu} for geographic heading and leveling information
+	\item Ambient pressure and temperature sensor for calculating the exact speed of sound
+	\item Ethernet interface for audio streaming and device configuration
+	\item \acrshort{poe} power supply for single cable operation over long distances (up to 100\,m)
+	\item Intuitive \acrfull{gui} for device configuration and monitoring
+	\item Flexible mounting option for installation on a standard camera tripod
+	\item Microphone integration that is resistant to the influence of wind
+	\item Adjustable array arm angle for optimal beamforming performance
+	\item \acrshort{rgb} \acrshort{led}s for visual feedback and status indication
+\end{itemize}
 
 \subsection{Key Decisions}
-% In the conceptional phase of the development, several key decisions had to be made. This contains mainly the signal flow and the division between the processing part on the Raspberry Pi and the \acrshort{fpga}. Further, the question had to be evaluated, if a built-in power supply or an external power adapter is preferred. And most importantly, which type of ultrasonic transducer should be used in the design.
-% In addition, the overall dimension and scale of the final product had to be discussed.
-% In general, most of these decisions were made according to results of simulations, physical measurements and after extensive discussions.
-% In the following sections, each part of the project is explained in detail.
-
+The following section describes the key decisions made during the development of the final design.
+\begin{enumerate}
+	\item \textbf{Microphone Type}: The \textit{MP34DT05TR-A} model by ST Microelectronics was selected for its top-ported design, offering superior audio quality and sensitivity during tests.
+	\item \textbf{Microphone Integration}: To streamline the design and assembly process, dedicated \acrshort{pcb}s were designed to accommodate four microphones each.
+	      This approach minimizes the need for multiple connections, as only one flex-cable is required to connect each arm to the mainboard.
+	\item \textbf{Ethernet Protocol}: Given the necessity for reliable audio transmission, a \acrshort{tcp} connection was required, since a regular \acrshort{udp} connection does not guarantee packet delivery.
+	\item \textbf{MCU Selection}: The \textit{Teensy 4.1} was chosen again for its proven capability in handling audio processing.
+	      Its built-in 100Base-T Ethernet interface is particularly beneficial for enabling audio streaming over a \acrshort{lan} network.
+	\item \textbf{GNSS Receiver}: A \acrshort{gnss} \acrshort{rtk} module from \textit{uBlox} was selected due to its high accuracy and extensive software support.
+	\item \textbf{Angle Sensor}: To accurately determine the positioning of the microphone array arms, a magnetic angle sensor was used.
+	      This sensor is essential for adjusting the beamforming algorithm to the current array geometry.
+	\item \textbf{Mechanical Construction}: An aluminum sheet metal construction was chosen for its cost-effective manufacturing and robustness.
+	\item \textbf{Touch Display}: A touch display was integrated to facilitate easy monitoring and configuration of the system.
+\end{enumerate}
 \newpage
+
 \section{Mechanical Design}
 Blabla
 
