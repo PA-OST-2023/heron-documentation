@@ -166,7 +166,7 @@ Each frame starts with a 20-byte header.
 		\textbf{Byte Offset} & \textbf{Data Format}    & \textbf{Description} & \textbf{Example Value} \\ \hline
 		0-7                  & String                  & Magic Sequence       & \codeword{HERON666}    \\ \hline
 		8-11                 & Integer (Little Endian) & Packet Index         & 12345                  \\ \hline
-		12-19                & Integer (Little Endian) & Timestamp (ns)       & 1616929134054668023    \\ \hline
+		12-19                & Integer (Little Endian) & Timestamp (ns)       & 1713586842696942069    \\ \hline
 	\end{tabular}
 	\caption{Description of the 20-byte Packet Header}
 	\label{tab:packet_header}
@@ -202,7 +202,7 @@ The
 		device\_cpu\_temperature    & Current CPU Temperature       & Float              & °C            & 36.5                   \\ \hline
 		device\_operating\_time     & Device Operating Time         & Integer            & s             & 15615                  \\ \hline
 		device\_system\_warning     & Current System Warning Status & Boolean            & -             & false                  \\ \hline
-		ethernet\_mac               & MAC Address                   & String             & -             & "DE:AD:BE:EF:FE:ED"    \\ \hline
+		ethernet\_mac               & MAC Address                   & String             & -             & "48:53:52:20:3C:33"    \\ \hline
 		ethernet\_ip                & Current IP Address            & String             & -             & "192.168.1.10"         \\ \hline
 		streaming\_state            & Current Streaming State       & Boolean            & -             & true                   \\ \hline
 		streaming\_speed            & Current Streaming Speed       & Float              & Mbit/s        & 22.21                  \\ \hline
