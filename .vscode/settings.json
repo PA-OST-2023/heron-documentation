@@ -9,6 +9,14 @@
                 "pdflatex"
             ]
         },
+        {
+            "name": "latexmk",
+            "tools": [
+                "latexmk",
+                "clean"
+            ]
+        },
+        
     ],
     "latex-workshop.latex.tools": [
         {
@@ -26,6 +34,23 @@
             "command": "makeglossaries",
             "args": [
                 "%DOCFILE%"
+            ]
+        },
+        {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+                "-synctex=1",
+                "-file-line-error",
+                "-interaction=nonstopmode",
+                "-pdf",
+            ]
+        },
+        {
+            "name": "clean",
+            "command": "latexmk",
+            "args": [
+                "-c",
             ]
         }
     ],
