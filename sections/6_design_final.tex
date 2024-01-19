@@ -57,25 +57,60 @@ The following section describes the key decisions made during the development of
 \newpage
 
 \section{Mechanical Design}
-Blabla
+The mechanical design of the sound source localization system is characterized by its unique foldable microphone arms, conceptually inspired by the functionality of an umbrella.
+\textit{SolidWorks 2023} was utilized for the design process, facilitating efficient development.
 
+Aluminum, chosen for its lightweight and durable properties, was the primary material used.
+It also ensures resistance to corrosion, an important consideration for long-term use.
+The \acrshort{cad} software's advanced sheet metal design capabilities strategically accelerated the design phase.
 
+All sheet metal parts were laser-cut, then underwent post-processing including threading and countersinking.
+These components were fabricated by \textit{Blexon}, a Swiss metal manufacturing service, at a cost of approximately 350\,CHF per unit.
+Other aluminum parts essential to the design were produced through \acrshort{cnc} machining at the university's workshop.
+
+Figure \ref{fig:final_design_3d_rendering} shows a 3D rendering of the final design.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=1.0\textwidth, trim={0 4.9cm 0 0}]{images/6_design_final/array_final_design_mechanical_dimensions.pdf}
-	\caption{Mechanical Dimensions of the Final Array Design}
-	\label{fig:array_final_design_mechanical_dimensions}
-\end{figure}
-
-\newpage
-
-
-\begin{figure}[h]
-	\centering
+	\vspace{0.4cm}
 	\includegraphics[width=1.0\textwidth]{images/6_design_final/final_design_3d_rendering.jpg}
 	\caption{3D Rendering of the Final Design}
 	\label{fig:final_design_3d_rendering}
 \end{figure}
+\pagebreak
+
+\subsection{Part List}
+The following list provides an overview of all custom manufactured metal parts:
+\begin{itemize}
+	\item 1x Top Mounting Platform: 2.5\,mm aluminum sheet metal
+	\item 1x Bottom Sliding Platform: 2.5\,mm aluminum sheet metal
+	\item 8x Microphone Arm Support Frame: 2.5\,mm aluminum sheet metal
+	\item 8x Connection Bars: 5\,mm aluminum sheet metal
+	\item 1x Antenna Platform: 2.5\,mm aluminum sheet metal
+	\item 1x Main Mounting Pole: $\varnothing$\,20\,x\,400\,mm aluminum rod (Drawing: xxx)
+	\item 1x Top Mounting Ring: $\varnothing$\,44\,x\,45\,mm aluminum part (Drawing: xxx)
+	\item 1x Bottom Sliding Ring: $\varnothing$\,44\,x\,15\,mm aluminum part (Drawing: xxx)
+	\item 1x Antenna Top Mount: $\varnothing$\,26\,mm\,x\,12\,mm aluminum part (Drawing: xxx)
+	\item 1x Antenna Bottom Mount: 29.5\,x\,14.5\,x\,15.0\,mm aluminum part (Drawing: xxx)
+	\item 1x Antenna Pole: $\varnothing$\,6\,x\,240\,mm stainless steel rod (Drawing: xxx) \todo{Add references to appendix}
+\end{itemize}
+
+\subsection{Microphone Arm Design}
+Figure \ref{fig:mechanical_dimensions_microphone_arm} shows the mechanical dimensions of the microphone arm.
+The pivot point is located at 95\,mm from the axial center of the microphone array.
+Each microphone arm is oriented at an angle of 45\,° to the center pole.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1.0\textwidth, trim={0 4.9cm 0 0}]{images/6_design_final/array_final_design_mechanical_dimensions.pdf}
+	\caption{Mechanical Dimensions of the Microphone Arm}
+	\label{fig:mechanical_dimensions_microphone_arm}
+\end{figure}
+\pagebreak
+
+\subsection{Microphone Wind Protection}
+Blabla
+
+\subsection{Folding Mechanism}
+Blabla
 
 
 \newpage
