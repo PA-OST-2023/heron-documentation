@@ -57,68 +57,143 @@ The following section describes the key decisions made during the development of
 \newpage
 
 \section{Mechanical Design}
-Blabla
+The mechanical design of the sound source localization system is characterized by its unique foldable microphone arms, conceptually inspired by the functionality of an umbrella.
+\textit{SolidWorks 2023} was utilized for the design process, facilitating efficient development.
 
+Aluminum, chosen for its lightweight and durable properties, was the primary material used.
+It also ensures resistance to corrosion, an important consideration for long-term use.
+The \acrshort{cad} software's advanced sheet metal design capabilities strategically accelerated the design phase.
 
+All sheet metal parts were laser-cut, then underwent post-processing including threading and countersinking.
+These components were fabricated by \textit{Blexon}, a Swiss metal manufacturing service, at a cost of approximately 350\,CHF per unit.
+Other aluminum parts essential to the design were produced through \acrshort{cnc} machining at the university's workshop.
+
+Figure \ref{fig:final_design_3d_rendering} shows a 3D rendering of the final design.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=1.0\textwidth, trim={0 4.9cm 0 0}]{images/6_design_final/array_final_design_mechanical_dimensions.pdf}
-	\caption{Mechanical Dimensions of the Final Array Design}
-	\label{fig:array_final_design_mechanical_dimensions}
-\end{figure}
-
-
-\begin{figure}[h]
-	\centering
+	\vspace{0.4cm}
 	\includegraphics[width=1.0\textwidth]{images/6_design_final/final_design_3d_rendering.jpg}
 	\caption{3D Rendering of the Final Design}
 	\label{fig:final_design_3d_rendering}
 \end{figure}
+\pagebreak
 
+\subsection{Part List}
+The following list provides an overview of all custom manufactured metal parts:
+\begin{itemize}
+	\item 1x Top Mounting Platform: 2.5\,mm aluminum sheet metal
+	\item 1x Bottom Sliding Platform: 2.5\,mm aluminum sheet metal
+	\item 8x Microphone Arm Support Frame: 2.5\,mm aluminum sheet metal
+	\item 8x Connection Bars: 5\,mm aluminum sheet metal
+	\item 1x Antenna Platform: 2.5\,mm aluminum sheet metal
+	\item 1x Main Mounting Pole: $\varnothing$\,20\,x\,400\,mm aluminum rod (Drawing: xxx)
+	\item 1x Top Mounting Ring: $\varnothing$\,44\,x\,45\,mm aluminum part (Drawing: xxx)
+	\item 1x Bottom Sliding Ring: $\varnothing$\,44\,x\,15\,mm aluminum part (Drawing: xxx)
+	\item 1x Antenna Top Mount: $\varnothing$\,26\,mm\,x\,12\,mm aluminum part (Drawing: xxx)
+	\item 1x Antenna Bottom Mount: 29.5\,x\,14.5\,x\,15.0\,mm aluminum part (Drawing: xxx)
+	\item 1x Antenna Pole: $\varnothing$\,6\,x\,240\,mm stainless steel rod (Drawing: xxx) \todo{Add references to appendix}
+\end{itemize}
 
+\subsection{Microphone Arm Design}
+Figure \ref{fig:mechanical_dimensions_microphone_arm} shows the mechanical dimensions of the microphone arm.
+The pivot point is located at 95\,mm from the axial center of the microphone array.
+Each microphone arm is oriented at an angle of 45\,° to the center pole.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1.0\textwidth, trim={0 4.9cm 0 0}]{images/6_design_final/array_final_design_mechanical_dimensions.pdf}
+	\caption{Mechanical Dimensions of the Microphone Arm}
+	\label{fig:mechanical_dimensions_microphone_arm}
+\end{figure}
+\pagebreak
 
+\subsection{Microphone Wind Protection}
+As mentioned in section \ref{sec:array_prototype_measurements}, the microphone wind protection is a critical component of the design.
+Therefor, each microphone is equipped with specialized microphone wind protection fur, which is attached to the microphone arm using a 3D-printed clip, as shown in figure \ref{fig:microphone_fur_clip_cad}.
+\begin{figure}[h!]
+	\centering
+	\begin{minipage}{0.44\textwidth}
+		\centering
+		\includegraphics[height=3.3cm]{images/6_design_final/microphone_furr_clip_cad.png}
+		\caption{3D-Printed Fur Clip}
+		\label{fig:microphone_fur_clip_cad}
+	\end{minipage}
+	\begin{minipage}{0.55\textwidth}
+		\centering
+		\includegraphics[height=3.3cm]{images/6_design_final/microphone_furr_clip.jpg}
+		\caption{Microphone Wind Protection Fur}
+		\label{fig:microphone_fur_clip}
+	\end{minipage}
+\end{figure}
+
+\subsection{Folding Mechanism}
+The microphone arms can be fully extended to achive a planar array geometry or folded towards the center pole to a minimum angle of 90\,°.
+As figure \ref{fig:microphone_arm_folding_mechanism} shows, a cone shaped array structure results from this design.
+The angle can be freely adjusted or locked in place using a M6 knurled screw located at the lower mounting platform.
+\begin{figure}[h]
+	\centering
+	\vspace{-0.1cm}
+	\includegraphics[width=0.84\textwidth]{images/6_design_final/microphone_arm_folding_mechanism.pdf}
+	\hspace{-3.6cm}
+	\caption{Mechanical Design of Folding Mechanism}
+	\label{fig:microphone_arm_folding_mechanism}
+\end{figure}
 
 \newpage
 \section{Hardware Design}
-Blabla
+The hardware design of the final sound source localization system is characterized by its multi-\acrshort{pcb} construction.
+The system's central component is the mainboard, which houses the processing unit, various sensors, and the power supply.
+In the center of the mainboard, a round touch display is mounted, which serves as the primary interface for user interaction.
+
+Surrounding the mainboard are eight microphone arm \acrshort{pcb}s, each connected to the mainboard by 50\,mm long, 10-Pin flex-cables with a 1\,mm pin pitch.
+These flex-cables provide the mechanical flexibility required adjusting the angle of the microphone arms.
+Mounted on each microphone arm \acrshort{pcb} are four \acrshort{mems} microphones.
+These microphones are strategically positioned as specified in section \ref{sec:final_array_geometry}.
+Additionally, each arm is equipped with 8 \acrshort{rgb} \acrshort{led}s, which serve both functional and aesthetic purposes, offering visual feedback and enhancing the system's overall design.
+To accurately measure the angle of the microphone arms, a dedicated angle sensor \acrshort{pcb} was developed.
+
+The entire hardware was designed using \textit{Altium Designer 23}, a leading software in \acrshort{pcb} design.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1.0\textwidth]{images/6_design_final/Mainboard_Front_Display.png}
-	\caption{Front view of the mainboard}
+	\caption{Front View of the Mainboard}
 	\label{fig:mainboard_front}
 \end{figure}
 \newpage
 
 
-
 \subsection{Block Diagram}
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=1.0\textwidth, trim={0 0 0.5cm 0}]{images/6_design_final/final_design_block_diagram.pdf}
-	\caption{System block diagram}
+The system block diagram in figure \ref{fig:system_block_diagram} provides an overview of the hardware design.
+Note that components marked inside dashed boxes are located on separate \acrshort{pcb}s.
+\begin{figure}[h!]s
+	\hspace{-1.3cm}
+	\includegraphics[width=1.28\textwidth, angle=90]{images/6_design_final/final_design_block_diagram.pdf}
+	\vspace{-0.1cm}
+	\caption{System Block Diagram}
 	\label{fig:system_block_diagram}
 \end{figure}
+\newpage
 
 \subsection{Power Supply}
-The device can be powered by multiple sources. Primary the device is powered by the ethernet interface, which provides a \acrfull{poe} connection.
+The device can be powered by multiple sources.
+Primary the device is powered by the ethernet interface, which provides a \acrfull{poe} connection.
 This is the preferred method, as it is the most convenient way to use the microphone array in the field.
-In addition, there are two USB-C ports (\acrshort{mcu} and \acrshort{gnss}) that can be used to supply power when no PoE connection is available (e.g. in a laboratory environment for programming and debugging).
+In addition, there are two \acrshort{usb}-C ports (\acrshort{mcu} and \acrshort{gnss}) that can be used to supply power when no \acrshort{poe} connection is available (e.g. in a laboratory environment for programming and debugging).
 Each supply method can be used in conjunction with each other. However, the source must be able to provide at least 12.5\,W of power (5\,V, 2.5\,A).
 In figure \ref{fig:power_supply_overview} an overview of the power supply is shown.
 Note that the Teensy 4.1 has an internal 3.3\,V regulator, which is powered by the systems internal 5\,V supply.
 The 1.8\,V rail is generated by a dedicated linear voltage regulator and is mainly used for the \acrshort{pdm} to \acrshort{tdm} converters (ADAU7118).
-
-\begin{figure}
+\begin{figure}[h]
 	\centering
-	\includegraphics[width=0.65\textwidth]{images/6_design_final/final_design_power_supply.pdf}
+	\includegraphics[width=0.7\textwidth]{images/6_design_final/final_design_power_supply.pdf}
 	\caption{Power Supply Overview}
 	\label{fig:power_supply_overview}
 \end{figure}
 
 \subsubsection{Power over Ethernet (PoE)}
-
+Blabla
 
 \subsection{Microcontroller Unit (MCU)}
+Blabla
 
 %  TODO: Write about external PSRAM
 
@@ -142,7 +217,7 @@ The 1.8\,V rail is generated by a dedicated linear voltage regulator and is main
 
 \subsubsection{Angle Sensor}
 
-\subsection{Printed Circuit Board (PCB)}
+\subsection{Printed Circuit Boards (PCB)s}
 
 \subsubsection{Mainboard}
 
@@ -156,7 +231,7 @@ Only a few additional components were soldered by hand, such as the PDM to TDP c
 It turned out that multiple microphone arm PCBs were faulty (damaged microphones).
 This was most likely caused by the soldering process, as the MEMS microphones are very sensitive to heat.
 
-\newpage
+% \newpage
 \section{Firmware Design}
 Blabla
 
