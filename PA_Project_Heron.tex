@@ -116,6 +116,9 @@
 \usepackage{silence}
 \WarningFilter{glossaries}{Overriding \printglossary}
 \WarningFilter{glossaries}{Overriding `theglossary'}
+\WarningFilter{latexfont}{Font shape `OT1/cmr/m/n' in size <100> not available}		% Suppress warnings for font size in layout (Large number of chapters)
+\WarningFilter{latexfont}{Size substitutions with differences}
+
 %% Important: Must be last import package, otherwise hyperlinks do not work?!
 \usepackage[acronym]{glossaries}
 
@@ -127,7 +130,6 @@
 \email{}
 \thesistype{Project Thesis}
 \advisor{Hannes Badertscher}
-% \supervisor{None}
 \group{}
 \institute{Interdisciplinary Center for Artificial Intelligence}
 \department{MSE}

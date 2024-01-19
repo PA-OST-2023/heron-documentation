@@ -15,16 +15,16 @@ By analysing the sound of some commercially available drones
 a desired frequency range of 500 to 2000 hz was set.
 This range includes most of the sound's energy.
 
-The array geometry has some contraints, 
+The array geometry has some contraints,
 such as the number of microphones and the mechanical feasibilty.
 As stated in \ref*{chap:AqqSys} the maximum number of microphones
 in an array is 32.
 
 To compare different array geometries, several simulations
 were ran for each array.
-The simulated data was then ran through the beamforming 
+The simulated data was then ran through the beamforming
 algorithm.
-The steering angles are based on a grid with $-180^\circ \leq \phi < 180\circ$ and 
+The steering angles are based on a grid with $-180^\circ \leq \phi < 180\circ$ and
 $0^\circ \leq \theta \leq 180^\circ$ with a spacing of $1^\circ$.
 For each point in this grid the power over the desired frequency band is calculated.
 Displaying the result leads to an image like Figure \ref*{aev:fig:gridEx}.
@@ -49,8 +49,8 @@ is greater than half the peaks value. \todo{besser englisch}
 
 \subsection{Area}
 Since the grid resulting from the beamforming represents spherical function
-simply taking the sum of all the gridpoints from the mainlobe 
-would deliver false results. 
+simply taking the sum of all the gridpoints from the mainlobe
+would deliver false results.
 So each grid point is normalized by the surface element of a sphere
 \begin{equation}
 	dA = r \sin\theta \, d\phi \cdot r d\theta.
@@ -62,7 +62,7 @@ of two seperable ones.
 The Peak Average Power ratio is the ratio between the peak power and
 the average power over the whole grid.
 The results from the projection are compenstatet by weighting
-the power at each grid cell with the area of that grid cell. 
+the power at each grid cell with the area of that grid cell.
 
 
 Blabla
@@ -94,15 +94,15 @@ smear out the peak.
 	%    \includegraphics[width=0.25\textwidth]{mesh}
 	\includegraphics[]{images/5_array_evaluation/circ_m_pap.pdf}
 	\caption{PAP ratio for different array radiuses and total number
-	of microphones.}
+		of microphones.}
 	\label{aev:fig:MicCirc}
 \end{figure}
 \begin{figure}
 	\centering
 	%    \includegraphics[width=0.25\textwidth]{mesh}
 	\includegraphics[]{images/5_array_evaluation/area_circ.pdf}
-	\caption{Ratio of the mainlobe area compared to the area of a half sphere for 
-	a circular array with 32 microphones.}
+	\caption{Ratio of the mainlobe area compared to the area of a half sphere for
+		a circular array with 32 microphones.}
 	\label{aev:fig:areaCirc}
 \end{figure}
 \begin{figure}
