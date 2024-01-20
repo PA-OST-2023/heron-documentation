@@ -148,7 +148,7 @@ Surrounding the mainboard are eight microphone arm \acrshort{pcb}s, each connect
 These flex-cables provide the mechanical flexibility required adjusting the angle of the microphone arms.
 Mounted on each microphone arm \acrshort{pcb} are four \acrshort{mems} microphones.
 These microphones are strategically positioned as specified in section \ref{sec:final_array_geometry}.
-Additionally, each arm is equipped with 8 \acrshort{rgb} \acrshort{led}s, which serve both functional and aesthetic purposes, offering visual feedback and enhancing the system's overall design.
+Additionally, each arm is equipped with eight \acrshort{rgb} \acrshort{led}s, which serve both functional and aesthetic purposes, offering visual feedback and enhancing the system's overall design.
 To accurately measure the angle of the microphone arms, a dedicated angle sensor \acrshort{pcb} was developed.
 
 The entire hardware was designed using \textit{Altium Designer 23}, a leading software in \acrshort{pcb} design.
@@ -218,17 +218,47 @@ These additional memory chips provide sufficient audio buffering capabilities,
 essential for the system's performance in handling and processing the audio stream.
 
 \subsection{Audio Input}
-Blabla
+The audio input hardware builds upon the previous design detailed in section \ref{sec:acquisition_system_audio_input}, featuring four \textit{ADAU7118} \acrshort{pdm} to \acrshort{tdm} converters.
+Two of these converters are connected to each \acrshort{tdm}-16 interface on the \textit{Teensy 4.1}.
+Each converter \acrshort{ic} manages eight \acrshort{mems} microphones, effectively handling two microphone arms.
 
-\subsection{GNSS}
-Blabla
+\subsection{GNSS Receiver}
+The mainboard of the sound source localization system employs a \textit{NEO-M8P-2} module by \textit{uBlox} as its \acrshort{gnss} receiver,
+chosen for its ease of integration into embedded systems through its versatile serial interfaces, including \acrshort{spi}, \acrshort{i2c}, \acrshort{uart}, and \acrshort{usb}.
+For this specific application, the \acrshort{i2c} interface was utilized to connect the module to the \textit{Teensy\,4.1}.
+Additionally, the module's \acrshort{usb} interface is extended to a dedicated \acrshort{usb}-C port, offering enhanced debugging capabilities with tools provided by \textit{uBlox}.
+
+The design of the antenna frontend is tailored to drive active \acrshort{gnss} antennas, incorporating an inductor to couple the 3.3\,V supply voltage into the \acrshort{rf} line.
+This setup powers the built-in \acrshort{lna} of the external antenna, ensuring optimal signal reception.
+A standard \acrshort{sma} connector is used for connecting the antenna.
+
+The module is also equipped with direct digital outputs for conveying status information.
+A yellow \acrshort{led}, linked to the \acrshort{rtk}-Status output, illuminates to indicate when the module is in \acrshort{rtk} mode and has precisely determined its position.
+Additionally, a red \acrshort{led} connected to the 1\,Hz time pulse output serves as an indicator, flashing briefly every second to signify a fixed \acrshort{gnss} status.
+
+\subsubsection{External Antenna}
+\begin{minipage}{\linewidth}
+	\begin{wrapfigure}{r}{5.8cm}
+		\vspace{-0.2cm}
+		\includegraphics[width=5.3cm]{images/6_design_final/gnss_antenna.jpg}
+		\centering
+		\caption{GNSS Antenna (ANN-MB1-00)}
+		\label{fig:gnss_antenna}
+	\end{wrapfigure}
+	The external \acrshort{gnss} antenna selected for this project is the \textit{ANN-MB1-00} from \textit{uBlox}.
+	It supports both the L1 and L5 bands, making it versatile for various satellite systems including \acrshort{gps}, \acrshort{glonass}, Galileo, and BeiDou.
+	The original 5\,m cable was shortened to approximately 30\,cm, and a new \acrshort{sma} connector was attached to the end.
+	A crucial aspect of these multi-band antennas is their need for a metal base with a diameter of at least 10\,cm to enhance signal reception.
+	To meet this requirement, the antenna is mounted on a dedicated aluminum platform, as shown in figure \ref{fig:final_design_3d_rendering}.
+\end{minipage}
+\newpage
 
 \subsection{Human Machine Interface (HMI)}
 Blabla
 
 %  TODO: Wite about LEDs and Buzzer
 
-\subsection{LCD Display}
+\subsection{Display Module}
 Blabla
 
 \subsection{RGB LEDs}
@@ -289,7 +319,7 @@ The sound source localization system is based on three custom designed \acrshort
 		\label{fig:angle_sensor_pcb}
 	\end{wrapfigure}
 	\subsubsection{Angle Sensor}
-	The Angle Sensor \acrshort{pcb} is a 2-layer design, measuring 61.25\,x\,16.5\,mm, with all components mounted on the top side.
+	The Angle Sensor \acrshort{pcb} is a 2-layer design, measuring 61.25\,x\,16.5\,mm, with all components mounted on the bottom side.
 	A standard 2.54\,mm pin header is used for connecting it to the mainboard.
 	The magnetic angle sensor \acrshort{ic} is placed exactly at the pivot point of the microphone arm.
 	The \acrshort{pcb} is mounted to the main frame using a 3D-printed fixture.
@@ -380,7 +410,7 @@ Blabla
 \subsubsection{Phased Locked Loop (PLL)}
 Blabla
 
-\subsubsection{Remote Configuration}
+\subsection{Remote Configuration}
 Blabla
 
 \begin{table}
