@@ -11,12 +11,12 @@ confirm the validity of the simulation.
 In the next step the findings of the prototypes and simulations
 were used to come up with a final array design.
 
-By analysing the sound of some commercially available drones
+By analyzing the sound of some commercially available drones
 a desired frequency range of 500 to 2000 hz was set.
 This range includes most of the sound's energy.
 
-The array geometry has some contraints,
-such as the number of microphones and the mechanical feasibilty.
+The array geometry has some constraints,
+such as the number of microphones and the mechanical feasibility.
 As stated in \ref*{chap:AqqSys} the maximum number of microphones
 in an array is 32.
 
@@ -57,7 +57,7 @@ So each grid point is normalized by the surface element of a sphere
 \end{equation}
 The area of the mainlobe determines how good different sources can be separated.
 With a big mainlobe area two close sources may lead to one bigger mainlobe instead
-of two seperable ones.
+of two separable ones.
 \subsection{Peak Average Power ratio}
 The Peak Average Power ratio is the ratio between the peak power and
 the average power over the whole grid.
@@ -74,8 +74,8 @@ In \cite{arr1} different array types are compared and measured.
 The best scores are reached with the Underbrink style array, a combination
 of multiple circular arrays.
 They also included several spiral based arrays
-Based on this three main groups of arrays were further analysed,
-the circualr array, an adaption of the underbrink array, and a archimedes
+Based on this three main groups of arrays were further analyzed,
+the circular array, an adaption of the underbrink array, and a archimedes
 spiral array.
 \subsection{Circular Array}
 The circular array is the most simple shape of these three.
@@ -84,10 +84,15 @@ Figure \ref*{aev:fig:MicCirc} shows how the PAP ratio changes when
 more microphones are added to an array with a fixed radius.
 For smaller array the best PAP they can have is reached with less
 microphones than the bigger ones need.
-\dots Hallo Satz
-The radius of the array has a big impact on how the lower frequencies
-smear out the peak.
-
+This is expected since a bigger radius means bigger spacings between microphones
+which introduces aliasing on the higher frequencies.
+Looking at Figure \ref*{aev:fig:areaCirc} and Figure \ref*{aev:fig:papCirc}
+the change of the mainlobe area and PAP ration can be seen for 
+an array with 32 microphones and varying radius.
+As expected the area decreases with increasing radius, since the lower frequencies will be 
+sampled better. 
+Also the PAP ratio becomes better with an increase of the radius.
+At a radius of 0.8m however, the curve begins to flatten and even starts to decrease. 
 
 \begin{figure}
 	\centering
@@ -112,8 +117,22 @@ smear out the peak.
 	\caption{Peak Average }
 	\label{aev:fig:papCirc}
 \end{figure}
-\dots
+
 \subsection{Underbrink Array}
+In the original paper, the underbrink array is designed, so that each 
+microphone covers the same area of a ring with a fixed inner and outer radius and number of circles.
+In this thesis the design has been changed so that given the same parameters,
+the circle were equally spaced and the phase shift between the circles can be defined.
+An example of such an array is shown in Figure \ref*{aev:fig:FancyArr}.
+The amount of circles is set to four which leads to eight microphones per circle.
+All the parameters together lead to four degrees of freedom when designing such an array.
+\begin{figure}
+	\centering
+	%    \includegraphics[width=0.25\textwidth]{mesh}
+	\includegraphics[]{images/5_array_evaluation/fancy_arr.pdf}
+	\caption{Hansi.}
+	\label{aev:fig:FancyArr}
+\end{figure}
 \dots
 \subsection{Archimedes Spiral Array}
 
@@ -135,11 +154,10 @@ Based on simulation results, two specific array types were explored: The Multi-C
 		\caption{Multi-Circular Array}
 		\label{fig:prototype_array_multi_circular}
 	\end{wrapfigure}
-	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-	At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-	At vero eos et accusam et justo duo dolores et ea rebum.
-	\todo[inline]{\@Alain: Add explanation of the array geometry here}
+	This array geometry allows to build circular arrays with different radiuses.
+	Additionally the adaptation of the underbrink array can be made. The orange points
+	show such a configuration. 
+	A second one, where each circle is shifted by $\pi / 8$ rad is also possible.
 \end{minipage}
 \vspace{0.5cm}    % Adjust this depending on the length of the text above
 
