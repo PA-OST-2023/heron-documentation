@@ -253,19 +253,51 @@ Additionally, a red \acrshort{led} connected to the 1\,Hz time pulse output serv
 \end{minipage}
 \newpage
 
-\subsection{Human Machine Interface (HMI)}
-Blabla
-
-%  TODO: Wite about LEDs and Buzzer
-
 \subsection{Display Module}
-Blabla
+\begin{minipage}{\linewidth}
+	\begin{wrapfigure}{r}{5.8cm}
+		\vspace{-0.6cm}
+		\includegraphics[width=5.3cm]{images/6_design_final/seeed_round_display_module.png}
+		\centering
+		\caption{Seeed Round Display Module}
+		\label{fig:seeed_round_display_module}
+	\end{wrapfigure}
+	The display module, a round \acrshort{tft} unit from \textit{Seeed Electronics}, features a 240\,x\,240 pixel resolution and a 1.28\,inch (3.3\,cm) diameter.
+	It operates via a high-speed \acrshort{spi} interface at 80\,MHz, allowing a smooth 30\,\acrshort{fps} refresh rate.
+	Notably, the module includes an integrated \acrfull{rtc} of the type \textit{PCF8563},
+	powered by a \textit{CR 927} (3\,V) coin cell battery, ensuring continuous timekeeping even when the main power is off.
+	Additionally, the backlight brightness is adjustable via a \acrfull{pwm} output pin on the \textit{Teensy\,4.1}.
+
+	Both the touchscreen and the \acrshort{rtc} are connected to the \textit{Teensy\,4.1} through the same \acrshort{i2c}.
+	The module is mounted to the mainbaord with three M2 screws and a custom 3D-printed mounting ring.
+\end{minipage}
 
 \subsection{RGB LEDs}
-Blabla
+In the sound source localization system, a total of 81 individually addressable \acrshort{rgb} \acrshort{led}s are utilized.
+These \acrshort{led}s are of the type \textit{WS2812B-0807} and have a size of 2.0\,x\,1.8\,mm.
+They feature a single wire data interface, which operates at 800\,kHz and are powered by the 5\,V supply.
+However, due to the high potential power consumption when all \acrshort{led}s are set to full brightness (white), it is crucial to manage the power draw carefully.
+The maximal power consumption of all \acrshort{led}s is approximately
+\begin{equation} \label{eq:led_power_consumption}
+	P_{\text{tot}} = V_{\text{sup}} \cdot N_{\text{LED}} \cdot I_{\text{max}} = 5\,\text{V} \cdot 81 \cdot 19\,\text{mA} \approx 7.7\,\text{W}.
+\end{equation}
+Consequently, the global brightness of the \acrshort{led}s must be limited through software.
 
 \subsection{Sensors}
-Blabla
+The mainboard of the sound source localization system is equipped with a variety of sensors.
+Firstly, a combined magnetometer and accelerometer is implemented.
+It provides crucial heading and leveling information for the device,
+which is essential for providing accurate positioning information, specifically when utilizing multiple microphone arrays.
+
+Additionally, the system incorporates a combined ambient pressure and temperature sensor.
+This sensor plays a vital role in monitoring the ambient air conditions, a factor that significantly influences the accuracy of the beamforming algorithms used in sound localization.
+
+Furthermore, a magnetic angle sensor is integrated into the design.
+This sensor determines the current positions of the array arms.
+Since all the arms are mechanically coupled and maintain the same angle relative to each other, only one of these angle sensors is required.
+
+All sensors are connected to the \textit{Teensy 4.1} via a shared \acrshort{i2c} bus running at only 100\,kHz due to the relativly long physical distance between the sensors and the \acrshort{mcu}.
+\newpage
 
 \subsubsection{Magnetometer \& Accelerometer Sensor}
 Blabla
@@ -409,6 +441,26 @@ Blabla
 
 \subsubsection{Phased Locked Loop (PLL)}
 Blabla
+
+\subsection{Human Machine Interface (HMI)}
+The \acrfull{hmi} of the mainboard consists of 17 \acrshort{rgb} \acrshort{led}s, with one specifically dedicated as a Status \acrshort{led}.
+To provide acoustic feedback, a buzzer is integrated into the design.
+This buzzer is particularly useful for alerting users to specific events, such as an audio buffer overflow, by playing a distinctive beep sequence.
+Table \ref{tab:system_status_led} provides an overview of the \acrshort{led} indication patterns for the various system states.
+\begin{table}
+	\centering
+	\begin{tabular}{ l l l l l}
+		\textbf{System Status} & \textbf{Blink Pattern} & \textbf{LED Color} & \textbf{Streaming State} & \textbf{GNSS Fix} \vspace{0.1cm} \\ \hline
+		Running                & 1 Pulse/Second         & White              & No                       & No                               \\ \hline
+		Running                & 2 Pulse/Second         & White              & Yes                      & No                               \\ \hline
+		Running                & 1 Pulse/Second         & Green              & No                       & Yes                              \\ \hline
+		Running                & 2 Pulse/Second         & Green              & Yes                      & Yes                              \\ \hline
+		Warning                & 2\,Hz Blinking         & Yellow             & -                        & -                                \\ \hline
+		Error                  & 2\,Hz Blinking         & Red                & -                        & -                                \\ \hline
+	\end{tabular}
+	\caption{System Status LED Indication}
+	\label{tab:system_status_led}
+\end{table}
 
 \subsection{Remote Configuration}
 Blabla
