@@ -398,6 +398,25 @@ where $\omega_l$ is the lowest and $\omega_h$ the highest
 frequency of interest.
 
 \subsection{Other beamforming techniques}
+
+\section{Tracking}
+By now the \acrshort{doa} of a sound source can be estimated.
+But since drones expected to be moving, a source once it has been
+detected, need to be tracked.
+
+In \cite{Dorne tracker} the tracking is done with by 
+updating the steering vector with an adaptive filter. 
+They however do not go into detail on how the direction is then
+retrieved from the steering vector.
+One possibility may be by looking at the $G(\phi, \theta)$ of the steering vector.
+But what makes this definitely not used in this thesis, is that its based on a 
+narrow band beamformer. 
+Developing a beamforming based tracker for a wide band beamformer was outside of the 
+scope of this thesis.
+
+Another popular tracking independent of beamforing is a Kalmann tracker.
+Balabulaba
+
 \newpage
 \section{Simulator}
 In order to experiment with different microphone arrangements and algorithms a simulator was developed.

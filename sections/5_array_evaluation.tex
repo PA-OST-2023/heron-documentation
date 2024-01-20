@@ -133,8 +133,25 @@ All the parameters together lead to four degrees of freedom when designing such 
 	\caption{Hansi.}
 	\label{aev:fig:FancyArr}
 \end{figure}
+Optimizing these four parameter with some mechanical feasibility constraints is not an simple task.
+So the effect of single parameters while the others were fixed was studied.
+First the amount of circles was set.
+Given the 32 microphones, the number of circles is preferred to be a divisor 
+of 32.
+Four circles seemed like a good balance between number of circles and number of microphones
+per circle.
+
+
+
 \dots
 \subsection{Archimedes Spiral Array}
+An archimedes spiral in polar coordinates is defined as
+\begin{equation}
+	r(\varphi) = a * \varphi.
+\end{equation}
+Making an array with this shape has three degrees of freedom,
+$r$ of the first microphone, $r$ of the last microphone and the 
+spiral arm spacing $a$. 
 
 \newpage
 \section{Mechanical Design}
@@ -154,12 +171,13 @@ Based on simulation results, two specific array types were explored: The Multi-C
 		\caption{Multi-Circular Array}
 		\label{fig:prototype_array_multi_circular}
 	\end{wrapfigure}
-	This array geometry allows to build circular arrays with different radiuses.
-	Additionally the adaptation of the underbrink array can be made. The orange points
-	show such a configuration. 
-	A second one, where each circle is shifted by $\pi / 8$ rad is also possible.
+	This array geometry allows to build circular arrays with radiuses of 20cm, 25cm and
+	30cm.
+	A circle with a radius of 15cm was added to make the adaptation of the Underbrink array. 
+	The orange points show such a configuration with $\phi_o = \pi/16$.
+	A second geometry, where each circle is shifted by $\phi_o = \pi / 8$ is also possible.
 \end{minipage}
-\vspace{0.5cm}    % Adjust this depending on the length of the text above
+\vspace{5.5cm}    % Adjust this depending on the length of the text above
 
 \subsection{Archimedean Spiral Array}
 \begin{minipage}{\linewidth}
@@ -170,11 +188,10 @@ Based on simulation results, two specific array types were explored: The Multi-C
 		\caption{Archimedean Spiral Array}
 		\label{fig:prototype_array_archimedian_spiral}
 	\end{wrapfigure}
-	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-	At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-	At vero eos et accusam et justo duo dolores et ea rebum.
-	\todo[inline]{\@Alain: Add explanation of the array geometry here}
+	The archimedean Spiral Array was made with a inner radius of 5cm and an outer radius of 
+	30cm. The spiral makes a total of four turns which leads to a 
+	separation distance of 6.25cm.
+
 \end{minipage}
 \newpage
 
@@ -199,28 +216,37 @@ In the centre of each array, a mechanical mount for the Acquisition-System hardw
 	\end{minipage}
 \end{figure}
 
-
-\newpage
 \section{Measurements \& Findings} \label{sec:array_prototype_measurements}
-Blabla
+The performance of the physical arrays were evaluated with outdoor measurement.
+To simulate a drone the sound of a DJI Mavic drone was played back on 
+UE BOOM loudspeakers.
+Various angles were tested by turning and tilting the array such that 
+the loudspeakers are in the direction to bes tested.
 
-\todo[inline]{Describe why we used fluffy stuff on the microphones (because we had problems first with wind). Mention the wind protection fur made by RØDE called DeadWombat.}
+During the first tests, the wind caused the microphone to overdrive
+thus making the signal useless.
+To reduce this a RØDE DeadWombat microphone cover was cut into small pieces
+and glued onto the microphones.
+This lead to significantly less wind noises.
+
 
 
 \begin{figure}[h!]
 	\centering
-	\begin{minipage}{0.49\textwidth}
+	\begin{subfigure}[b]{0.49\textwidth}
 		\centering
 		\includegraphics[width=0.95\textwidth]{images/5_array_evaluation/array_test_1.jpg}
 		\caption{Multi-Circular Array (inner circle)}
 		\label{fig:array_test_1}
-	\end{minipage}
-	\begin{minipage}{0.49\textwidth}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\textwidth}
 		\centering
 		\includegraphics[width=0.95\textwidth]{images/5_array_evaluation/array_test_2.jpg}
 		\caption{Multi-Circular Array (interleaved  pattern)}
 		\label{fig:array_test_2}
-	\end{minipage}
+	\end{subfigure}
+	\caption{Test arrays.}
+	\label{fig:testSetup}
 \end{figure}
 
 \todo[inline]{Conclusion of array geometry → tree-dimensional array may provide better results. (This will be referenced in chapter of final design)}
