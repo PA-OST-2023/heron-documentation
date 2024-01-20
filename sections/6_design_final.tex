@@ -248,7 +248,7 @@ Blabla
 
 \newpage
 \subsection{Printed Circuit Boards (PCBs)}
-Blabla
+The sound source localization system is based on three custom designed \acrshort{pcb}s.
 
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{r}{7.0cm}
@@ -259,41 +259,41 @@ Blabla
 		\label{fig:mainboard_pcb}
 	\end{wrapfigure}
 	\subsubsection{Mainboard}
-	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-	At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-	Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
+	The Mainbaord is based on a 4-layer round \acrshort{pcb} with a diameter of 150\,mm.
+	It utilizes a double-sided component assembly, primarily positioning elements on the \acrshort{pcb}'s underside, as detailed in the 3D visualization \ref{fig:mainboard_pcb}.
+	A key design challenge involved accommodating components taller than 4\,mm.
+	These had to be placed within the white-marked areas, corresponding to cutouts in the aluminum top mounting plate.
+	The \acrshort{pcb} is securely mounted using five surface-mounted standoff M3 nuts.
 \end{minipage}
-% \vspace{0.1cm}
 
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{r}{7.0cm}
-		% \vspace{-0.6cm}
+		\vspace{0.2cm}
 		\includegraphics[width=6.5cm]{images/6_design_final/Microphone_Arm_Front.png}
 		\centering
 		\caption{Microphone Arm PCB}
 		\label{fig:microphone_arm_pcb}
 	\end{wrapfigure}
 	\subsubsection{Microphone Arm}
-	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-	At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-	Takimata sanctus est Lorem ipsum dolor sit amet.
+	The Microphone Arm \acrshort{pcb} is a 2-layer design, measuring 288.7\,x\,190.4\,mm, with all components mounted on the top side.
+	It features two surface-mounted M3 nuts near the connector side, which provide mechanical rigidity when mounted on the support frame.
+	Additionally, the \acrshort{pcb} features seven 3.2\,mm mounting holes placed for attaching the microphone fur clips.
 \end{minipage}
-% \vspace{0.1cm}
 
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{r}{7.0cm}
-		% \vspace{-0.6cm}
+		\vspace{0.2cm}
 		\includegraphics[width=6.5cm]{images/6_design_final/Angle_Sensor_Front.png}
 		\centering
 		\caption{Angle Sensor PCB}
 		\label{fig:angle_sensor_pcb}
 	\end{wrapfigure}
 	\subsubsection{Angle Sensor}
-	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-	At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+	The Angle Sensor \acrshort{pcb} is a 2-layer design, measuring 61.25\,x\,16.5\,mm, with all components mounted on the top side.
+	A standard 2.54\,mm pin header is used for connecting it to the mainboard.
+	The magnetic angle sensor \acrshort{ic} is placed exactly at the pivot point of the microphone arm.
+	The \acrshort{pcb} is mounted to the main frame using a 3D-printed fixture.
 \end{minipage}
-% \vspace{0.5cm}
 
 \subsection{Manufacturing}
 The \acrshort{pcb}s were manufactured and assembled by \textit{JLCPCB}.
@@ -307,7 +307,7 @@ Blabla
 
 \subsection{Overview}
 
-\begin{table}
+\begin{table}[h]
 	\centering
 	\begin{tabular}{|l|l|}
 		\hline
