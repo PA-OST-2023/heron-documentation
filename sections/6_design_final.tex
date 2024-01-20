@@ -154,6 +154,7 @@ To accurately measure the angle of the microphone arms, a dedicated angle sensor
 The entire hardware was designed using \textit{Altium Designer 23}, a leading software in \acrshort{pcb} design.
 \begin{figure}[h!]
 	\centering
+	\vspace{0.3cm}
 	\includegraphics[width=1.0\textwidth]{images/6_design_final/Mainboard_Front_Display.png}
 	\caption{Front View of the Mainboard}
 	\label{fig:mainboard_front}
@@ -300,13 +301,37 @@ All sensors are connected to the \textit{Teensy 4.1} via a shared \acrshort{i2c}
 \newpage
 
 \subsubsection{Magnetometer \& Accelerometer Sensor}
-Blabla
+The \textit{LSM303AGRTR} by \textit{ST Microelectronics} was selected as the magnetometer and accelerometer, largely due to its wide availability, extensive software support, and high resolution.
+This sensor uniquely combines a sensitive 3-axis magnetic flux measurement unit with a 3-axis \textit{LIS2MDL} accelerometer, providing comprehensive motion and orientation sensing capabilities.
+
+A critical aspect of using any kind of magnetometer is the compensation of interference from ferromagnetic and paramagnetic materials.
+This necessitates regular calibration of the sensor, especially when there are changes in the surrounding environment.
+This calibration is essential to maintain the accuracy and reliability of the sensor's readings.
+Detailed information and guidelines for the calibration process can be found in section \ref{sec:sensor_calibration}
 
 \subsubsection{Ambient Pressure \& Temperature Sensor}
-Blabla
+The \textit{BMP388} by \textit{Bosch Sensortec} was selected as the ambient pressure and temperature sensor.
+This sensor has a pressure measurement range of 300\,-\,1250\,hPa, with an accuracy of ±\,8\,Pa ($\approx$\,0.66\,m) within the typical operating range of 900\,-\,1100\,hPa.
+The integrated temperature sensor features a measurement accuracy of ±\,0.3\,°C in the range of 0\,-\,65\,°C.
+
+During the \acrshort{pcb} design for the mainboard, however, the thermal placement of this sensor was not adequately considered.
+Consequently, heat-emitting components on the board affect the \textit{BMP388}'s temperature readings, leading to a temperature offset of approximately 2.5\,°C.
+A better approach would have been to isolate the sensor thermally, e.g. by creating a slot around the sensor on the \acrshort{pcb}.
 
 \subsubsection{Angle Sensor}
-Blabla
+The design utilizes the \textit{AS5600} magnetic angle sensor from \textit{AMS-Osram Semiconductors}.
+This sensor offers 12-bit resolution and can accurately detect the position of a circular magnet, mounted at a distance of 0.5\,mm to 3\,mm.
+Additionally, this sensor features a \acrshort{pwm} digital output, that has been connected to a dedicated \acrshort{led} on the angle sensor \acrshort{pcb}.
+This \acrshort{led} provides a visual indication of the current angle being measured and confirms magnet detection.
+
+Figure \ref{fig:angle_sensor_principle} shows the principle of operation of the \textit{AS5600} angle sensor.
+\begin{figure}[h!]
+	\centering
+	\vspace{0.2cm}
+	\includegraphics[width=4.8cm]{images/6_design_final/angle_sensor_principle.png}
+	\caption{Operation Principle of the AS5600 Angle Sensor \cite{ams_osram_as5600}}
+	\label{fig:angle_sensor_principle}
+\end{figure}
 
 \newpage
 \subsection{Printed Circuit Boards (PCBs)}
@@ -368,6 +393,7 @@ This was most likely caused by the soldering process, as the \acrshort{mems} mic
 Blabla
 
 \subsection{Overview}
+Blabla
 
 \begin{table}[h]
 	\centering
@@ -388,28 +414,27 @@ Blabla
 	\label{tab:threads}
 \end{table}
 
-
 \subsection{Audio Streaming}
 The audio streaming module handles the buffering and transmission of the 32 audio channels.
-It is based on a TCP server that provides a socket connection on port 6666.
-The audio data is transmitted in a lossless 16-bit signed integer format, with a sample rate of 44.1 kHz.
+It is based on a \acrshort{tcp} server that provides a socket connection on port 6666.
+The audio data is transmitted in a lossless 16-bit signed integer format, with a sample rate of 44.1\,kHz.
 
-The TCP connection asures a reliable data transmission, which is essential for the audio data.
-To provide a low latency audio stream, the audio data is buffered in a circular buffer of 12 MB size.
-This allows for a maximum delay of ca. 4.4\,s.
-
+The \acrshort{tcp} connection asures a reliable data transmission, which is essential for the audio data.
+To provide a low latency audio stream, the audio data is buffered in a circular buffer of 12\,MB size.
+This allows a maximal bufferin time of approximately 4.4\,s.
 For a continuous audio stream, a tranmission rate of
 \begin{equation}
 	\frac{32\,\text{channels} \cdot 16\,\text{bit} \cdot 44100\,\text{Hz}}{10^6\,\text{bit/s}} = 22.1184\,\text{Mbit/s}
 \end{equation}
 is required.
 The theoretical maximum transmission rate of 100Base-T Ethernet is 100\,Mbit/s.
-However, the maximum transmission rate of the Teensy 4.1 is around 60\,Mbit/s, which is still sufficient for the audio stream.
+However, the maximum transmission rate of the \textit{Teensy 4.1} is around 60\,Mbit/s, which is still sufficient.
 
-Due to the maximal TCP packet size of 1460 bytes, the audio data is split into concatenated packets.
+\newpage
+Due to the maximal \acrshort{tcp} packet size of 1460 bytes, the audio data is split into concatenated packets.
 A frame consists of 128 interleafed samples (32 channels) and is transmitted in 8 packets.
-Each frame starts with a 20-byte header.
-
+Each frame starts with a 20-byte header, containing a magic sequence, the packet index and the timestamp in nanoseconds.
+Table \ref{tab:packet_header} shows the structure of the packet header.
 \begin{table}[h!]
 	\centering
 	\begin{tabular}{|l|l|l|l|}
@@ -423,13 +448,16 @@ Each frame starts with a 20-byte header.
 	\label{tab:packet_header}
 \end{table}
 
-\begin{figure}
+Blabla
+
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=1.0\textwidth]{images/6_design_final/Audio_Stream_Frame.pdf}
 	\caption{Example of a Frame with 128 Samples (32 Channels)}
 	\label{fig:frame_example}
 \end{figure}
 
+\newpage
 \subsection{GNSS \& RTC Time}
 Blabla
 
@@ -447,7 +475,7 @@ The \acrfull{hmi} of the mainboard consists of 17 \acrshort{rgb} \acrshort{led}s
 To provide acoustic feedback, a buzzer is integrated into the design.
 This buzzer is particularly useful for alerting users to specific events, such as an audio buffer overflow, by playing a distinctive beep sequence.
 Table \ref{tab:system_status_led} provides an overview of the \acrshort{led} indication patterns for the various system states.
-\begin{table}
+\begin{table}[h!]
 	\centering
 	\begin{tabular}{ l l l l l}
 		\textbf{System Status} & \textbf{Blink Pattern} & \textbf{LED Color} & \textbf{Streaming State} & \textbf{GNSS Fix} \vspace{0.1cm} \\ \hline
@@ -462,10 +490,11 @@ Table \ref{tab:system_status_led} provides an overview of the \acrshort{led} ind
 	\label{tab:system_status_led}
 \end{table}
 
+\newpage
 \subsection{Remote Configuration}
 Blabla
 
-\begin{table}
+\begin{table}[h!]
 	\tiny
 	\centering
 	\begin{tabular}{|l|l|l|l|l|}
@@ -505,10 +534,9 @@ Blabla
 	\label{table:device_data_types}
 \end{table}
 
-
 For remote configuration, the client (e.g. a PC) sends a JSON file containing the desired command and its parameters to the device.
 
-\begin{table}
+\begin{table}[h!]
 	\tiny
 	\centering
 	\begin{tabular}{|l|l|l|l|l|}
@@ -521,7 +549,7 @@ For remote configuration, the client (e.g. a PC) sends a JSON file containing th
 	\label{tab:received_commands}
 \end{table}
 
-\subsection{Sensor Calibration}
+\subsection{Sensor Calibration} \label{sec:sensor_calibration}
 Blabla
 
 
