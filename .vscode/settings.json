@@ -1,6 +1,15 @@
 {
     "latex-workshop.latex.recipes": [
         {
+            "name": "pdflatex ➜ bibtex ➜ pdflatex (x2)",
+            "tools": [
+                "pdflatex",
+                "bibtex",
+                "pdflatex",
+                "pdflatex"
+            ]
+        },
+        {
             "name": "pdflatex, makeglossaries, pdflatex (2x)",
             "tools": [
                 "pdflatex",
@@ -15,8 +24,7 @@
                 "latexmk",
                 "clean"
             ]
-        },
-        
+        }
     ],
     "latex-workshop.latex.tools": [
         {
@@ -32,6 +40,13 @@
         {
             "name": "makeglossaries",
             "command": "makeglossaries",
+            "args": [
+                "%DOCFILE%"
+            ]
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
             "args": [
                 "%DOCFILE%"
             ]
@@ -53,5 +68,5 @@
                 "-c",
             ]
         }
-    ],
+    ]
 }
