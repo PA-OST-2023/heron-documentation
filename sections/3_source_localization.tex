@@ -269,6 +269,7 @@ be calculated to simulate a source in a specific direction
 		e^{j\omega_0 t_{N-1}(\varphi_s, \theta_s)} 
 	\end{pmatrix}
 \end{equation}
+To simplify the formulas, $t_n(\phi, \theta)$ is from now written as $t_n$.
 The amplitude response of an array using delay and sum beamforming can
 now be calculated with
 \begin{equation}
@@ -305,7 +306,8 @@ however there are also side lobes pointing to directions without sources.
 		\label{ssl:fig:CircBmTheta}
 	\end{subfigure}
 	\caption{Delay and Sum Beamformer response for a circular array with $N=16$ microphones 
-	and a radius $r = 0.25$m. }
+	and a radius $r = 0.25$m. Note that the gains are applied on the amplitudes, so if the 
+	power levels are multiplied by $G(\dots)^2$}
 	\label{ssl:fig:CircBmResponse}
 \end{figure}
 
@@ -381,7 +383,7 @@ By using a discrete fourier transform the beamformer can be written
 in matrix form
 \todo{Indexchaos lösen}
 \begin{equation}
-	Y(\phi, \theta) = 
+	\bm{Y}(\phi, \theta) = 
 	\begin{pmatrix}
 		X_0(\omega_l) & \hdots & X_0(\omega_h)\\
 		\vdots & \ddots & \vdots \\
@@ -394,8 +396,12 @@ in matrix form
 		e^{-j\omega_l t_{N-1}} & \hdots & e^{-j\omega_h t_{N-1}}
 	\end{pmatrix},
 \end{equation}
-where $\omega_l$ is the lowest and $\omega_h$ the highest
-frequency of interest.
+with a total of $M$ frequency points of interest between $\omega_l$ and $\omega_h$.
+The power of the signal is now calculated with
+\begin{equation}
+	P(\phi, \theta) =  \sum_{m=0}^{M-1}\lvert \sum_{n=0}^{N-1} \bm{Y}_{m, n} \rvert^2
+\end{equation}
+using Parsevals' Theorem.
 
 \subsection{Other beamforming techniques}
 
