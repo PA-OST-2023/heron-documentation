@@ -163,7 +163,7 @@ in figures \ref*{aev:fig:FancyArea} and \ref*{aev:fig:FancyPap}.
 
 
 \dots
-\subsection{Archimedes Spiral Array}
+\subsection{Archimedean Spiral Array}
 An archimedes spiral in polar coordinates is defined as
 \begin{equation}
 	r(\varphi) = a * \varphi.
@@ -171,6 +171,8 @@ An archimedes spiral in polar coordinates is defined as
 Making an array with this shape has three degrees of freedom,
 $r$ of the first microphone, $r$ of the last microphone and the 
 spiral arm spacing $a$. 
+
+
 
 \newpage
 \section{Mechanical Design}
@@ -241,14 +243,17 @@ To simulate a drone the sound of a DJI Mavic drone was played back on
 UE BOOM loudspeakers.
 Various angles were tested by turning and tilting the array such that 
 the loudspeakers are in the direction to bes tested.
+The distance of the loudspeaker to the array was set to 
+15m.
+All of the tests except the archimedean were made in an open field with little reverberation.
+The archimedean array had to be tested between buildings due to rain.
 
 During the first tests, the wind caused the microphone to overdrive
 thus making the signal useless.
 To reduce this a RØDE DeadWombat microphone cover was cut into small pieces
 and glued onto the microphones.
 This lead to significantly less wind noises.
-
-
+Two examples of test configurations are depicted in Figure \ref*{fig:testSetup}.
 
 \begin{figure}[h!]
 	\centering
@@ -270,6 +275,23 @@ This lead to significantly less wind noises.
 
 \todo[inline]{Conclusion of array geometry → tree-dimensional array may provide better results. (This will be referenced in chapter of final design)}
 
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{1\textwidth}
+		\centering
+		\includegraphics[width=0.95\textwidth]{images/5_array_evaluation/PapTestSim.pdf}
+		\caption{GG}
+		\label{fig:comp1}
+	\end{subfigure}
+	\begin{subfigure}[b]{1\textwidth}
+		\centering
+		\includegraphics[width=0.95\textwidth]{images/5_array_evaluation/AreaTestSim.pdf}
+		\caption{EZ}
+		\label{fig:comp2}
+	\end{subfigure}
+	\caption{Test and simulation comparisons with a a source located at $(r, \phi, \theta) = (15, 0, \pi/2)$}
+	\label{fig:TestSim}
+\end{figure}
 
 
 \newpage
