@@ -1,4 +1,5 @@
 \chapter{Array Evaluation}
+\label{chap:aev}
 \section{Overview}
 As stated in chapter \dots the geometry of a microphone array
 has a impact on the performance of beamforming.
@@ -58,14 +59,21 @@ So each grid point is normalized by the surface element of a sphere
 The area of the mainlobe determines how good different sources can be separated.
 With a big mainlobe area two close sources may lead to one bigger mainlobe instead
 of two separable ones.
+Since the area is calculated with for $\theta < 90^\circ$, the areas calculated
+for peaks close to that border are not the actual areas when looking at the 
+full angular range.
+
 \subsection{Peak Average Power ratio}
 The Peak Average Power ratio is the ratio between the peak power and
 the average power over the whole grid.
-The results from the projection are compenstatet by weighting
+The results from the projection are compensated by weighting
 the power at each grid cell with the area of that grid cell.
-
-
-Blabla
+With these considerations the PAP ratio is defined as
+\begin{equation}
+	PAP = \frac{\max \, P(\phi, \theta)}{\sum_{\phi, \theta}^{} P(\phi, \theta) dA(\phi, \theta)}.
+\end{equation}
+A high PAP ratio is desired, since it means that little power is leaking 
+into other directions than the real \acrshort{doa}.
 \section{Array Geometry}
 In \todo{cite} the authors use a circular array to detect and track drones.
 They however did not gave any reasoning no why the chose a circular array.
@@ -93,6 +101,15 @@ As expected the area decreases with increasing radius, since the lower frequenci
 sampled better.
 Also the PAP ratio becomes better with an increase of the radius.
 At a radius of 0.8m however, the curve begins to flatten and even starts to decrease.
+It can as well be observed that for smaller source angles the mainlobe area is smaller.
+This is mostly an effect of the mainlobe smearing in the $\theta$ direction.
+Recalling equation \eqref{ssl:eq:beamr3} with a fixed $\phi$
+the time delay at a microphone is $t_n = C \sin(\theta)$ with $C=const$.
+Looking at the derivative of $t_n$ with respect to $\theta$ it becomes
+clear that with angles close to $0^\circ$ the change of $t_n$ is high
+whereas if $\theta = 90^\circ$, $t_n$ changes slowly when $\theta$ is 
+changed.
+
 
 \begin{figure}
 	\centering

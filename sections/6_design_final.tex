@@ -842,6 +842,12 @@ Via a callback in the played audio is also stored into the ring buffer.
 
 \subsection{Tracker}
 
+\subsubsection{Beamforming}
+The steering angle grid used in Chapter \ref*{chap:aev} has the drawback 
+that for some steering angle much more points are calculated than for others.
+To reduce the amount of calculations a new angle grid was created, based on
+a pseudo uniformly sampled semisphere.
+
 
 \subsection{GUI}
 
