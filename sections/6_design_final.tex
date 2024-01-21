@@ -425,21 +425,23 @@ The audio streaming module handles the buffering and transmission of the 32 audi
 It is based on a \acrshort{tcp} server that provides a socket connection on port 6666.
 The audio data is transmitted in a lossless 16-bit signed integer format, with a sample rate of 44.1\,kHz.
 
-The \acrshort{tcp} connection asures a reliable data transmission, which is essential for the audio data.
-To provide a low latency audio stream, the audio data is buffered in a circular buffer of 12\,MB size.
-This allows a maximal bufferin time of approximately 4.4\,s.
-For a continuous audio stream, a tranmission rate of
+The \acrshort{tcp} connection asures a reliable data transmission, which is essential for a continuous audio stream.
+To ensure low latency, the audio data is buffered in a circular buffer of 12\,MB size.
+This allows a maximal buffering time of approximately 4.4\,s.
+A minimal tranmission rate of
 \begin{equation}
 	\frac{32\,\text{channels} \cdot 16\,\text{bit} \cdot 44100\,\text{Hz}}{10^6\,\text{bit/s}} = 22.1184\,\text{Mbit/s}
 \end{equation}
 is required.
 The theoretical maximum transmission rate of 100Base-T Ethernet is 100\,Mbit/s.
-However, the maximum transmission rate of the \textit{Teensy 4.1} is around 60\,Mbit/s, which is still sufficient.
+However, the real-world tests with the \textit{Teensy 4.1} showed a maximum transmission rate of around 60\,Mbit/s, which is still sufficient for the audio stream.
 
 \newpage
 Due to the maximal \acrshort{tcp} packet size of 1460 bytes, the audio data is split into concatenated packets.
 A frame consists of 128 interleafed samples (32 channels) and is transmitted in 8 packets.
-Each frame starts with a 20-byte header, containing a magic sequence, the packet index and the timestamp in nanoseconds.
+Each frame starts with a 20-byte header, beginning with a magic sequence that allows the receiver to synchronize the incoming data stream.
+Next is the packet index, which is incremented for each frame and enables the receiver to detect missing packets.
+The last field is the timestamp in the \acrshort{unix} epoch format in nanoseconds.
 Table \ref{tab:packet_header} shows the structure of the packet header.
 \begin{table}[h!]
 	\centering
@@ -454,8 +456,8 @@ Table \ref{tab:packet_header} shows the structure of the packet header.
 	\label{tab:packet_header}
 \end{table}
 
-Blabla
-
+Figure \ref{fig:frame_example} shows an example of a transmission sequence.
+Note the interleafed sample order, which is based on the WAV file format.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1.0\textwidth]{images/6_design_final/Audio_Stream_Frame.pdf}
@@ -465,17 +467,30 @@ Blabla
 
 \newpage
 \subsection{GNSS \& RTC Time}
-Blabla
+The system incorporates two methods for timekeeping: A \acrshort{gnss} module and a \acrfull{rtc}.
+The \acrshort{gnss} module is highly accurate, providing time information down to the nanosecond, which is essential for providing accurate timestamps for the audio stream.
+In contrast, the \acrshort{rtc} is designed to maintain time even if the device loses power.
+Once the \acrshort{gnss} time is established and stable, it automatically synchronizes the \acrshort{rtc}.
 
-\subsubsection{GNSS Time}
-Blabla
+The \acrshort{gnss} module sends periodically its timing information to the \acrshort{mcu} at a rate of 5\,Hz.
+Whenever a new time packet is received, the system logs the current internal system time in microseconds.
+This allows calculating the time offset to any subsequent \acrshort{api} call which asks for the current time.
 
-\subsubsection{RTC Time}
-Blabla
+In situations where \acrshort{gnss} data isn't available, the system falls back to the \acrshort{rtc} time.
+While this ensures continuous timekeeping, the \acrshort{rtc}'s limitation to second-level resolution presents a challenge.
+It doesn't provide detailed information about the exact moment whenever a second has passed.
+To address this and achieve more precise timing information, a specific algorithm is required as described in the following section.
 
 \subsubsection{Phased Locked Loop (PLL)}
-Blabla
+To estimate the subseconds of the current \acrshort{rtc} time, a \acrfull{pll} has been used in combination with a \acrshort{pi}-controller.
+This approach effectively smooths out the \acrshort{rtc}'s stair-step signal, enhancing time resolution.
+The Proportional (P) component of the \acrshort{pi}-controller is set to zero to avoid amplifying the \acrshort{rtc}'s abrupt second changes, which could lead to output irregularities.
+Instead, the focus is set on the Integral (I) component, which has been tuned by simulating the \acrshort{rtc}'s behavior in \textit{Python}.
+This configuration allows for a gradual accumulation of timing errors, rather than responding to immediate changes, leading to a smoother and more consistent output.
+A resulting integral gain of 0.01 was found to provide the best results.
 
+
+\newpage
 \subsection{Human Machine Interface (HMI)}
 The \acrfull{hmi} of the mainboard consists of 17 \acrshort{rgb} \acrshort{led}s, with one specifically dedicated as a Status \acrshort{led}.
 To provide acoustic feedback, a buzzer is integrated into the design.
@@ -496,7 +511,6 @@ Table \ref{tab:system_status_led} provides an overview of the \acrshort{led} ind
 	\label{tab:system_status_led}
 \end{table}
 
-\newpage
 \subsection{Remote Configuration}
 Blabla
 
@@ -505,36 +519,36 @@ Blabla
 	\centering
 	\begin{tabular}{|l|l|l|l|l|}
 		\hline
-		\textbf{Data Field}         & \textbf{Description}          & \textbf{Data Type} & \textbf{Unit} & \textbf{Example Value} \\ \hline
-		device\_firmware\_version   & Firmware Version              & String             & -             & "V0.1"                 \\ \hline
-		device\_firmware\_build     & Firmware Build Date           & String             & -             & "240110"               \\ \hline
-		device\_cpu\_frequency      & CPU Frequency                 & Integer            & Hz            & 912000000              \\ \hline
-		device\_cpu\_temperature    & Current CPU Temperature       & Float              & °C            & 36.5                   \\ \hline
-		device\_operating\_time     & Device Operating Time         & Integer            & s             & 15615                  \\ \hline
-		device\_system\_warning     & Current System Warning Status & Boolean            & -             & false                  \\ \hline
-		ethernet\_mac               & MAC Address                   & String             & -             & "48:53:52:20:3C:33"    \\ \hline
-		ethernet\_ip                & Current IP Address            & String             & -             & "192.168.1.10"         \\ \hline
-		streaming\_state            & Current Streaming State       & Boolean            & -             & true                   \\ \hline
-		streaming\_speed            & Current Streaming Speed       & Float              & Mbit/s        & 22.21                  \\ \hline
-		streaming\_buffer           & Streaming Buffer Fill Level   & Float              & \%            & 15.1                   \\ \hline
-		sensor\_heading             & Device Heading                & Float              & °             & 270.0                  \\ \hline
-		sensor\_pitch               & Device Pitch                  & Float              & °             & 5.2                    \\ \hline
-		sensor\_roll                & Device Roll                   & Float              & °             & 2.4                    \\ \hline
-		sensor\_temperature         & Ambient Temperature           & Float              & °C            & 22.3                   \\ \hline
-		sensor\_pressure            & Ambient Pressure              & Float              & hPa           & 1013.2                 \\ \hline
-		sensor\_altitude            & Device Altitude               & Float              & m (MSL)       & 434.5                  \\ \hline
-		sensor\_angle               & Arm Angle                     & Float              & °             & 45.7                   \\ \hline
-		sensor\_magnet\_detected    & Magnet Detection Status       & Boolean            & -             & true                   \\ \hline
-		sensor\_magnet\_too\_weak   & Magnet Too Weak Status        & Boolean            & -             & false                  \\ \hline
-		sensor\_magnet\_too\_strong & Magnet Too Strong Status      & Boolean            & -             & false                  \\ \hline
-		gnss\_latitude              & GNSS Latitude                 & Float              & °             & 40.7128                \\ \hline
-		gnss\_longitude             & GNSS Longitude                & Float              & °             & -74.0060               \\ \hline
-		gnss\_altitude              & GNSS Altitude                 & Float              & m (MSL)       & 344.8                  \\ \hline
-		gnss\_magnetic\_declination & GNSS Magnetic Declination     & Float              & °             & -5.0                   \\ \hline
-		gnss\_satelite\_count       & GNSS Satellite Count          & Integer            & -             & 8                      \\ \hline
-		gnss\_fix                   & GNSS Fix Status               & Boolean            & -             & true                   \\ \hline
-		gnss\_fix\_type             & GNSS Fix Type                 & Integer            & -             & 3                      \\ \hline
-		gnss\_time\_valid           & GNSS Time Validity            & Integer            & UNIX (UTC+0)  & 1704921651             \\ \hline
+		\textbf{Data Field}         & \textbf{Description}          & \textbf{Data Type} & \textbf{Unit} & \textbf{Example Value}       \\ \hline
+		device\_firmware\_version   & Firmware Version              & String             & -             & \texttt{"V0.1"}              \\ \hline
+		device\_firmware\_build     & Firmware Build Date           & String             & -             & \texttt{"240110"}            \\ \hline
+		device\_cpu\_frequency      & CPU Frequency                 & Integer            & Hz            & 912000000                    \\ \hline
+		device\_cpu\_temperature    & Current CPU Temperature       & Float              & °C            & 36.5                         \\ \hline
+		device\_operating\_time     & Device Operating Time         & Integer            & s             & 15615                        \\ \hline
+		device\_system\_warning     & Current System Warning Status & Boolean            & -             & false                        \\ \hline
+		ethernet\_mac               & MAC Address                   & String             & -             & \texttt{"48:53:52:20:3C:33"} \\ \hline
+		ethernet\_ip                & Current IP Address            & String             & -             & \texttt{"192.168.1.10"}      \\ \hline
+		streaming\_state            & Current Streaming State       & Boolean            & -             & true                         \\ \hline
+		streaming\_speed            & Current Streaming Speed       & Float              & Mbit/s        & 22.21                        \\ \hline
+		streaming\_buffer           & Streaming Buffer Fill Level   & Float              & \%            & 15.1                         \\ \hline
+		sensor\_heading             & Device Heading                & Float              & °             & 270.0                        \\ \hline
+		sensor\_pitch               & Device Pitch                  & Float              & °             & 5.2                          \\ \hline
+		sensor\_roll                & Device Roll                   & Float              & °             & 2.4                          \\ \hline
+		sensor\_temperature         & Ambient Temperature           & Float              & °C            & 22.3                         \\ \hline
+		sensor\_pressure            & Ambient Pressure              & Float              & hPa           & 1013.2                       \\ \hline
+		sensor\_altitude            & Device Altitude               & Float              & m (MSL)       & 434.5                        \\ \hline
+		sensor\_angle               & Arm Angle                     & Float              & °             & 45.7                         \\ \hline
+		sensor\_magnet\_detected    & Magnet Detection Status       & Boolean            & -             & true                         \\ \hline
+		sensor\_magnet\_too\_weak   & Magnet Too Weak Status        & Boolean            & -             & false                        \\ \hline
+		sensor\_magnet\_too\_strong & Magnet Too Strong Status      & Boolean            & -             & false                        \\ \hline
+		gnss\_latitude              & GNSS Latitude                 & Float              & °             & 40.7128                      \\ \hline
+		gnss\_longitude             & GNSS Longitude                & Float              & °             & -74.0060                     \\ \hline
+		gnss\_altitude              & GNSS Altitude                 & Float              & m (MSL)       & 344.8                        \\ \hline
+		gnss\_magnetic\_declination & GNSS Magnetic Declination     & Float              & °             & -5.0                         \\ \hline
+		gnss\_satelite\_count       & GNSS Satellite Count          & Integer            & -             & 8                            \\ \hline
+		gnss\_fix                   & GNSS Fix Status               & Boolean            & -             & true                         \\ \hline
+		gnss\_fix\_type             & GNSS Fix Type                 & Integer            & -             & 3                            \\ \hline
+		gnss\_time\_valid           & GNSS Time Validity            & Integer            & UNIX (UTC+0)  & 1704921651                   \\ \hline
 	\end{tabular}
 	\caption{Device Data JSON File Fields, Descriptions, Data Types, Units, and Example Values}
 	\label{table:device_data_types}
@@ -824,11 +838,11 @@ from either the TCP stream or a pre recorded WAV FIle.
 In both methods, the data is stored into an adapted ring buffer
 until it is used by the main application.
 \subsubsection{Ring Buffer}
-A slightly modified ring buffer has been implemented to buffer the 
+A slightly modified ring buffer has been implemented to buffer the
 audio data.
-It is thread save since the storing and reading functions are called from 
+It is thread save since the storing and reading functions are called from
 different threads.
-The main difference to a conventional ring buffer is that the data is not 
+The main difference to a conventional ring buffer is that the data is not
 read from the tail but rather from the head.
 
 
@@ -836,7 +850,7 @@ read from the tail but rather from the head.
 
 \subsubsection{WAV Stream}
 The WAV stream is made with the PYAudio and the WAVE library from python.
-With the WAVE library a .wav file is opened and then 
+With the WAVE library a .wav file is opened and then
 played back with PYAudio.
 Via a callback in the played audio is also stored into the ring buffer.
 
