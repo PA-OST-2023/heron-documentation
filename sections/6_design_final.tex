@@ -390,11 +390,17 @@ This was most likely caused by the soldering process, as the \acrshort{mems} mic
 
 \newpage
 \section{Firmware Design}
-Blabla
+The firmware of the sound source localization system is build upon the audio acquisition system firmware.
+It runs again on the \textit{Teensy 4.1} \acrshort{mcu} and the same toolchain has been used as described in section \ref{sec:acquisition_system_firmware_design}.
+One of the main components of the firmware is the integration of the \textit{QNEthernet} stack.
+However, integrating it proved to be quite challenging.
+The \textit{QNEthernet} stack is not designed for a multithreaded environment, necessitating the main ethernet handler to operate in the main thread, i.e., the background thread.
 
 \subsection{Overview}
-Blabla
-
+The firmware is structured into multiple software modules, most of them running in their own thread.
+Careful balancing of the thread priorities was essential to ensure the system's stability and performance.
+Especially, enough processing headroom for the background thread had to be reserved, for high ethernet throughput and a fluent display refresh rate.
+Table \ref{tab:threads} provides an overview of all threads and their purpose.
 \begin{table}[h]
 	\centering
 	\begin{tabular}{|l|l|}
@@ -410,7 +416,7 @@ Blabla
 		\texttt{Application}       & Main Application Logic       \\ \hline
 		\texttt{Main}              & Main Thread (Background)     \\ \hline
 	\end{tabular}
-	\caption{Overview of all threads and their purpose}
+	\caption{Overview of all Threads and their Purpose}
 	\label{tab:threads}
 \end{table}
 
