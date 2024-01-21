@@ -819,6 +819,26 @@ Figure \ref{fig:gui_pages_overview} shows an overview of all GUI pages and how n
 The software is made to perform the tracking of the sound sources\dots
 
 \subsection{Audio Interface}
+The Audio Interface provides the application with the audio data
+from either the TCP stream or a pre recorded WAV FIle.
+In both methods, the data is stored into an adapted ring buffer
+until it is used by the main application.
+\subsubsection{Ring Buffer}
+A slightly modified ring buffer has been implemented to buffer the 
+audio data.
+It is thread save since the storing and reading functions are called from 
+different threads.
+The main difference to a conventional ring buffer is that the data is not 
+read from the tail but rather from the head.
+
+
+\subsubsection{TCP Stream}
+
+\subsubsection{WAV Stream}
+The WAV stream is made with the PYAudio and the WAVE library from python.
+With the WAVE library a .wav file is opened and then 
+played back with PYAudio.
+Via a callback in the played audio is also stored into the ring buffer.
 
 \subsection{Tracker}
 
