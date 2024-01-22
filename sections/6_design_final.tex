@@ -57,6 +57,7 @@ The following section describes the key decisions made during the development of
 \newpage
 
 \section{Mechanical Design}
+\label{chap:fin:Mech}
 The mechanical design of the sound source localization system is characterized by its unique foldable microphone arms, conceptually inspired by the functionality of an umbrella.
 \textit{SolidWorks 2023} was utilized for the design process, facilitating efficient development.
 
@@ -876,6 +877,7 @@ Figure \ref{fig:gui_pages_overview} shows an overview of all \acrshort{gui} page
 
 
 \section{Software Design}
+\label{chap:fin:sw}
 The software is made to perform the tracking of the sound sources\dots
 
 \subsection{Audio Interface}
@@ -890,9 +892,12 @@ It is thread save since the storing and reading functions are called from
 different threads.
 The main difference to a conventional ring buffer is that the data is not
 read from the tail but rather from the head.
-
+This allows the application to always read the last $N$ samples while the data
+in the buffer does not get split up.
 
 \subsubsection{TCP Stream}
+The TCP streamer allows to stream the audio directly via TCP form the microphone array.
+
 
 \subsubsection{WAV Stream}
 The WAV stream is made with the PYAudio and the WAVE library from python.
