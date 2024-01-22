@@ -347,6 +347,10 @@ This can lead to ambiguity, when a sound source is under the array.
 The beamforming delays are the same for a source mirrored at the cutting surface.
 A three dimnsional array does not have this problem.
 
+
+
+\newpage
+\section{Final Array Geometry} \label{sec:final_array_geometry}
 Finally the idea of a multicircular array where the circles can be 
 set to a different height came up.
 In the measurements the multicircual array performed well. 
@@ -381,15 +385,9 @@ properties of the array.
 		\caption{EZ}
 		\label{fig:finpap}
 	\end{subfigure}
-	\caption{Test and simulation comparisons with a a source located at $(r, \phi, \theta) = (15, 0, \pi/2)$}
+	\caption{Test and simulation comparisons with a a source located at $(r, \phi, \theta) = (15m, 0^\circ, 90^\circ)$}
 	\label{fig:finflat}
 \end{figure}
-
-
-
-\newpage
-\section{Final Array Geometry} \label{sec:final_array_geometry}
-Blabla
 
 \begin{figure}[h]
 	\centering
@@ -397,3 +395,33 @@ Blabla
 	\caption{Final Array Concept Design}
 	\label{fig:final_array_concept_design}
 \end{figure}
+
+
+To make the circular sub array on different height levels
+a mechanical system is used as discribed in Section \ref{chap:fin:Mech}.
+The performance of the array changes with the angle of the microphone arms.
+Since a bigger angle lowers the distances between the microphones it is to be 
+excpected, that the performance decreases due to the influence of the lower frequencies.
+Figure \ref*{fig:fintilt} shows how the metrics change with the arm angle.
+Up to an angle of $30^\circ$ performance decreases slowly.
+Therefore the optimal angle range is between 0 and 30 degrees.
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{1\textwidth}
+		\centering
+		\includegraphics[width=0.95\textwidth]{images/5_array_evaluation/tilt_area.pdf}
+		\caption{GG}
+		\label{fig:finartilt}
+	\end{subfigure}
+	\begin{subfigure}[b]{1\textwidth}
+		\centering
+		\includegraphics[width=0.95\textwidth]{images/5_array_evaluation/tilt_PAP.pdf}
+		\caption{EZ}
+		\label{fig:finpaptilt}
+	\end{subfigure}
+	\caption{Test and simulation comparisons with a a source located at $(r, \phi, \theta) = (15, 0, \pi/2)$}
+	\label{fig:fintilt}
+\end{figure}
+
+
