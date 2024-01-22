@@ -879,7 +879,8 @@ Figure \ref{fig:gui_pages_overview} shows an overview of all \acrshort{gui} page
 \section{Software Design}
 \label{chap:fin:sw}
 The software is made to perform the tracking of the sound sources.
-It runs on a external device, in this case a Dell Latitude 5310 Laptop.
+It runs on a external device, in this case a Dell Latitude 5310 Laptop
+with Ubuntu installed.
 
 \subsection{Audio Interface}
 The Audio Interface provides the application with the audio data
@@ -902,7 +903,7 @@ WAV file.
 \subsubsection{TCP Stream}
 The TCP streamer allows to stream the audio directly via TCP form the microphone array.
 The streaming runs via a socket to which the application connects to.
-Uising the control sequence the recieved data is preprocessed and then stored into 
+Using the control sequence the received data is preprocessed and then stored into 
 the buffer.
 
 \subsubsection{WAV Stream}
@@ -910,19 +911,23 @@ The WAV stream is made with the PYAudio and the WAVE library from python.
 With the WAVE library a .wav file is opened and then
 played back with PYAudio.
 Via a callback in the played audio is also stored into the ring buffer.
+On windows and MacOs PYAudio could not stream a 32 channel WAV file.
+Hence the application needs to be ran on Ubuntu.
+Other Linux distributions may also work but were not tested during
+this thesis.
 
 \subsection{Communication}
-To retrieve the sensor datas from the microphone array
-a comminucator class was created.
+To retrieve the sensor data from the microphone array
+a communicator class was created.
 It continuously reads the JSON containing various data 
 via a POST request from the microphone array.
 
-\subsection{Tracker}
-The tracker consists of three major parts, the beamformer, peak detector and 
-tracker.
+\subsection{Sound source tracking}
+The sound source tracking consists of three parts, the beamformer, peak detector and 
+Kalman Tracker.
 \subsubsection*{Beamforming}
 First a data block is ran through the beamforming filterbank.
-Contrary to prior beamforming grid, a pseudo unformly sampled 
+Contrary to prior beamforming grid, a pseudo uniformly sampled 
 semisphere is used to define the steering angles.
 During testing, a samplenumber of 1700 points, which 
 gives an angle resolution of $\approx 2^\circ$, was used.
@@ -938,8 +943,8 @@ If only one source needs to be tracked, a simple argmax on the beamformer
 response is sufficient.
 
 For the case of multiple sources a more elaborate peakdetector is used.
-To simplify the peakdetector, the beamformer respones, wich is defined on
-a sphere is maped onto a flat surface with
+To simplify the peakdetector, the beamformer response, which is defined on
+a sphere is mapped onto a flat surface with
 \begin{align}
 	x &= \theta \cos\phi \\
 	y &= \theta \sin\phi.
@@ -952,7 +957,7 @@ This image allows the use of a 2d peak detector like the one described in
 The basic function is to use grayscale dilation to find local maxima
 and then filter out larger plateaus with a 
 median blur filter.
-The resulting peaks can be further filtered by minimal hieight and 
+The resulting peaks can be further filtered by minimal height and 
 minimal ratio to the maximum value.
 Other filters may be useful in the future, but were not implemented in this version.
 
@@ -1009,7 +1014,7 @@ can not be determined, the directions are mapped onto the map with
 To make the circle bigger, $\theta$ is multiplied by 30 before mapping it.
 The red circle indicates a $\theta = 90^\circ$.
 By using the compass data, the alignment of the array does not matter 
-for the tracks to be displayed in the right compass diraction.
+for the tracks to be displayed in the right compass direction.
 
 If the external does not have an internet connection to display the map,
 the application can be run in an offline mode.

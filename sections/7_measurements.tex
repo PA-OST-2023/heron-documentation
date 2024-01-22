@@ -22,9 +22,9 @@ different arm angles.
     \centering
     \begin{tabular}{ |c"c|c|c| }    
         \hline
-        * & \makecell{$\phi$} & 
-        \makecell{$\theta$} & 
-        \makecell{$r$}\\
+        * & \makecell{$\phi_s$} & 
+        \makecell{$\theta_s$} & 
+        \makecell{$r_s$}\\
         \thickhline
             $\bm{P_1}$ & 
             \makecell{$-120^\circ$} & 
@@ -37,13 +37,13 @@ different arm angles.
             \makecell{$17$m}\\ 
         \hline
             $\bm{P_3}$ & 
-            \makecell{$-158\circ$}& 
+            \makecell{$-158^\circ$}& 
             \makecell{$25^\circ$}& 
             \makecell{$32$m}\\ 
         \hline
             $\bm{P_4}$ & 
             \makecell{$-158^\circ$}&
-            \makecell{$15\circ$}& 
+            \makecell{$15^\circ$}& 
             \makecell{$52$m}\\
         \hline
             $\bm{P_5}$ & 
@@ -61,7 +61,7 @@ in section \ref{sec:metrics}.
 Tables \ref*{meas:tabPhi} and \ref*{meas:tabtheta} show the signed error
 for the two angles $\phi$ and $\theta$.
 The measurement of $\phi$ is relatively independent of the array arm angle.
-However for positions with a high $\theta$ the error in $\theta$ increases
+However for positions with a high $\theta_s$ the error in $\theta$ increases
 when the arm angle increases. 
 Since this was not the case in the simulation, it is suspected that 
 these errors come from physical effects of the sound waves in the array 
@@ -168,7 +168,16 @@ and the directionality of the used microphones.
     \label{meas:tabtheta}
 \end{table}
 
-\todo[inline]{balabalubua}
+The mainlobe areas from the measurements are as expected from the simulations.
+It is however observed that the mainlobe area at $\bm{P}_1, \bm{P}_3$ and $\bm{P}_4$
+is better when the arm is angled. 
+WIth the current measurements it can not be stated if this results from noise or
+from other effects.
+
+The PAP ratio is significantly lower than in the simulated cases.
+Since the measurement was taken outdoors with background noise, 
+this is no surprise.
+Nonetheless the PAP ratio follows similar trends when $\theta_s$ or the arm angle is changed.
 \begin{table}[h]
     \centering
     \begin{tabular}{ |P{1.8cm}"P{2cm}|P{2cm}|P{2cm}|P{2cm}|P{2cm} | }

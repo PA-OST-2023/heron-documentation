@@ -18,7 +18,7 @@ This range includes most of the sound's energy.
 
 The array geometry has some constraints,
 such as the number of microphones and the mechanical feasibility.
-As stated in \ref*{chap:AqqSys} the maximum number of microphones
+As stated in \ref*{chap:AqqSys} the maximum number of microphones \todo[inline]{Refernez zu flroian}
 in an array is 32.
 
 To compare different array geometries, several simulations
@@ -51,20 +51,25 @@ Another measure related to the main lobe with is the main lobe area.s
 The main lobe is defined as all the points around the peak where their value
 is greater than half the peaks value. \todo{besser englisch}
 
-\subsection{Area}
-Since the grid resulting from the beamforming represents spherical function
+\subsection{Area ratio}
+Since the grid resulting from the beamforming represents a function on a sphere,
 simply taking the sum of all the gridpoints from the mainlobe
 would deliver false results.
 So each grid point is normalized by the surface element of a sphere
 \begin{equation}
 	dA = r \sin\theta \, d\phi \cdot r d\theta.
 \end{equation}
+To make the resulting numbers easier to understand, the calculated area is divided
+by the area of the semisphere.
+So the area ratio shows how much of the whole search space is taken by the mainlobe.
+
 The area of the mainlobe determines how good different sources can be separated.
 With a big mainlobe area two close sources may lead to one bigger mainlobe instead
 of two separable ones.
 Since the area is calculated with for $\theta < 90^\circ$, the areas calculated
 for peaks close to that border are not the actual areas when looking at the 
 full angular range.
+
 
 \subsection{Peak Average Power ratio}
 The Peak Average Power ratio is the ratio between the peak power and
@@ -86,7 +91,7 @@ The best scores are reached with the Underbrink style array, a combination
 of multiple circular arrays.
 They also included several spiral based arrays
 Based on this three main groups of arrays were further analyzed,
-the circular array, an adaption of the underbrink array, and a archimedes
+the circular array, an adaption of the Underbrink array, and a archimedes
 spiral array.
 \subsection{Circular Array}
 The circular array is the most simple shape of these three.
@@ -97,6 +102,15 @@ For smaller array the best PAP they can have is reached with less
 microphones than the bigger ones need.
 This is expected since a bigger radius means bigger spacings between microphones
 which introduces aliasing on the higher frequencies.
+\begin{figure}[h]
+	\centering
+	%    \includegraphics[width=0.25\textwidth]{mesh}
+	\includegraphics[]{images/5_array_evaluation/circ_m_pap.pdf}
+	\caption{PAP ratio for different array radiuses and total number
+		of microphones.}
+	\label{aev:fig:MicCirc}
+\end{figure}
+
 Looking at Figure \ref*{aev:fig:areaCirc} and Figure \ref*{aev:fig:papCirc}
 the change of the mainlobe area and PAP ration can be seen for
 an array with 32 microphones and varying radius.
@@ -112,30 +126,24 @@ Looking at the derivative of $t_n$ with respect to $\theta$ it becomes
 clear that with angles close to $0^\circ$ the change of $t_n$ is high
 whereas if $\theta = 90^\circ$, $t_n$ changes slowly when $\theta$ is 
 changed.
-
-
-\begin{figure}
+\begin{figure}[h!]
 	\centering
-	%    \includegraphics[width=0.25\textwidth]{mesh}
-	\includegraphics[]{images/5_array_evaluation/circ_m_pap.pdf}
-	\caption{PAP ratio for different array radiuses and total number
-		of microphones.}
-	\label{aev:fig:MicCirc}
-\end{figure}
-\begin{figure}
-	\centering
-	%    \includegraphics[width=0.25\textwidth]{mesh}
-	\includegraphics[]{images/5_array_evaluation/area_circ.pdf}
-	\caption{Ratio of the mainlobe area compared to the area of a half sphere for
-		a circular array with 32 microphones.}
-	\label{aev:fig:areaCirc}
-\end{figure}
-\begin{figure}
-	\centering
-	%    \includegraphics[width=0.25\textwidth]{mesh}
-	\includegraphics[]{images/5_array_evaluation/PAP_circ.pdf}
-	\caption{Peak Average }
-	\label{aev:fig:papCirc}
+	\begin{subfigure}[b]{1\textwidth}
+		\centering
+		%    \includegraphics[width=0.25\textwidth]{mesh}
+		\includegraphics[]{images/5_array_evaluation/area_circ.pdf}
+		\caption{Mainlobe area ratio.}
+		\label{aev:fig:areaCirc}
+	\end{subfigure}
+	\begin{subfigure}[b]{1\textwidth}
+		\centering
+		%    \includegraphics[width=0.25\textwidth]{mesh}
+		\includegraphics[]{images/5_array_evaluation/PAP_circ.pdf}
+		\caption{Peak Average power ratio}
+		\label{aev:fig:papCirc}
+	\end{subfigure}
+	\caption{Metrics for circular microphone arrays with different radiuses and 32 microphones.}
+	\label{aev:fig:metrCirc}
 \end{figure}
 
 \subsection{Multi Circular Array}
@@ -145,15 +153,15 @@ microphone covers the same area of a ring with a fixed inner and outer radius an
 In this thesis the design has been changed so that given the same parameters,
 the circle were equally spaced and the phase shift between the circles can be defined.
 An example of such an array is shown in Figure \ref*{aev:fig:FancyArr}.
-
-All the parameters together lead to four degrees of freedom when designing such an array.
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	%    \includegraphics[width=0.25\textwidth]{mesh}
 	\includegraphics[]{images/5_array_evaluation/fancy_arr.pdf}
 	\caption{Hansi.}
 	\label{aev:fig:FancyArr}
 \end{figure}
+
+All the parameters together lead to four degrees of freedom when designing such an array.
 Optimizing these four parameter with some mechanical feasibility constraints is not an simple task.
 So the effect of single parameters while the others were fixed was studied.
 First the amount of circles was set.
@@ -166,21 +174,21 @@ Similar to the circular array, the lower frequencies play a big role in the metr
 Smaller arrays that have trouble localizing these frequencies perform the worst as seen
 in figures \ref*{aev:fig:FancyArea} and \ref*{aev:fig:FancyPap}.
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	%    \includegraphics[width=0.25\textwidth]{mesh}
 	\includegraphics[]{images/5_array_evaluation/fancy_area.pdf}
-	\caption{Area of the mainloabe for multi circualr arrays with different
-	sizess.}
+	\caption{Area of the mainlobe for multi circular arrays with different
+	sizes.}
 	\label{aev:fig:FancyArea}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	%    \includegraphics[width=0.25\textwidth]{mesh}
 	\includegraphics[]{images/5_array_evaluation/fancy_pap.pdf}
-	\caption{PAP ratio for multi circualr arrays with different
-	sizess.}
+	\caption{PAP ratio for multi circular arrays with different
+	sizes.}
 	\label{aev:fig:FancyPap}
 \end{figure}
 
@@ -191,7 +199,7 @@ $\approx 2.1\%$ an the PAP ratio is between 14 and 16.
 Comparing this to the multicircular array a PAP ratio of up
 more than 20 can be reached. 
 The areas however are generally larger and can lie in ranges 
-betwen one and four percent.
+between one and four percent.
 
 This tradeoff reminds of the windowing functions for discrete
 fouriertransforms. 
@@ -287,17 +295,7 @@ To reduce this a RØDE DeadWombat microphone cover was cut into small pieces
 and glued onto the microphones.
 This lead to significantly less wind noises.
 Two examples of test configurations are depicted in Figure \ref*{fig:testSetup}.
-The measured data was then evaluated using the mainlobe area and PAP ratio. 
-Additionaly to compare the real arrays to the simulated one, each measurement
-was also simulated.
-The result for a $\theta = 90^\circ$ and $\theta = 30^\circ$ are shown in 
-Figure \ref*{fig:TestSim}.
-In most cases the simulated arrays performed better.
-This is probably due to lower background noise in the environment and other 
-Quite extreme differences can be seen with the Archimedean array which is 
-suspected to be caused by the more reverberant measurement environment.
-
-\begin{figure}[]
+\begin{figure}[h]
 	\centering
 	\begin{subfigure}[b]{0.49\textwidth}
 		\centering
@@ -314,8 +312,16 @@ suspected to be caused by the more reverberant measurement environment.
 	\caption{Test arrays.}
 	\label{fig:testSetup}
 \end{figure}
-
-\begin{figure}[]
+The measured data was then evaluated using the mainlobe area and PAP ratio. 
+Additionally to compare the real arrays to the simulated one, each measurement
+was also simulated.
+The result for a $\theta = 90^\circ$ and $\theta = 30^\circ$ are shown in 
+Figure \ref*{fig:TestSim}.
+In most cases the simulated arrays performed better.
+This is probably due to lower background noise in the environment and other 
+Quite extreme differences can be seen with the Archimedean array which is 
+suspected to be caused by the more reverberant measurement environment.
+\begin{figure}[h]
 	\centering
 	\begin{subfigure}[b]{1\textwidth}
 		\centering
@@ -333,7 +339,7 @@ suspected to be caused by the more reverberant measurement environment.
 	\label{fig:TestSim}
 \end{figure}
 
-All the two dimensianal array geometries tested have the drawback
+All the two dimensional array geometries tested have the drawback
 that their performance is dependent on the \acrshort*{doa}.
 A directional independent array design is the spherical array. \cite{keylist}
 It uses the theory of spherical harmonics to sample the sound at specific points
@@ -348,20 +354,24 @@ possible advantages come to light.
 Until now the measurement space is a semisphere above the array with the array as the cutting surface.
 This can lead to ambiguity, when a sound source is under the array.
 The beamforming delays are the same for a source mirrored at the cutting surface.
-A three dimnsional array does not have this problem.
+A three dimensional array does not have this problem.
 
+Another positive effect of effect of three dimensional array is
+that the microphones are more spread out for sounds 
+coming from low thetas.
+With a flat array the 
 
 
 \newpage
 \section{Final Array Geometry} \label{sec:final_array_geometry}
 Finally the idea of a multicircular array where the circles can be 
 set to a different height came up.
-In the measurements the multicircual array performed well. 
+In the measurements the multicircular array performed well. 
 To get an optimal array geometry, the maximal radius of 0.38m was first set.
 Even though a larger radius would yield better results, it also
-comes with more mechanical challanges.
+comes with more mechanical challenges.
 The angle $\phi_o$ chosen to be the same as in the test array
-\textit{Multicircualr array 1} as it perfromed the best of the two multicircular 
+\textit{Multicircular array 1} as it performed the best of the two multicircular 
 configurations.
 To find a suited $r_i$, the mainlobe area and PAP ratio was calculated for
 various $r_i$.
