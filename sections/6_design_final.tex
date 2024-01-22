@@ -866,9 +866,12 @@ It is thread save since the storing and reading functions are called from
 different threads.
 The main difference to a conventional ring buffer is that the data is not
 read from the tail but rather from the head.
-
+This allows the application to always read the last $N$ samples while the data
+in the buffer does not get split up.
 
 \subsubsection{TCP Stream}
+The TCP streamer allows to stream the audio directly via TCP form the microphone array.
+
 
 \subsubsection{WAV Stream}
 The WAV stream is made with the PYAudio and the WAVE library from python.

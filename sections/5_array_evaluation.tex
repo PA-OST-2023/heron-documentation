@@ -34,8 +34,10 @@ This is a result from the projection of the semisphere onto a 2-d surface.
 \begin{figure}
 	\centering
 	%    \includegraphics[width=0.25\textwidth]{mesh}
-	\includegraphics[]{images/5_array_evaluation/0.5_0.79.pdf}
-	\caption{PGurke}
+	\includegraphics[]{images/5_array_evaluation/0.3_0.79.pdf}
+	\caption{$G(\phi, \theta)$ for $-180 \leq \phi \leq 180$ and $0 \leq \theta \leq 90$.
+	Red blob represents the mainlobe where the power is bigger than the half of the 
+	maximum power.}
 	\label{aev:fig:gridEx}
 \end{figure}
 \section{Metrics}
@@ -317,22 +319,22 @@ suspected to be caused by the more reverberant measurement environment.
 	\begin{subfigure}[b]{1\textwidth}
 		\centering
 		\includegraphics[width=0.95\textwidth]{images/5_array_evaluation/PapTestSim.pdf}
-		\caption{GG}
+		\caption{Comparison of the PAP ration.}
 		\label{fig:comp1}
 	\end{subfigure}
 	\begin{subfigure}[b]{1\textwidth}
 		\centering
 		\includegraphics[width=0.95\textwidth]{images/5_array_evaluation/AreaTestSim.pdf}
-		\caption{EZ}
+		\caption{Comparison of the mainlobe area}
 		\label{fig:comp2}
 	\end{subfigure}
-	\caption{Test and simulation comparisons with a a source located at $(r, \phi, \theta) = (15, 0, \pi/2)$}
+	\caption{Measurements and simulation comparisons with a a source located at $(r, \phi, \theta) = (15, 0, \pi/2)$}
 	\label{fig:TestSim}
 \end{figure}
 
 All the two dimensianal array geometries tested have the drawback
 that their performance is dependent on the \acrshort*{doa}.
-A directional independent array design is the spherical array.\cite{keylist}
+A directional independent array design is the spherical array. \cite{keylist}
 It uses the theory of spherical harmonics to sample the sound at specific points
 on a sphere.
 The number of microphones used is depending on the order of the harmonics and so 
