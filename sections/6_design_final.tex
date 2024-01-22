@@ -471,7 +471,6 @@ The system incorporates two methods for timekeeping: A \acrshort{gnss} module an
 The \acrshort{gnss} module is highly accurate, providing time information down to the nanosecond, which is essential for providing accurate timestamps for the audio stream.
 In contrast, the \acrshort{rtc} is designed to maintain time even if the device loses power.
 Once the \acrshort{gnss} time is established and stable, it automatically synchronizes the \acrshort{rtc}.
-
 The \acrshort{gnss} module sends periodically its timing information to the \acrshort{mcu} at a rate of 5\,Hz.
 Whenever a new time packet is received, the system logs the current internal system time in microseconds.
 This allows calculating the time offset to any subsequent \acrshort{api} call which asks for the current time.
@@ -484,18 +483,32 @@ To address this and achieve more precise timing information, a specific algorith
 \subsubsection{Phased Locked Loop (PLL)}
 To estimate the subseconds of the current \acrshort{rtc} time, a \acrfull{pll} has been used in combination with a \acrshort{pi}-controller.
 This approach effectively smooths out the \acrshort{rtc}'s stair-step signal, enhancing time resolution.
-The Proportional (P) component of the \acrshort{pi}-controller is set to zero to avoid amplifying the \acrshort{rtc}'s abrupt second changes, which could lead to output irregularities.
+The Proportional (P) component of the \acrshort{pi}-controller is set to zero to avoid amplifying the \acrshort{rtc}'s abrupt second changes.
 Instead, the focus is set on the Integral (I) component, which has been tuned by simulating the \acrshort{rtc}'s behavior in \textit{Python}.
-This configuration allows for a gradual accumulation of timing errors, rather than responding to immediate changes, leading to a smoother and more consistent output.
-A resulting integral gain of 0.01 was found to provide the best results.
+In practice, an integral gain of 0.01 was found to provide best results.
+The \acrshort{pll} algorithm is executed 5 times per second and can be described as
+\begin{equation}
+	\begin{aligned}
+		t_{\text{PLL}}
+		 & =
+		t_{\text{SYS}} - t_\Delta  + 0.5\,\text{s} \\
+		t_\Delta
+		 & =
+		K_p \cdot e + K_i \cdot \sum e             \\
+		e
+		 & =
+		t_{\text{SYS}} - (t_{\text{RTC}} + t_\Delta) \;.
+	\end{aligned}
+\end{equation}
 
+Figure \ref{fig:pll_measured_data} shows the measured timing data of the \acrshort{rtc} and the \acrshort{pll} output.
+It can clearly be seen that the \acrshort{pll} output is approaching the interpolated \acrshort{rtc} time.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1.0\textwidth]{images/6_design_final/PLL_Measured_Data_plot.pdf}
 	\caption{Measured Timing Data of the RTC and PLL Output}
 	\label{fig:pll_measured_data}
 \end{figure}
-
 
 \newpage
 \subsection{Human Machine Interface (HMI)}
