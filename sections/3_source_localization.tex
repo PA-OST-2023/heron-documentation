@@ -420,8 +420,52 @@ narrow band beamformer.
 Developing a beamforming based tracker for a wide band beamformer was outside of the 
 scope of this thesis.
 
-Another popular tracking independent of beamforing is a Kalmann tracker.
-Balabulaba
+Another popular tracker independent of beamforing is a Kalmann tracker.
+A Kalman tracker uses a Kalmann filter to filter out the measurement noise.
+The basic model is, that the source moves with a constant velocitiy leading to 
+the state and observation matrix
+\begin{equation*}
+	\bm{x}(n) = 
+	\begin{pmatrix}
+		x_n \\
+		y_n \\
+		z_n \\
+		\dot{x}_n \\
+		\dot{y}_n \\
+		\dot{z}_n \\
+	\end{pmatrix},
+	\bm{A}(n) = 
+	\begin{pmatrix}
+		1 & 0 & 0 & \Delta T & 0 & 0\\
+		0 & 1 & 0 & 0 & \Delta T  & 0\\
+		0 & 0 & 1 & 0 & 0 & \Delta T \\
+		0 & 0 & 0 & 1 & 0 & 0\\
+		0 & 0 & 0 & 0 & 1 & 0\\
+		0 & 0 & 0 & 0 & 0 & 1\\		
+	\end{pmatrix}, 
+	\bm{C}(n) = 
+	\begin{pmatrix}
+		1 & 0 & 0 & 0 & 0 & 0\\
+		0 & 1 & 0 & 0 & 0 & 0\\
+		0 & 0 & 1 & 0 & 0 & 0 \\	
+	\end{pmatrix}
+\end{equation*}
+With each new measurement, the Kalman filter is run and a new position is 
+estimated.
+
+To enable multi object tracking, another processign step is added.
+First the new measured objects are assigned to the already
+existing trackers. 
+To make this assignment somehow optimal, the Hungarian algorithm 
+with the measurement and blind prediction of each Kalman filter as input, is used.
+If the distance between the prediction and measured object position of a pair is close enough
+the Kalman filter is run with the measured position as input.
+However if they are far apart, the measured object is treated as a new object
+and is assigned to a new Kalman filter instance.
+
+Note that the tracker is in the cartesian coordinate system.
+The transformation from a \acrshort*{doa} to a cartesian point is
+covered in Section \ref*{chap:fin:sw}
 
 \newpage
 \section{Simulator}
