@@ -501,7 +501,6 @@ The \acrshort{pll} algorithm is executed 5 times per second and can be described
 		t_{\text{SYS}} - (t_{\text{RTC}} + t_\Delta) \;.
 	\end{aligned}
 \end{equation}
-
 Figure \ref{fig:pll_measured_data} shows the measured timing data of the \acrshort{rtc} and the \acrshort{pll} output.
 It can clearly be seen that the \acrshort{pll} output is approaching the interpolated \acrshort{rtc} time.
 \begin{figure}[h]
@@ -509,6 +508,96 @@ It can clearly be seen that the \acrshort{pll} output is approaching the interpo
 	\includegraphics[width=1.0\textwidth]{images/6_design_final/PLL_Measured_Data_plot.pdf}
 	\caption{Measured Timing Data of the RTC and PLL Output}
 	\label{fig:pll_measured_data}
+\end{figure}
+
+\subsection{Remote Configuration}
+The firmware includes an \acrshort{http} server on port 6667 that offers access to a \acrshort{json} file containing key system information.
+This file, essential for remote management, details parameters such as the device's position, orientation, and status.
+To retrieve this \acrshort{json} file, a simple \acrshort{http} GET request is made to the server's root \acrshort{url}.
+This should be done periodically to ensure the most up-to-date information.
+Table \ref{table:device_data_types} provides an overview of all data fields and their purpose.
+\begin{table}[h!]
+	\centering
+	\tiny
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		\textbf{Data Field}         & \textbf{Description}        & \textbf{Data Type} & \textbf{Unit} & \textbf{Example Value}       \\ \hline
+		device\_firmware\_version   & Firmware Version            & String             & -             & \texttt{"V0.1"}              \\ \hline
+		device\_firmware\_build     & Firmware Build Date         & String             & -             & \texttt{"240110"}            \\ \hline
+		device\_cpu\_frequency      & CPU Frequency               & Integer            & Hz            & 912000000                    \\ \hline
+		device\_cpu\_temperature    & CPU Temperature             & Float              & °C            & 36.5                         \\ \hline
+		device\_operating\_time     & Device Operating Time       & Integer            & s             & 15615                        \\ \hline
+		device\_system\_warning     & System Warning Status       & Boolean            & -             & false                        \\ \hline
+		ethernet\_mac               & MAC Address                 & String             & -             & \texttt{"48:53:52:20:3C:33"} \\ \hline
+		ethernet\_ip                & IP Address                  & String             & -             & \texttt{"192.168.1.10"}      \\ \hline
+		streaming\_state            & Streaming State             & Boolean            & -             & true                         \\ \hline
+		streaming\_speed            & Streaming Speed             & Float              & Mbit/s        & 22.21                        \\ \hline
+		streaming\_buffer           & Streaming Buffer Fill Level & Float              & \%            & 15.1                         \\ \hline
+		sensor\_heading             & Device Heading              & Float              & °             & 270.0                        \\ \hline
+		sensor\_pitch               & Device Pitch                & Float              & °             & 5.2                          \\ \hline
+		sensor\_roll                & Device Roll                 & Float              & °             & 2.4                          \\ \hline
+		sensor\_temperature         & Ambient Temperature         & Float              & °C            & 22.3                         \\ \hline
+		sensor\_pressure            & Ambient Pressure            & Float              & hPa           & 1013.2                       \\ \hline
+		sensor\_altitude            & Device Altitude             & Float              & m (MSL)       & 434.5                        \\ \hline
+		sensor\_angle               & Arm Angle                   & Float              & °             & 45.7                         \\ \hline
+		sensor\_magnet\_detected    & Magnet Detection Status     & Boolean            & -             & true                         \\ \hline
+		sensor\_magnet\_too\_weak   & Magnet Too Weak Status      & Boolean            & -             & false                        \\ \hline
+		sensor\_magnet\_too\_strong & Magnet Too Strong Status    & Boolean            & -             & false                        \\ \hline
+		gnss\_latitude              & GNSS Latitude               & Float              & °             & 40.7128                      \\ \hline
+		gnss\_longitude             & GNSS Longitude              & Float              & °             & -74.0060                     \\ \hline
+		gnss\_altitude              & GNSS Altitude               & Float              & m (MSL)       & 344.8                        \\ \hline
+		gnss\_magnetic\_declination & GNSS Magnetic Declination   & Float              & °             & -5.0                         \\ \hline
+		gnss\_satelite\_count       & GNSS Satellite Count        & Integer            & -             & 8                            \\ \hline
+		gnss\_fix                   & GNSS Fix Status             & Boolean            & -             & true                         \\ \hline
+		gnss\_fix\_type             & GNSS Fix Type               & Integer            & -             & 3                            \\ \hline
+		gnss\_time\_valid           & GNSS Time Validity          & Boolean            & -             & true                         \\ \hline
+	\end{tabular}
+	\caption{Device Data JSON File}
+	\label{table:device_data_types}
+\end{table}
+In addition to providing system information, the device is designed to receive commands from the host.
+This is achieved by sending a \acrshort{json} file to the web server via a POST request.
+As of now, the system demonstrates this functionality with a single implemented command (\texttt{"clear\_warning"}).
+While currently limited to this one command, plans include introducing further data fields, such as \acrshort{rtk} coefficients.
+Table \ref{tab:received_commands} provides an overview of all control commands and their purpose.
+\begin{table}[h!]
+	\centering
+	\tiny
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		\textbf{Data Field}  & \textbf{Description}                    & \textbf{Data Type} & \textbf{Unit} & \textbf{Example Value} \\ \hline
+		clear\_warning       & Clears the warning status               & Boolean            & -             & true                   \\ \hline
+		gnss\_coefficient\_x & GNSS RTK Coefficients (not implemented) & Float              & -             & -                      \\ \hline
+	\end{tabular}
+	\caption{Command JSON File}
+	\label{tab:received_commands}
+\end{table}
+
+\newpage
+\subsection{Sensor Calibration} \label{sec:sensor_calibration}
+The calibration of the magnetometer involves a customized approach, building upon the \textit{Motion Sensor Calibration Tool} originally developed by \textit{PJRC}.
+This tool, initially designed for external use on a \acrshort{pc}, has been adapted to run directly on the \textit{Teensy 4.1}.
+The fundamental principle of the algorithm is to collect data points while the sensor undergoes rotation in various directions.
+Ideally, these points, when plotted in 3D space, should form a perfect sphere centered at the origin.
+
+In practice, due to hard and soft magnetic offsets, the resulting shape deviates from a perfect sphere,
+forming an ellipsoid that is both deformed and offset from the origin.
+The transformation caused by these offsets can be mathematically expressed as
+\begin{equation}
+	\mathbf{m}_\text{cal} = \mathbf{A} \cdot \left( \begin{bmatrix} \tilde{m}_x \\ \tilde{m}_y \\ \tilde{m}_z \end{bmatrix} - \mathbf{b} \right)
+\end{equation}
+where $\mathbf{b}$ represents the hard-iron offsets and $\mathbf{A}$ expresses the soft-iron coefficients as a 3x3 matrix.
+
+To address this, \textit{NXP} has developed an advanced algorithm that accurately fits this ellipsoid using a least squares approach, complemented by outlier detection.
+The intricacies of this algorithm are thoroughly explained in a specific application note provided by \textit{NXP} \cite{compass_calibration}.
+
+Once the calibration process is successfully completed, the resulting coefficients are stored in the \textit{Teensy 4.1}'s flash memory.
+These saved coefficients are then automatically recalled and utilized each time the system is rebooted.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.9\textwidth]{images/6_design_final/sensor_calibration.png}
+	\caption{Motion Sensor Calibration Tool by \textit{PJRC}}
+	\label{fig:sensor_calibration_tool}
 \end{figure}
 
 \newpage
@@ -532,86 +621,23 @@ Table \ref{tab:system_status_led} provides an overview of the \acrshort{led} ind
 	\label{tab:system_status_led}
 \end{table}
 
-\subsection{Remote Configuration}
-Blabla
-
-\begin{table}[h!]
-	\tiny
-	\centering
-	\begin{tabular}{|l|l|l|l|l|}
-		\hline
-		\textbf{Data Field}         & \textbf{Description}          & \textbf{Data Type} & \textbf{Unit} & \textbf{Example Value}       \\ \hline
-		device\_firmware\_version   & Firmware Version              & String             & -             & \texttt{"V0.1"}              \\ \hline
-		device\_firmware\_build     & Firmware Build Date           & String             & -             & \texttt{"240110"}            \\ \hline
-		device\_cpu\_frequency      & CPU Frequency                 & Integer            & Hz            & 912000000                    \\ \hline
-		device\_cpu\_temperature    & Current CPU Temperature       & Float              & °C            & 36.5                         \\ \hline
-		device\_operating\_time     & Device Operating Time         & Integer            & s             & 15615                        \\ \hline
-		device\_system\_warning     & Current System Warning Status & Boolean            & -             & false                        \\ \hline
-		ethernet\_mac               & MAC Address                   & String             & -             & \texttt{"48:53:52:20:3C:33"} \\ \hline
-		ethernet\_ip                & Current IP Address            & String             & -             & \texttt{"192.168.1.10"}      \\ \hline
-		streaming\_state            & Current Streaming State       & Boolean            & -             & true                         \\ \hline
-		streaming\_speed            & Current Streaming Speed       & Float              & Mbit/s        & 22.21                        \\ \hline
-		streaming\_buffer           & Streaming Buffer Fill Level   & Float              & \%            & 15.1                         \\ \hline
-		sensor\_heading             & Device Heading                & Float              & °             & 270.0                        \\ \hline
-		sensor\_pitch               & Device Pitch                  & Float              & °             & 5.2                          \\ \hline
-		sensor\_roll                & Device Roll                   & Float              & °             & 2.4                          \\ \hline
-		sensor\_temperature         & Ambient Temperature           & Float              & °C            & 22.3                         \\ \hline
-		sensor\_pressure            & Ambient Pressure              & Float              & hPa           & 1013.2                       \\ \hline
-		sensor\_altitude            & Device Altitude               & Float              & m (MSL)       & 434.5                        \\ \hline
-		sensor\_angle               & Arm Angle                     & Float              & °             & 45.7                         \\ \hline
-		sensor\_magnet\_detected    & Magnet Detection Status       & Boolean            & -             & true                         \\ \hline
-		sensor\_magnet\_too\_weak   & Magnet Too Weak Status        & Boolean            & -             & false                        \\ \hline
-		sensor\_magnet\_too\_strong & Magnet Too Strong Status      & Boolean            & -             & false                        \\ \hline
-		gnss\_latitude              & GNSS Latitude                 & Float              & °             & 40.7128                      \\ \hline
-		gnss\_longitude             & GNSS Longitude                & Float              & °             & -74.0060                     \\ \hline
-		gnss\_altitude              & GNSS Altitude                 & Float              & m (MSL)       & 344.8                        \\ \hline
-		gnss\_magnetic\_declination & GNSS Magnetic Declination     & Float              & °             & -5.0                         \\ \hline
-		gnss\_satelite\_count       & GNSS Satellite Count          & Integer            & -             & 8                            \\ \hline
-		gnss\_fix                   & GNSS Fix Status               & Boolean            & -             & true                         \\ \hline
-		gnss\_fix\_type             & GNSS Fix Type                 & Integer            & -             & 3                            \\ \hline
-		gnss\_time\_valid           & GNSS Time Validity            & Integer            & UNIX (UTC+0)  & 1704921651                   \\ \hline
-	\end{tabular}
-	\caption{Device Data JSON File Fields, Descriptions, Data Types, Units, and Example Values}
-	\label{table:device_data_types}
-\end{table}
-
-For remote configuration, the client (e.g. a PC) sends a JSON file containing the desired command and its parameters to the device.
-
-\begin{table}[h!]
-	\tiny
-	\centering
-	\begin{tabular}{|l|l|l|l|l|}
-		\hline
-		\textbf{Data Field}    & \textbf{Description}                       & \textbf{Data Type} & \textbf{Unit} & \textbf{Example Value} \\ \hline
-		clear\_warning         & Clears the warning status                  & Boolean            & -             & true / false           \\ \hline
-		gnss\_coefficient\_xxx & GNSS RTK Coefficient XXX (Not implemented) & Float              & -             & -                      \\ \hline
-	\end{tabular}
-	\caption{Overview of Received Commands in JSON File}
-	\label{tab:received_commands}
-\end{table}
-
-\subsection{Sensor Calibration} \label{sec:sensor_calibration}
-Blabla
-
-
 \subsection{Graphical User Interface (GUI)}
-The GUI provides a user-friendly interface for configuring the device and monitoring its status.
-It is based on the LVGL framework.
+The \acrshort{gui} provides a user-friendly interface for configuring the device and monitoring its status.
+It is based on the acquisition system's \acrshort{gui} and makes again use of the \textit{lvgl} framework.
 
-\newpage
 \subsection{GUI Pages}
-In the following sections, the different GUI pages are explained in detail.
+In the following sections, the different \acrshort{gui} pages are explained in detail.
 Navigating between the pages is done by clicking on the corresponding icon in the home menu.
 To return to the home menu, the sub-page header bar with the arrow symbol can be pressed.
-Figure \ref{fig:gui_pages_overview} shows an overview of all GUI pages and how navigation between them is done.
+Figure \ref{fig:gui_pages_overview} shows an overview of all \acrshort{gui} pages and how navigation between them is done.
 \begin{figure}[h!]
 	\centering
 	\vspace{-0.5cm}
-	\includegraphics[width=0.85\textwidth]{images/6_design_final/final_design_gui_pages.pdf}
+	\includegraphics[width=0.86\textwidth]{images/6_design_final/final_design_gui_pages.pdf}
 	\caption{GUI Pages Overview}
 	\label{fig:gui_pages_overview}
 \end{figure}
-\vspace{-0.3cm}
+\newpage
 
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{l}{4.5cm}
@@ -626,7 +652,7 @@ Figure \ref{fig:gui_pages_overview} shows an overview of all GUI pages and how n
 	On the bottom of the screen, the current firmware version and build date is displayed.
 	After the system has booted, the home menu is displayed.
 \end{minipage}
-\vspace{2.2cm}		% One line corresponds to ca. 0.4cm
+\vspace{2.0cm}		% One line corresponds to ca. 0.4cm
 
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{l}{4.5cm}
@@ -647,7 +673,7 @@ Figure \ref{fig:gui_pages_overview} shows an overview of all GUI pages and how n
 	The \acrshort{usb} icon is filled white when a device is connected to the \acrshort{usb} port.
 	As soon as the virtual COM port is opened, the icon turns green.
 \end{minipage}
-\pagebreak
+\vspace{0.1cm}
 
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{l}{4.5cm}
@@ -661,7 +687,7 @@ Figure \ref{fig:gui_pages_overview} shows an overview of all GUI pages and how n
 	The system information page displays important device information such as the firmware version,
 	firmware build date, etherent \acrshort{mac} address, \acrshort{cpu} frequency and temperature, as well as the operating time.
 \end{minipage}
-\vspace{1.3cm}
+\vspace{2.1cm}
 
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{l}{4.5cm}
@@ -677,7 +703,7 @@ Figure \ref{fig:gui_pages_overview} shows an overview of all GUI pages and how n
 	Two gauge bars display the current streaming speed and the fill level of the streaming buffer.
 	In normal operation, the indicated streaming speed should be around 22\,Mbit/s and the buffer fill level near 0\,\%.
 \end{minipage}
-\vspace{0.0cm}
+\newpage
 
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{l}{4.5cm}
@@ -693,7 +719,7 @@ Figure \ref{fig:gui_pages_overview} shows an overview of all GUI pages and how n
 	When the \acrshort{ip} address is changed, the user can either confirm the change or discard it by returning to the previous page.
 	When a new \acrshort{ip} address is confirmed, the device will instantly change its \acrshort{ip} address and restart the servers.
 \end{minipage}
-\vspace{0.0cm}
+\vspace{0.2cm}
 
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{l}{4.5cm}
@@ -730,7 +756,7 @@ Figure \ref{fig:gui_pages_overview} shows an overview of all GUI pages and how n
 	For example, the \acrshort{url} directs to: \smallskip \newline
 	\url{google.com/maps/place/47.222400,8.816460}
 \end{minipage}
-\vspace{-0.2cm}
+\vspace{0.0cm}
 
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{l}{4.5cm}
@@ -786,7 +812,7 @@ Figure \ref{fig:gui_pages_overview} shows an overview of all GUI pages and how n
 	If the magnet is too weak or too strong, the corresponding status indicator turns yellow.
 	Otherwise, the status indicators are grayed out.
 \end{minipage}
-\pagebreak
+\vspace{0.0cm}
 
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{l}{4.5cm}
@@ -847,9 +873,9 @@ Figure \ref{fig:gui_pages_overview} shows an overview of all GUI pages and how n
 	Below the mode settings, the \acrshort{led} brightness can be adjusted.
 	All settings are saved in the internal flash memory of the device and are restored after a reboot.
 \end{minipage}
-
-
 \newpage
+
+
 \section{Software Design}
 \label{chap:fin:sw}
 The software is made to perform the tracking of the sound sources\dots
