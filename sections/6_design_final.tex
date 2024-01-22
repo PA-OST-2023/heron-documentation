@@ -878,7 +878,8 @@ Figure \ref{fig:gui_pages_overview} shows an overview of all \acrshort{gui} page
 
 \section{Software Design}
 \label{chap:fin:sw}
-The software is made to perform the tracking of the sound sources\dots
+The software is made to perform the tracking of the sound sources.
+It runs on a external device, in this case a Dell Latitude 5310 Laptop.
 
 \subsection{Audio Interface}
 The Audio Interface provides the application with the audio data
@@ -894,6 +895,9 @@ The main difference to a conventional ring buffer is that the data is not
 read from the tail but rather from the head.
 This allows the application to always read the last $N$ samples while the data
 in the buffer does not get split up.
+
+Additionally the ringbuffer is able to write newly input data into a 
+WAV file. 
 
 \subsubsection{TCP Stream}
 The TCP streamer allows to stream the audio directly via TCP form the microphone array.
@@ -936,10 +940,11 @@ response is sufficient.
 For the case of multiple sources a more elaborate peakdetector is used.
 To simplify the peakdetector, the beamformer respones, wich is defined on
 a sphere is maped onto a flat surface with
-\begin{align*}
+\begin{align}
 	x &= \theta \cos\phi \\
 	y &= \theta \sin\phi.
-\end{align*}
+	\label{eq:maping}
+\end{align}
 This mapping is later also used for the Kalmann tracker.
 The mapped response is then converted to an image with linear interpolation.
 This image allows the use of a 2d peak detector like the one described in 
@@ -972,6 +977,39 @@ on e pre recorder WAV file.
 	\label{fin:fig:gui}
 \end{figure}
 
+\subsubsection*{Connections}
 On the left side the user can manage the connections to the audio streamer.
-New connections to a Wav streamer can be
-Blabla
+New connections to a Wav streamer can be established by providing a audio file
+and an array configuration. To open a TCP connection, the IP address and port
+of the array is needed.
+Connections can also be closed with the \textit{close connection} button.
+
+Open connections are listed below and via a dropdown list, 
+the displayed connection can be selected.
+
+The streamed audio data can be recorded to a WAV file with the \textit{Start Recording}
+button.
+
+\subsubsection*{Beamforming}
+The beamformer response is shown in two different ways.
+The top plot shows the mapped beamformer response in a surface plot, where
+the z-axis represents the beamformed power.
+To increase readability the power is normalized between zero and one.
+The bottom plot displays the sampled semisphere where the color 
+represents the beamformed power. 
+
+\subsubsection*{Map}
+The map shows the current position of the array.
+If no GPS data is available the default position is by the 
+building 8 at OST in Rapperswil. 
+The tracks are also displayed on the map.
+Since with one array the exact position of the sound source 
+can not be determined, the directions are mapped onto the map with 
+\ref*{eq:maping}. 
+To make the circle bigger, $\theta$ is multiplied by 30 before mapping it.
+The red circle indicates a $\theta = 90^\circ$.
+By using the compass data, the alignment of the array does not matter 
+for the tracks to be displayed in the right compass diraction.
+
+If the external does not have an internet connection to display the map,
+the application can be run in an offline mode.
