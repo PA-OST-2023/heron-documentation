@@ -923,8 +923,9 @@ It continuously reads the JSON containing various data
 via a POST request from the microphone array.
 
 \subsection{Sound source tracking}
-The sound source tracking consists of three parts, the beamformer, peak detector and 
+The sound source tracking consists of three parts, the beamforming, peak detector and 
 Kalman Tracker.
+
 \subsubsection*{Beamforming}
 First a data block is ran through the beamforming filterbank.
 Contrary to prior beamforming grid, a pseudo uniformly sampled 
@@ -939,7 +940,7 @@ which gives a power level for each steering direction.
 
 \subsubsection*{Peak detection}
 To detect where possible sound source are, a peak detector was implemented.
-If only one source needs to be tracked, a simple argmax on the beamformer 
+If only one source needs to be tracked, a simple argmax on the beamforming 
 response is sufficient.
 
 For the case of multiple sources a more elaborate peakdetector is used.
@@ -970,10 +971,11 @@ Filter can predict it's new position.
 By default it makes ten such blind predictions until the track is discarded.
 
 \subsection{GUI}
-To visualize the beamforming responses and control the tracker a web based GUI with 
-Plotly was created.
-Figure \ref*{fin:fig:gui} shows a screenshot of the GUI while tracking is performed
-on e pre recorder WAV file.
+To visualize the beamforming responses and control the tracker a web based \acrshort*{gui} with 
+Plotly and Dash was created.
+Figure \ref*{fin:fig:gui} shows a screenshot of the \acrshort*{gui} while tracking is performed
+on a pre recorder WAV file.
+With the \acrshort*{gui} and the current tracker settings the software runs on 5 \acrshort{fps}.
 \begin{figure}
 	\centering
 	%    \includegraphics[width=0.25\textwidth]{mesh}
@@ -996,8 +998,8 @@ The streamed audio data can be recorded to a WAV file with the \textit{Start Rec
 button.
 
 \subsubsection*{Beamforming}
-The beamformer response is shown in two different ways.
-The top plot shows the mapped beamformer response in a surface plot, where
+The beamforming response is shown in two different ways.
+The top plot shows the mapped beamforming response in a surface plot, where
 the z-axis represents the beamformed power.
 To increase readability the power is normalized between zero and one.
 The bottom plot displays the sampled semisphere where the color 

@@ -83,10 +83,10 @@ With these considerations the PAP ratio is defined as
 A high PAP ratio is desired, since it means that little power is leaking 
 into other directions than the real \acrshort{doa}.
 \section{Array Geometry}
-In \todo{cite} the authors use a circular array to detect and track drones.
+In \cite{GuiAhmad} the authors use a circular array to detect and track drones.
 They however did not gave any reasoning no why the chose a circular array.
-\cite{bandkProducts}
-In \cite{arr1} different array types are compared and measured.
+%\cite{bandkProducts}
+In \cite{array_comp} different array types are compared and measured.
 The best scores are reached with the Underbrink style array, a combination
 of multiple circular arrays.
 They also included several spiral based arrays
@@ -207,11 +207,17 @@ fouriertransforms.
 \subsection{Archimedean Spiral Array}
 An archimedean spiral in polar coordinates is defined as
 \begin{equation}
-	r(\varphi) = a * \varphi.
+	\label{eva:eq:arch}
+	r(\varphi) = a \varphi.
 \end{equation}
 Making an array with this shape has three degrees of freedom,
-$r$ of the first microphone, $r$ of the last microphone and the 
-spiral arm spacing $a$. 
+$r_i$ of the first microphone, $r_o$ of the last microphone and the 
+spiral arm spacing $d$. 
+Using these parameters, \eqref{eva:eq:arch} is rewritten to
+\begin{equation}
+	r(\phi) = \frac{d}{1 - 2\pi} \phi + r_i.
+\end{equation}
+
 \todo[inline]{IRGENDÖPPIS}
 
 
@@ -234,11 +240,10 @@ Based on simulation results, two specific array types were explored: The Multi-C
 		\caption{Multi-Circular Array}
 		\label{fig:prototype_array_multi_circular}
 	\end{wrapfigure}
-	This array geometry allows to build circular arrays with radiuses of 20cm, 25cm and
-	30cm.
-	A circle with a radius of 15cm was added to make the adaptation of the Underbrink array. 
-	The orange points show such a configuration with $\phi_o = \pi/16$.
-	A second geometry, where each circle is shifted by $\phi_o = \pi / 8$ is also possible.
+	This array setup allows to build two different multi-circular arrays with four rings.
+	One with an $\phi_o = \pi/16$ and the second one with $\phi_o = \pi / 8$.
+	On the three outer circles a total of 32 microphones can be installed, to 
+	build circular arrays with radiuses of 20cm, 25cm and 30cm
 \end{minipage}
 \vspace{5.5cm}    % Adjust this depending on the length of the text above
 
@@ -257,6 +262,9 @@ Based on simulation results, two specific array types were explored: The Multi-C
 
 \end{minipage}
 \newpage
+
+
+
 
 
 \subsection{Wooden Prototype Arrays}
@@ -281,7 +289,7 @@ In the centre of each array, a mechanical mount for the Acquisition-System hardw
 
 \section{Measurements \& Findings} \label{sec:array_prototype_measurements}
 The performance of the physical arrays were evaluated with outdoor measurement.
-To simulate a drone the sound of a DJI Mavic drone \todo{Cite yt} was played back on 
+To simulate a drone the sound of a DJI Mavic Pro drone was played back on 
 UE BOOM loudspeakers.
 Various angles were tested by turning and tilting the array such that 
 the loudspeakers are in the direction to bes tested.
@@ -289,6 +297,50 @@ The distance of the loudspeaker to the array was set to
 15m.
 All of the tests except the archimedean were made in an open field with little reverberation.
 The archimedean array had to be tested between buildings due to rain.
+In Table \ref{eval:arrs} the tested arrays and their parameter are listed.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ |c"c|c|c| }    
+        \hline
+        * & \makecell{Type} & 
+        \makecell{Max radius} & 
+        \makecell{Other parameters}\\
+        \thickhline
+            Circ 20 & 
+            \makecell{Circular} & 
+            \makecell{0.2m}& 
+            \makecell{-}\\ 
+        \hline
+            Circ 25 & 
+            \makecell{Circular}& 
+            \makecell{0.25m}& 
+            \makecell{-}\\ 
+        \hline
+            Circ 30 & 
+            \makecell{Circular}& 
+            \makecell{0.3m}& 
+            \makecell{-}\\ 
+        \hline
+            Multi circ 1 & 
+            \makecell{Multi-circular}&
+            \makecell{0.3m}& 
+            \makecell{$\phi_o = \pi/16$}\\
+        \hline
+            Multi circ 2 & 
+            \makecell{Mutli-circular}&
+            \makecell{0.3m}& 
+            \makecell{$\phi_o = \pi/8$}\\
+        \hline
+            Arch & 
+            \makecell{Archimedean}&
+            \makecell{0.3m}& 
+            \makecell{$r_i = 0.05$m, $d = 0.0625$m}\\
+        \hline
+    \end{tabular}
+    \caption{Test arrays.}
+    \label{eval:arrs}
+\end{table}
 
 During the first tests, the wind caused the microphone to overdrive
 thus making the signal useless.
@@ -342,7 +394,7 @@ suspected to be caused by the more reverberant measurement environment.
 
 All the two dimensional array geometries tested have the drawback
 that their performance is dependent on the \acrshort*{doa}.
-A directional independent array design is the spherical array. \cite{keylist}
+A directional independent array design is the spherical array \cite{Rafaely2010}.
 It uses the theory of spherical harmonics to sample the sound at specific points
 on a sphere.
 The number of microphones used is depending on the order of the harmonics and so 
@@ -362,7 +414,11 @@ that the microphones are more spread out for sounds
 coming from low thetas.
 Ideally all the microphones are sampled at the exact same time, but in 
 reality this may not be the case.
-\todo[inline]{Nicht verzagen Florian Fragen}
+From the microphone to the Teensy4.1 the signals is dependent on different clocks and 
+filters, which are not guaranteed to be synchronous.
+With a low spread of the microphones, a small error in the sampling times could
+induce a larger error in the measured \acrshort*{doa} than if 
+the microphones were more spread out.
 
 
 \newpage
