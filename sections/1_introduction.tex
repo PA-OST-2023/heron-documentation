@@ -26,9 +26,13 @@ The inherent limitation of a single microphone array is its ability to determine
 Consequently, it became apparent that accurate localization of drones in the three-dimensional space necessitates the integration of multiple microphone arrays.
 Each array contributes a directional vector towards the sound source.
 The exact position of the object is then deduced by finding the theoretical point of intersection of these vectors, considering the known locations and orientations of each array.
-Figure (xxx) illustrates this concept.
-
-\todo[inline]{Add image of setup}
+Figure \ref{fig:areal_overview_diagram} illustrates this concept.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1.0\textwidth, trim={0 -0.1cm 0 -0.3cm}]{images/1_introduction/areal_overview_diagram_2.pdf}
+	\caption{Areal Visualizations of Multiple Microphone Arrays}
+	\label{fig:areal_overview_diagram}
+\end{figure}
 
 It is important to note that the main focus of this project centers on the development of the microphone array itself,
 which is responsible for providing a vector to the sound source.
