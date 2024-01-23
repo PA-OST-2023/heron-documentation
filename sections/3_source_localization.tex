@@ -1,48 +1,70 @@
 \graphicspath{ {images/3_source_localization/} }
 \chapter{Sound Source Localization}
 \section{Physical background}
-This section shows some underling fundamentals on which the following described theory is based on.
-\todo{Schribe}
+This section introduces the sound propagation model from \cite{physik_skript} which the following described theory is based on.
+The sound propagation of an ideal isotropic source follows
+\begin{equation}
+	I = \frac{P}{4\pi r^2},
+\end{equation}
+where $I$ is the measurement point, $P$ is the source power and $r$ is the distance
+between $I$ and the source.
+In this formula the absorption of the air is neglected.
+If the sound intensity is measured at two points which are much closer
+to each other than they are from the source, the intensities are approximately
+$I_1 \approx I_2$.
+
+The propagation speed of sound waves in air is 
+\begin{equation}
+	c = \sqrt{\frac{\aleph R T}{M}}
+\end{equation}
+with $\aleph$ as the heat capacity ration, R as the gas constant, T as the temperature
+and M as the molar mass.
+If $c$ is known for a specific temperature $T_0$ the equation is equal to 
+\begin{equation}
+	c(T) = c_{T_0} \sqrt{1 + \frac{T}{T_0}}.
+\end{equation}
+
 
 \section{Sound Source Localization Methods}
 \acrfull{ssl} is a well researched area with many applications.
-\cite{nat_skript}
 The basic system can be brought into two categories, time based or power based methods.
 \subsection{Power based SSL}
 The idea of power based SSL is based of the known propagation properties of sound waves in air.
-BlaBlaBla \todo{short text}
 However for this method to work some properties of the sound source have to be known.
-Additionally the sensors that measure the sound power levels have to be calibrated \dots
+Additionally the sensors that measure the sound power levels have to be precise
+enough to be able to capture small differences in Sound power levels.
+To avoid such demanding hardware requirements this approach was not further 
+studied in this thesis.
 
 \subsection{Time Based SSL}
 Another group of \acrshort*{ssl} is based on the time when the
-signal is received by the microphones.
+signal is picked up by the microphones.
 Given a source at a location $\bm{S} = (x_S,y_S)^T$ and $N$ microphones at locations
 $\bm{M_n} = (x_n,y_n)^T$ the time it takes for a acoustic signal from the source to reach a microphone is
 \begin{equation}
 	t_n = \frac{\lVert \bm{S} - \bm{M_n}\rVert}{c}
 	= \frac{\sqrt{\left(x_S - x_n\right) + \left(y_S - y_n\right)}}{c} .
 \end{equation}
-So if $t_n$ is known for a microphone, the location of the source can be limited to point on a circle
+So if $t_n$ is known for a microphone, the location of the source can be limited to points on a circle
 around $M_n$ with a radius of $t_n c$.
-Given three or more microphones the intersection of these circles will show th location of the source.
-However in many cases this approach is not realistic since $t_n$ is generally not know.
+Given three or more microphones, the intersection of these circles will show the location of the source.
+However in many cases this approach is not realistic since $t_n$ is generally not known.
 It would require some sort of a synchronization between the microphones and the sources.
 \subsubsection{Near-Field}
-The next time property that could be used is the \acrfull{tdoa} which between
-two microphones $\bm{M_n}$ and $\bm{M_m}$ is defined as
+The next time property that could be used is the \acrfull{tdoa} between
+two microphones, which is defined as
 \begin{equation}
-	t_{n, m} = t_m - t_n = \frac{\lVert \bm{S} - \bm{M_m}\rVert - \lVert \bm{S} - \bm{M_n}\rVert}{c}.
+	t_{n, m} = t_m - t_n = \frac{\lVert \bm{S} - \bm{M}_m\rVert - \lVert \bm{S} - \bm{M}_n\rVert}{c}.
 \end{equation}
-With this equation $\bm{S}$ can be interpreted as the set of points that lie on a hyperbola
-which fixed points are the Microphones and the vertices are $c t_{n,m}$m apart.
-To find the location of $\bm{S}$ a minimum of four microphones is now needed.
-This approach works only if we can assume that the curvature of the incoming sound waves
-at the microphones is big enough. Figure \ref{ssl:fig:near field} shows such a arrangement
+With this equation, $\bm{S}$ can be interpreted as the set of points that lie on a hyperbola
+whose fixed points are the Microphones and the vertices are $c t_{n,m}$m apart.
+To find the location of $\bm{S}$, a minimum of four microphones is now needed.
+This approach only works if we can assume that the curvature of the incoming sound waves
+at the microphones is big enough. Figure \ref{ssl:fig:near field} shows such a arrangement,
 which is generally known as the near-field scenario.
 It is generally said, that the near-field assumption holds when the distance from the source
 to the array isn't much greater than the size of the array.
-In Figure \ref{ssl:fig:hyperbola} it can be seen how the resulting hyperbolas from the
+In Figure \ref{ssl:fig:hyperbola}, it can be seen how the resulting hyperbolas from the
 \acrshort{tdoa} intersect at the point $\bm{S}$.
 
 
@@ -70,12 +92,12 @@ In Figure \ref{ssl:fig:hyperbola} it can be seen how the resulting hyperbolas fr
 \subsubsection{Far-Field}
 When the source is much further away than the size of the Array, as depicted
 in Figure \ref{ssl:fig:far field}, the curvature of the sound wave at the array is negligible.
-This is generally known as the far-field case.
-Now the sound waves aren't modeled as spherical waves but rather as planar waves.
-Given such a planar wave only the direction in which the source is placed can be determined with the TDOAs.
+This is generally known as the far-field case where the sound waves aren't 
+modeled as spherical waves but rather as planar waves.
+Given such a planar wave, only the direction in which the source is placed can be determined with the TDOAs.
 
 % Beamforming_general_S1110865703212038
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	%    \includegraphics[width=0.25\textwidth]{mesh}
 	\includegraphics[]{FarField.pdf}
@@ -87,40 +109,41 @@ Given such a planar wave only the direction in which the source is placed can be
 If the exact localization is required, multiple far field based systems could be 
 used to triangulate the source position given the calculated direction from each system.
 
-\subsection{Direction of arrival estimation}
-Lots of research has been made on how to estimate the \acrfull*{doa} of a source
-with appropriate sensors.
-
-\todo{brief lierature study}
-
 In this thesis the focus was set on far-field techniques considering that the
 goal is to detect drones which are usually several meters above ground.
 Considering this decision, only the direction in which a sound source is positioned
 can be determined with a single system.
-%Constructing a microphone array 
+\newpage
+\subsection{Direction of arrival estimation}
+Lots of research has been made on how to estimate the \acrfull*{doa} of a source
+with appropriate sensors.
+In \cite{s140201918} the authors built a Sound Compass
+using MEMS to find the directions of multiple sound sources.
+They also followed the approach to use multiple of their devices to 
+find an exact position of a sound source.
+To estimate the \acrshort*{doa} they used a Delay and Sum beamformer,
+which is also used in this thesis.
 
 \subsection{Beamforming}
-Beamforming is a popular method for estimating the \acrshort{doa} of a signal.
-
 To better show the fundamental principles of beamforming, an example is used
-where the goal is not to estimate a \acrshort{doa} but to send a signal
+where the goal is not to estimate a \acrshort{doa} but to send a sound wave
 in a desired direction using loudspeakers.
-Figure \ref{ssl:fig:beamforming1} illustrates such a case in $\mathbb{R}^2$
+Figure \ref{ssl:fig:beamforming1} illustrates such a case in $\mathbb{R}^2$,
 where a linear array of N sound sources beam a sine wave $x(t) = \sin(\omega_0 t)$ 
 in the direction of $\varphi$.
 This is achieved by adding a phase shift to the sine wave
-at each microphone resulting in $x_n(t) = sin(\omega_0 t + \omega_0t_n)$.
-When the phase shifts are properly selected the points where the waves positively
+at each microphone, resulting in $x_n(t) = sin(\omega_0 t - \omega_0t_n)$.
+If the phase shifts are properly selected the points where the waves positively
 interfere form a beam.
-Given this example with a narrow band signal, the signal at each source
+Using this example with a narrow band signal, the output at each source
 can be written as
 \begin{equation}
-	x_n(t) = \Re(sin(\omega_0 t) e^{j\omega t_n})
+	x_n(t) = \Re(sin(\omega_0 t) e^{-j\omega t_n})
 \end{equation}
 and more generalized as 
 \begin{equation}
   \label{ssl:eq:beamSteerOut}
-  X(t, \varphi) = 
+  \bm{X}(t, \varphi) = 
   \Re\left(
     sin(\omega_0 t)
     \underbrace{
@@ -129,14 +152,14 @@ and more generalized as
         e^{-j\omega_0 t_1(\varphi)} \\
         \vdots \\ 
         e^{-j\omega_0 t_{N-1}(\varphi)} 
-      \end{pmatrix}}_{W(\varphi)}
+      \end{pmatrix}}_{\bm{W}(\varphi)}
   \right).
 \end{equation}
-The vector $W(\varphi)$ is commonly known as the steering vector.
+The vector $\bm{W}(\varphi)$ is commonly known as the steering vector.
 It can be seen that the steering vector is dependent on $\omega_0$ and 
 will therefore only have the desired effect on signals with frequencies 
 close to $\omega_0$.
-How to use beamforming with wider band signals will be shown later in this chapter.
+The idea will be expanded to wide band signals later in this chapter.
 \begin{figure}
 	\centering
 	%    \includegraphics[width=0.25\textwidth]{mesh}
@@ -147,18 +170,18 @@ How to use beamforming with wider band signals will be shown later in this chapt
 \end{figure}
 
 If the goal is to estimate the direction of a sound signal with microphones 
-$x_n(t)$ is now defined as the signal measured by the nth microphone.
+$x_n(t)$ is redefined as the signal measured by the $n$th microphone.
 Now \eqref{ssl:eq:beamSteerOut} is rewritten to 
 \begin{equation}
   \label{ssl:eq:beamSteerIn}
-  \bm{Y(t, \varphi)} = 
+  \bm{Y}(t, \varphi) = 
     \underbrace{
       \begin{pmatrix} 
         x_0(t) \\ 
         x_1(t) \\
         \vdots \\ 
         x_{N-1}(t)
-    \end{pmatrix}}_{X(t)}
+    \end{pmatrix}}_{\bm{X}(t)}
     \odot
     \underbrace{
       \begin{pmatrix} 
@@ -166,44 +189,42 @@ Now \eqref{ssl:eq:beamSteerOut} is rewritten to
         e^{-j\omega_0 t_1(\varphi)} \\
         \vdots \\ 
         e^{-j\omega_0 t_{N-1}(\varphi)} 
-      \end{pmatrix}}_{W(\varphi)}
+      \end{pmatrix}}_{\bm{W}(\varphi)}
 \end{equation}
-where depending on the method used either $Y(t, \varphi)$ is further processed, or the 
-method directly uses $X(t)$ for the \acrshort*{doa} estimation.
+where depending on the beamforming method used either $\bm{Y}(t, \varphi)$ is further processed, or the 
+method directly uses $\bm{X}(t)$ for the \acrshort*{doa} estimation.
 
 \subsubsection{Steering Vector}
 The calculation of the Steering Vector is dependent on different factors.
-The two main factor can be broken down to the geometry of the microphone array
+The two main factors can be broken down to the geometry of the microphone array
 and the direction in which the source lies. 
 Again the formulas are derived for a circular array in $\mathbb{R}^2$ and are then expanded into $\mathbb{R}^3$.
 A circular array where all the microphones are 
-placed on a circle is convenient for the use of polar coordinates and the 
-formulas can also be used for any other array described in polar coordinates.
+placed on a circle is used for the derivation, the theory can however
+be expanded to any array geometry in $\mathbb{R}^2$.
 
-Figure \ref*{ssl:fig:steering} shows such an array with five equally spaced microphones $M_n$.
-The goal of the steering vector is to delay the measured signal at each microphone so that
-they each have the same phase and therefore positively interfere.
-To calculate these delays a reference point must firstly be defined, here it is the center of the circle.
-Because a far-field model is used the sound pressure level is equal along lines perpendicular
+Figure \ref*{ssl:fig:steering} shows a circular array with five equally spaced microphones $M_n$.
+The goal of the steering vector is to delay the measured signal at each microphone, so that
+they have the same phase and therefore positively interfere.
+To calculate these delays a reference point must first be defined.
+Here it is the center of the circle.
+With the far field model, the sound pressure level is equal along lines perpendicular
 to its propagation direction.
-With the magenta line as the reference line, each measured signal from the microphones must be
+Therefore the magenta line is the reference line and each measured signal from the microphones must be
 phase shifted with 
 \begin{equation}
   \omega_0 t_n = 
   \omega_0 \frac{
-    \lVert\bm{d}_n(\varphi_s)\rVert}
-    {c} 
-    \hat{\bm{d}}_n(\varphi_s) \cdot \hat{\bm{d}}_s.
+    \bm{d}_n(\varphi_s) \cdot \hat{\bm{d}}_s}
+    {c}.
 \end{equation}
-The Term $\hat{\bm{d}}_n(\varphi_s) \cdot \hat{\bm{d}}_s$ is needed to determine
-if a phase shift is positive or negative.
-Using the trigonometric properties of a right triangle
+Simplifying this equation with
 \begin{equation}
-  \lVert\bm{d}_n(\varphi_s)\rVert \hat{\bm{d}}_n(\varphi_s) \cdot \hat{\bm{d}}_s = r_{m_n} \cos(\varphi_s - \varphi_{m_n})
+	\bm{d}_n(\varphi_s) \cdot \hat{\bm{d}}_s = r_{m_n} \cos(\varphi_s - \varphi_{m_n})
 \end{equation}
-and therefore
+results in 
 \begin{equation}
-  t_n = 
+  t_n(\phi_s) = 
   r_{m_n} \cos(\varphi_s - \varphi_{m_n})
   \frac{1}{c}.
   \label{ssl:eq:beamr2}
@@ -211,30 +232,34 @@ and therefore
 This formula can be used for any microphone with polar coordinates
 $(\varphi_{m_n}, r_{m_n})$ and can therefore be used for any array configuration
 described in polar coordinates.
-\begin{figure}
-  \centering
-  %    \includegraphics[width=0.25\textwidth]{mesh}
-  \includegraphics[]{steering_vector.pdf}
-  \caption{Distances between each microphone and the reference line in 
-  a circualr microphone array.}
-  \label{ssl:fig:steering}
-\end{figure}
 
-To expand this idea into $\mathbb{R}^3$ the spherical coordinate system is now used.
+\begin{figure}[h]
+	\centering
+	%    \includegraphics[width=0.25\textwidth]{mesh}
+	\includegraphics[]{steering_vector.pdf}
+	\caption{Distances between each microphone and the reference line in 
+	a circualr microphone array.}
+	\label{ssl:fig:steering}
+  \end{figure}
+  
+
+To expand this idea into $\mathbb{R}^3$ the spherical coordinate system is used.
 This adds the angle $\theta$ as the inclination.
-When $\theta = \pi/2$ it is the same situation that has already been looked at.
-But as $\theta$ approaches 0 the speed of the wavefront projected onto the
-surface of the array increases. 
-This adds a term to \eqref{ssl:eq:beamr2}
+When $\theta = \pi/2$ it is the same situation as with the polar coordinate system.
+As $\theta$ approaches 0 the speed of the wavefront projected onto the
+surface of the array increases, until the sound wave reaches every microphone
+simultaneously when $\theta = 0$.
+This expands \eqref{ssl:eq:beamr2} to
 \begin{equation}
-	t_n = 
+	t_n(\phi_s, \theta_s) = 
 	r_{m_n} \cos(\varphi_s - \varphi_{m_n})
-	\frac{\sin(\theta)}{c}.
+	\frac{\sin(\theta_s)}{c}.
   \label{ssl:eq:beamr3}
 \end{equation}
+To simplify the formulas, $t_n(\phi, \theta)$ is from now on written as $t_n$.
 
 \subsubsection{Delay and Sum Beamformer}
-The basic beamformer is the delay and sum beamformer
+The basic beamforming is the delay and sum beamforming
 \begin{equation}
 	\label{ssl:eq:delAndSum}
 	y(t, \varphi, \theta) = 
@@ -244,7 +269,7 @@ The basic beamformer is the delay and sum beamformer
 		  x_1(t) \\
 		  \vdots \\ 
 		  x_{N-1}(t)
-	  \end{pmatrix}}_{X(t)}
+	  \end{pmatrix}}_{\bm{X}(t)}
 	  \cdot
 	  \underbrace{
 		\begin{pmatrix} 
@@ -252,16 +277,20 @@ The basic beamformer is the delay and sum beamformer
 			e^{-j\omega_0 t_1(\varphi, \theta)} \\
 			\vdots \\ 
 			e^{-j\omega_0 t_{N-1}(\varphi, \theta)} 
-		\end{pmatrix}}_{W(\varphi, \theta)}.
+		\end{pmatrix}}_{\bm{W}(\varphi, \theta)}.
 \end{equation}
-Notice how instead of the Hadamard product, the scalar product is now used.
-$y(t, \varphi, \theta)$ is therefor the sum of the delayed signals.
+Notice how instead of the Hadamard product, the scalar product is now used resulting
+in $y(t, \varphi, \theta)$ as the sum of the delayed signals.
 If the angles of the steering vector point towards a source its 
 signal will be amplified.
-By using the delays calculated for the steering vector $X(t)$ can
+
+Beamforming can be visualized with the so called beam pattern.
+It shows how much a sound of a source at a specific location
+is amplified depending on the steering direction.
+By using the delays calculated for the steering vector $\bm{X}(t)$ can
 be calculated to simulate a source in a specific direction
 \begin{equation}
-	X(t, \varphi_s, \theta_s) = 
+	\bm{X}(t, \varphi_s, \theta_s) = 
 	e^{j\omega_0 t}
 	\begin{pmatrix} 
 		e^{j\omega_0 t_0(\varphi_s, \theta_s)} \\ 
@@ -270,8 +299,8 @@ be calculated to simulate a source in a specific direction
 		e^{j\omega_0 t_{N-1}(\varphi_s, \theta_s)} 
 	\end{pmatrix}
 \end{equation}
-To simplify the formulas, $t_n(\phi, \theta)$ is from now written as $t_n$.
-The amplitude response of an array using delay and sum beamforming can
+
+The response of an array using delay and sum beamforming can
 now be calculated with
 \begin{equation}
 	G(\phi, \theta) = 
@@ -306,18 +335,62 @@ however there are also side lobes pointing to directions without sources.
 		it impossible to distinguish if a sound comes from $\theta$ or $180 + \theta$.} 
 		\label{ssl:fig:CircBmTheta}
 	\end{subfigure}
-	\caption{Delay and Sum Beamformer response for a circular array with $N=16$ microphones 
-	and a radius $r = 0.25$m. Note that the gains are applied on the amplitudes, so if the 
+	\caption{Beam patterns of delay and sum beamforming using a circular array with $N=16$ microphones 
+	and a radius $r = 0.25$m. Note that the gains are applied on the amplitudes, so the 
 	power levels are multiplied by $G(\dots)^2$}
 	\label{ssl:fig:CircBmResponse}
 \end{figure}
 
+\subsubsection*{Wide band delay and sum beamforming}
+Until now the formulas are only useful for narrow band signals. 
+This theory is now expanded to be applicable for wide band signals.
+
+The narrow band delay and sum beamforming has the property, that it behaves
+the same in the frequency domain
+\begin{equation}
+	e^{-j\omega_0 t_n} x_n(t) = \mathscr{F}^{-1}(e^{-j\omega_0 t_n} \mathscr{F}(x_n(t)))
+\end{equation}
+since it is just a multiplication with a scalar,. 
+The summation could also be done in the frequency domain due to the 
+linearity of the Fourier transform.
+The frequency domain has the advantage that an IIR Filter can be constructed, to 
+make a different phase shift for every frequency 
+\begin{equation}
+	\label[type]{ssl:eq:iirbeam1}
+	Y_n(t) = \mathscr{F}^{-1}(e^{-j\omega t_n} X_n(\omega)).
+\end{equation}
+By using a discrete fourier transform the beamformer can be written
+in matrix form
+\begin{equation}
+	\bm{Y}(\phi, \theta) = 
+	\begin{pmatrix}
+		X_0(\omega_l) & \hdots & X_0(\omega_h)\\
+		\vdots & \ddots & \vdots \\
+		X_{N-1}(\omega_l) & \hdots & X_{N-1}(\omega_h)
+	\end{pmatrix}
+	\odot
+	\begin{pmatrix}
+		e^{-j\omega_l t_0} & \hdots & e^{-j\omega_h t_0}\\
+		\vdots & \ddots & \vdots \\
+		e^{-j\omega_l t_{N-1}} & \hdots & e^{-j\omega_h t_{N-1}}
+	\end{pmatrix},
+\end{equation}
+with a total of $M$ frequency points of interest between $\omega_l$ and $\omega_h$.
+The power of the signal is now calculated with
+\begin{equation}
+	P(\phi, \theta) =  \sum_{m=0}^{M-1}\lvert \sum_{n=0}^{N-1} \bm{Y}_{m, n} \rvert^2
+\end{equation}
+using Parsevals' Theorem.
+This beamformer does not need to be implemented in the frequency domain.
+Delaying each signal in the time domain is equivalent.
+
+\subsubsection{Spatial Sampling}
 Beamforming can be seen as spatial sampling, where the microphones
 are the samplingpoints.
 So some of the concepts used in digital sampling such as 
 the samplingtheorem and the uncertainty principle can also 
 occur in some way in beamforming.
-Figure \ref{ssl:fig:f_deps} shows $G(\phi, \pi/2)$ for different frequencies.
+Figure \ref{ssl:fig:f_deps} shows the beam pattern for different frequencies.
 The array used in Figure \ref{ssl:fig:f_dep0} is the same array
 as in Figure \ref*{ssl:fig:CircBmResponse} whereas Figure \ref{ssl:fig:f_dep0}
 uses a circular array with $r = 0.5$m and also 16 microphones. 
@@ -362,56 +435,12 @@ interferences when the steering vector is not focused on the source.
 	and a radiuses of 0.25m an 0.5m. }
 	\label{ssl:fig:f_deps}
 \end{figure}
-
-
-Until now the formulas are only useful for narrow band signals. 
-This theory is now expanded to be applicable for wide band signals.
-The narrow band delay and sum beamformer has the property, that it behaves
-the same in the frequency domain
-\begin{equation}
-	e^{-j\omega_0 t_n} x_n(t) = \mathscr{F}^{-1}(e^{-j\omega_0 t_n} \mathscr{F}(x_n(t)))
-\end{equation}
-since it's just a multiplication with a scalar,. 
-The summation could also be done in the frequency domain due to the 
-linearity of the Fourier transform.
-However in the frequency domain a IIR Filter can be constructed, to 
-make a different phase shift for every frequency 
-\begin{equation}
-	\label[type]{ssl:eq:iirbeam1}
-	Y_n(t) = \mathscr{F}^{-1}(e^{-j\omega t_n} X_n(\omega)).
-\end{equation}
-By using a discrete fourier transform the beamformer can be written
-in matrix form
-\todo{Indexchaos lösen}
-\begin{equation}
-	\bm{Y}(\phi, \theta) = 
-	\begin{pmatrix}
-		X_0(\omega_l) & \hdots & X_0(\omega_h)\\
-		\vdots & \ddots & \vdots \\
-		X_{N-1}(\omega_l) & \hdots & X_{N-1}(\omega_h)
-	\end{pmatrix}
-	\odot
-	\begin{pmatrix}
-		e^{-j\omega_l t_0} & \hdots & e^{-j\omega_h t_0}\\
-		\vdots & \ddots & \vdots \\
-		e^{-j\omega_l t_{N-1}} & \hdots & e^{-j\omega_h t_{N-1}}
-	\end{pmatrix},
-\end{equation}
-with a total of $M$ frequency points of interest between $\omega_l$ and $\omega_h$.
-The power of the signal is now calculated with
-\begin{equation}
-	P(\phi, \theta) =  \sum_{m=0}^{M-1}\lvert \sum_{n=0}^{N-1} \bm{Y}_{m, n} \rvert^2
-\end{equation}
-using Parsevals' Theorem.
-
-\subsection{Other beamforming techniques}
-
 \section{Tracking}
 By now the \acrshort{doa} of a sound source can be estimated.
 But since drones expected to be moving, a source once it has been
 detected, need to be tracked.
 
-In \cite{Dornetracker} the tracking is done with by 
+In \cite{GuiAhmad} the tracking is done with by 
 updating the steering vector with an adaptive filter. 
 They however do not go into detail on how the direction is then
 retrieved from the steering vector.
