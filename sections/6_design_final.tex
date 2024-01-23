@@ -87,12 +87,12 @@ The following list provides an overview of all custom manufactured metal parts:
 	\item 8x Microphone Arm Support Frame: 2.5\,mm aluminum sheet metal
 	\item 8x Connection Bars: 5\,mm aluminum sheet metal
 	\item 1x Antenna Platform: 2.5\,mm aluminum sheet metal
-	\item 1x Main Mounting Pole: $\varnothing$\,20\,x\,400\,mm aluminum rod (Drawing: xxx)
-	\item 1x Top Mounting Ring: $\varnothing$\,44\,x\,45\,mm aluminum part (Drawing: xxx)
-	\item 1x Bottom Sliding Ring: $\varnothing$\,44\,x\,15\,mm aluminum part (Drawing: xxx)
-	\item 1x Antenna Top Mount: $\varnothing$\,26\,mm\,x\,12\,mm aluminum part (Drawing: xxx)
-	\item 1x Antenna Bottom Mount: 29.5\,x\,14.5\,x\,15.0\,mm aluminum part (Drawing: xxx)
-	\item 1x Antenna Pole: $\varnothing$\,6\,x\,240\,mm stainless steel rod (Drawing: xxx) \todo{Add references to appendix}
+	\item 1x Main Mounting Pole: $\varnothing$\,20\,x\,400\,mm aluminum rod (Drawing: \ref{appendix_mechanical_drawing_main_mounting_pole})
+	\item 1x Top Mounting Ring: $\varnothing$\,44\,x\,45\,mm aluminum part (Drawing: \ref{appendix_mechanical_drawing_top_mounting_ring})
+	\item 1x Bottom Sliding Ring: $\varnothing$\,44\,x\,15\,mm aluminum part (Drawing: \ref{appendix_mechanical_drawing_bottom_sliding_ring})
+	\item 1x Antenna Top Mount: $\varnothing$\,26\,mm\,x\,12\,mm aluminum part (Drawing: \ref{appendix_mechanical_drawing_antenna_top_mount})
+	\item 1x Antenna Bottom Mount: 29.5\,x\,14.5\,x\,15.0\,mm aluminum part (Drawing: \ref{appendix_mechanical_drawing_antenna_bottom_mount})
+	\item 1x Antenna Pole: $\varnothing$\,6\,x\,240\,mm stainless steel rod (Drawing: \ref{appendix_mechanical_drawing_antenna_pole})
 \end{itemize}
 
 \subsection{Microphone Arm Design}
@@ -897,13 +897,13 @@ read from the tail but rather from the head.
 This allows the application to always read the last $N$ samples while the data
 in the buffer does not get split up.
 
-Additionally the ringbuffer is able to write newly input data into a 
-WAV file. 
+Additionally the ringbuffer is able to write newly input data into a
+WAV file.
 
 \subsubsection{TCP Stream}
 The TCP streamer allows to stream the audio directly via TCP form the microphone array.
 The streaming runs via a socket to which the application connects to.
-Using the control sequence the received data is preprocessed and then stored into 
+Using the control sequence the received data is preprocessed and then stored into
 the buffer.
 
 \subsubsection{WAV Stream}
@@ -919,59 +919,59 @@ this thesis.
 \subsection{Communication}
 To retrieve the sensor data from the microphone array
 a communicator class was created.
-It continuously reads the JSON containing various data 
+It continuously reads the JSON containing various data
 via a POST request from the microphone array.
 
 \subsection{Sound source tracking}
-The sound source tracking consists of three parts, the beamforming, peak detector and 
+The sound source tracking consists of three parts, the beamforming, peak detector and
 Kalman Tracker.
 
 \subsubsection*{Beamforming}
 First a data block is ran through the beamforming filterbank.
-Contrary to prior beamforming grid, a pseudo uniformly sampled 
+Contrary to prior beamforming grid, a pseudo uniformly sampled
 semisphere is used to define the steering angles.
-During testing, a samplenumber of 1700 points, which 
+During testing, a samplenumber of 1700 points, which
 gives an angle resolution of $\approx 2^\circ$, was used.
 The number can be adjusted if higher resolution is necessary.
 With these samples and the current array arm angle, the filterbank can be
 calculated.
-The beamforming used is the Delay and Sum beamforming, 
+The beamforming used is the Delay and Sum beamforming,
 which gives a power level for each steering direction.
 
 \subsubsection*{Peak detection}
 To detect where possible sound source are, a peak detector was implemented.
-If only one source needs to be tracked, a simple argmax on the beamforming 
+If only one source needs to be tracked, a simple argmax on the beamforming
 response is sufficient.
 
 For the case of multiple sources a more elaborate peakdetector is used.
 To simplify the peakdetector, the beamformer response, which is defined on
 a sphere is mapped onto a flat surface with
 \begin{align}
-	x &= \theta \cos\phi \\
-	y &= \theta \sin\phi.
+	x & = \theta \cos\phi  \\
+	y & = \theta \sin\phi.
 	\label{eq:maping}
 \end{align}
 This mapping is later also used for the Kalmann tracker.
 The mapped response is then converted to an image with linear interpolation.
-This image allows the use of a 2d peak detector like the one described in 
+This image allows the use of a 2d peak detector like the one described in
 \cite{cvpeakdet}.
 The basic function is to use grayscale dilation to find local maxima
-and then filter out larger plateaus with a 
+and then filter out larger plateaus with a
 median blur filter.
-The resulting peaks can be further filtered by minimal height and 
+The resulting peaks can be further filtered by minimal height and
 minimal ratio to the maximum value.
 Other filters may be useful in the future, but were not implemented in this version.
 
 \subsubsection*{Kalman Tracker}
 The found peaks are given to the Kalman Tracker.
 With the Hungarian method the peaks are assigned to their corresponding
-trackers. 
+trackers.
 If a existing tracker does not correspond to a peak, the Kalman
-Filter can predict it's new position. 
+Filter can predict it's new position.
 By default it makes ten such blind predictions until the track is discarded.
 
 \subsection{GUI}
-To visualize the beamforming responses and control the tracker a web based \acrshort*{gui} with 
+To visualize the beamforming responses and control the tracker a web based \acrshort*{gui} with
 Plotly and Dash was created.
 Figure \ref*{fin:fig:gui} shows a screenshot of the \acrshort*{gui} while tracking is performed
 on a pre recorder WAV file.
@@ -991,7 +991,7 @@ and an array configuration. To open a TCP connection, the IP address and port
 of the array is needed.
 Connections can also be closed with the \textit{close connection} button.
 
-Open connections are listed below and via a dropdown list, 
+Open connections are listed below and via a dropdown list,
 the displayed connection can be selected.
 
 The streamed audio data can be recorded to a WAV file with the \textit{Start Recording}
@@ -1002,20 +1002,20 @@ The beamforming response is shown in two different ways.
 The top plot shows the mapped beamforming response in a surface plot, where
 the z-axis represents the beamformed power.
 To increase readability the power is normalized between zero and one.
-The bottom plot displays the sampled semisphere where the color 
-represents the beamformed power. 
+The bottom plot displays the sampled semisphere where the color
+represents the beamformed power.
 
 \subsubsection*{Map}
 The map shows the current position of the array.
-If no GPS data is available the default position is by the 
-building 8 at OST in Rapperswil. 
+If no GPS data is available the default position is by the
+building 8 at OST in Rapperswil.
 The tracks are also displayed on the map.
-Since with one array the exact position of the sound source 
-can not be determined, the directions are mapped onto the map with 
-\ref*{eq:maping}. 
+Since with one array the exact position of the sound source
+can not be determined, the directions are mapped onto the map with
+\ref*{eq:maping}.
 To make the circle bigger, $\theta$ is multiplied by 30 before mapping it.
 The red circle indicates a $\theta = 90^\circ$.
-By using the compass data, the alignment of the array does not matter 
+By using the compass data, the alignment of the array does not matter
 for the tracks to be displayed in the right compass direction.
 
 If the external does not have an internet connection to display the map,
