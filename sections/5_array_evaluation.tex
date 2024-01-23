@@ -1,7 +1,7 @@
 \chapter{Array Evaluation}
 \label{chap:aev}
 \section{Overview}
-As stated in chapter \dots the geometry of a microphone array
+As stated in chapter \ref*{sec:spatSam} the geometry of a microphone array
 has a impact on the performance of beamforming.
 The goal is to find a well suited array geometry for the detection and tracking of
 Drones.
@@ -24,13 +24,13 @@ of microphones in an array is 32.
 To compare different array geometries, several simulations
 were ran for each array.
 The simulated data was then ran through the beamforming
-algorithm.
+algorithm to create the resulting beam pattern.
 The steering angles are based on a grid with $-180^\circ \leq \phi < 180\circ$ and
-$0^\circ \leq \theta \leq 180^\circ$ with a spacing of $1^\circ$.
+$0^\circ \leq \theta \leq 90^\circ$ with a spacing of $1^\circ$.
 For each point in this grid the power over the desired frequency band is calculated.
 Displaying the result leads to an image like Figure \ref*{aev:fig:gridEx}.
-The visualizations may be misleading depending on the angle.
-This is a result from the projection of the semisphere onto a 2-d surface.
+The visualizations may be misleading, as they show a projection of 
+a function defined on a semisphere onto a 2-d surface.
 \begin{figure}
 	\centering
 	%    \includegraphics[width=0.25\textwidth]{mesh}
@@ -42,14 +42,15 @@ This is a result from the projection of the semisphere onto a 2-d surface.
 \end{figure}
 \section{Metrics}
 \label{sec:metrics}
-TO evaluate the performance of an array several metrics are used.
-In \todo{Cite Array design s40430-018-1275-5-1, array design comparisons} the
-main beam-width is proposed.
-\todo{cite Circ array drone trackings13638-019-1632-9} is using the ratio
+To evaluate the performance of an array several metrics are used.
+In \cite{Amaral} the
+main beam width is proposed as an evaluation metric.
+Instead of the proposed beam width the main lobe area is 
+used in this thesis.
+The main lobe is defined as all points around the maximum of the 
+beamforming pattern whose magnitude is larger than half of the maximum.
+ANother metric used is from \cite{GuiAhmad}, which is the ratio
 between the main lobe power and the side lobe power.
-Another measure related to the main lobe with is the main lobe area.s
-The main lobe is defined as all the points around the peak where their value
-is greater than half the peaks value. \todo{besser englisch}
 
 \subsection{Area ratio}
 Since the grid resulting from the beamforming represents a function on a sphere,
@@ -157,7 +158,8 @@ An example of such an array is shown in Figure \ref*{aev:fig:FancyArr}.
 	\centering
 	%    \includegraphics[width=0.25\textwidth]{mesh}
 	\includegraphics[]{images/5_array_evaluation/fancy_arr.pdf}
-	\caption{Hansi.}
+	\caption{Multi circular array that consists of 4 circular arrays
+	with an offset angle $\phi_o$ between them.}
 	\label{aev:fig:FancyArr}
 \end{figure}
 
@@ -174,23 +176,9 @@ Similar to the circular array, the lower frequencies play a big role in the metr
 Smaller arrays that have trouble localizing these frequencies perform the worst as seen
 in figures \ref*{aev:fig:FancyArea} and \ref*{aev:fig:FancyPap}.
 
-\begin{figure}[h]
-	\centering
-	%    \includegraphics[width=0.25\textwidth]{mesh}
-	\includegraphics[]{images/5_array_evaluation/fancy_area.pdf}
-	\caption{Area of the mainlobe for multi circular arrays with different
-	sizes.}
-	\label{aev:fig:FancyArea}
-\end{figure}
 
-\begin{figure}[h]
-	\centering
-	%    \includegraphics[width=0.25\textwidth]{mesh}
-	\includegraphics[]{images/5_array_evaluation/fancy_pap.pdf}
-	\caption{PAP ratio for multi circular arrays with different
-	sizes.}
-	\label{aev:fig:FancyPap}
-\end{figure}
+
+
 
 To compare this geometry to the circular a maximum radius is set.
 In this example 0.4m. 
@@ -203,7 +191,25 @@ between one and four percent.
 
 This tradeoff reminds of the windowing functions for discrete
 fouriertransforms. 
+\begin{figure}[h]
+	\centering
+	%    \includegraphics[width=0.25\textwidth]{mesh}
+	\includegraphics[]{images/5_array_evaluation/fancy_area.pdf}
+	\caption{Area of the mainlobe for multi circular arrays with different
+	sizes.}
+	\label{aev:fig:FancyArea}
+\end{figure}
+\begin{figure}
+	\centering
+	%    \includegraphics[width=0.25\textwidth]{mesh}
+	\includegraphics[]{images/5_array_evaluation/fancy_pap.pdf}
+	\caption{PAP ratio for multi circular arrays with different
+	sizes.}
+	\label{aev:fig:FancyPap}
+\end{figure}
 
+
+\newpage
 \subsection{Archimedean Spiral Array}
 An archimedean spiral in polar coordinates is defined as
 \begin{equation}
@@ -217,8 +223,14 @@ Using these parameters, \eqref{eva:eq:arch} is rewritten to
 \begin{equation}
 	r(\phi) = \frac{d}{1 - 2\pi} \phi + r_i.
 \end{equation}
-
-\todo[inline]{IRGENDÖPPIS}
+Similar to the circular and the multi circular array,
+the archimedean array performs better when the max 
+radius is increased.
+However care has to be taken when specifying the array
+as with certain configurations the microphones are not 
+spread out similarly in each direction.
+As a consequence the performance can vary depending 
+on $\phi_s$.
 
 
 
@@ -353,16 +365,16 @@ Two examples of test configurations are depicted in Figure \ref*{fig:testSetup}.
 	\begin{subfigure}[b]{0.49\textwidth}
 		\centering
 		\includegraphics[width=0.95\textwidth]{images/5_array_evaluation/array_test_1.jpg}
-		\caption{Multi-Circular Array (inner circle)}
+		\caption{Circular array with $r=0.2$m}
 		\label{fig:array_test_1}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.49\textwidth}
 		\centering
 		\includegraphics[width=0.95\textwidth]{images/5_array_evaluation/array_test_2.jpg}
-		\caption{Multi-Circular Array (interleaved  pattern)}
+		\caption{Multi circular array}
 		\label{fig:array_test_2}
 	\end{subfigure}
-	\caption{Test arrays.}
+	\caption{Two examples of the test arrays used for the measurement.}
 	\label{fig:testSetup}
 \end{figure}
 The measured data was then evaluated using the mainlobe area and PAP ratio. 
@@ -448,16 +460,17 @@ properties of the array.
 	\begin{subfigure}[b]{1\textwidth}
 		\centering
 		\includegraphics[width=0.95\textwidth]{images/5_array_evaluation/final_flat_area.pdf}
-		\caption{GG}
+		\caption{Main lobe area ratio of the array}
 		\label{fig:finar}
 	\end{subfigure}
 	\begin{subfigure}[b]{1\textwidth}
 		\centering
 		\includegraphics[width=0.95\textwidth]{images/5_array_evaluation/final_flat_PAP.pdf}
-		\caption{EZ}
+		\caption{Peak average power ratio of the array}
 		\label{fig:finpap}
 	\end{subfigure}
-	\caption{Test and simulation comparisons with a a source located at $(r, \phi, \theta) = (15m, 0^\circ, 90^\circ)$}
+	\caption{Metrics of a four circles multi circular array with $r_o=0.38$m, 
+	$\phi_o = 11.25^\circ$ and 32 Microphones, depending on $r_i$ }
 	\label{fig:finflat}
 \end{figure}
 
