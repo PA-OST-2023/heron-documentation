@@ -1,7 +1,7 @@
 \chapter{Array Evaluation}
 \label{chap:aev}
 \section{Overview}
-As stated in chapter \ref*{sec:spatSam}, the geometry of a microphone array
+As stated in chapter \ref{sec:spatSam}, the geometry of a microphone array
 has a impact on the performance of beamforming.
 The goal is to find a well suited array geometry for the detection and tracking of
 drones.
@@ -18,7 +18,7 @@ This range includes most of the sound's energy.
 
 The array geometry has some constraints,
 such as the number of microphones and the mechanical feasibility.
-As stated in \ref*{sec:acquisition_system_audio_input} the maximum number
+As stated in \ref{sec:acquisition_system_audio_input} the maximum number
 of microphones in an array is 32.
 
 To compare different array geometries, several simulations
@@ -28,7 +28,7 @@ algorithm to create the resulting beam pattern.
 The steering angles are based on a grid with $-180^\circ \leq \phi < 180\circ$ and
 $0^\circ \leq \theta \leq 90^\circ$ with a spacing of $1^\circ$.
 For each point in this grid the power in the desired frequency band is calculated.
-Displaying the result leads to an image like Figure \ref*{aev:fig:gridEx} shows.
+Displaying the result leads to an image like Figure \ref{aev:fig:gridEx} shows.
 The visualizations may be misleading, as they show a projection of 
 a function defined on a semisphere onto a two dimensional surface.
 \begin{figure}
@@ -98,7 +98,7 @@ spiral array.
 \subsection{Circular Array}
 The circular array is the most simple shape of these three.
 It has two degrees of freedom, the circle radius and the number of microphones.
-Figure \ref*{aev:fig:MicCirc} shows how the PAP ratio changes when
+Figure \ref{aev:fig:MicCirc} shows how the PAP ratio changes when
 more microphones are added to an array with a fixed radius.
 For smaller arrays, the best possible PAP is reached with less
 microphones than with bigger arrays.
@@ -113,7 +113,7 @@ which introduces aliasing.
 	\label{aev:fig:MicCirc}
 \end{figure}
 
-Looking at Figure \ref*{aev:fig:areaCirc} and Figure \ref*{aev:fig:papCirc}
+Looking at Figure \ref{aev:fig:areaCirc} and Figure \ref{aev:fig:papCirc}
 the change of the main lobe area and PAP ration can be seen for
 an array with 32 microphones and varying radius.
 As expected the area decreases with increasing radius, since the lower frequencies will be
@@ -154,7 +154,7 @@ In the original paper, the Underbrink array is designed, so that each
 microphone covers the same area of a ring with a fixed inner and outer radius and number of circles.
 In this thesis the design has been changed so that given the same parameters,
 the circle were equally spaced and the phase shift between the circles can be defined.
-An example of such an array is shown in Figure \ref*{aev:fig:FancyArr}.
+An example of such an array is shown in Figure \ref{aev:fig:FancyArr}.
 \begin{figure}[h]
 	\centering
 	%    \includegraphics[width=0.25\textwidth]{mesh}
@@ -174,7 +174,7 @@ per circle.
 
 Similar to the circular array, the lower frequencies play a big role in the metrics.
 Smaller arrays that have trouble localizing these frequencies perform the worst as seen
-in figures \ref*{aev:fig:FancyArea} and \ref*{aev:fig:FancyPap}.
+in figures \ref{aev:fig:FancyArea} and \ref{aev:fig:FancyPap}.
 
 To compare this geometry to the circular a maximum radius is set.
 In this example 0.4m. 
@@ -350,7 +350,7 @@ thus making the signal useless.
 To reduce this a RØDE DeadWombat microphone cover was cut into small pieces
 and glued onto the microphones.
 This lead to significantly less wind noises.
-Two examples of test configurations are depicted in Figure \ref*{fig:testSetup}.
+Two examples of test configurations are depicted in Figure \ref{fig:testSetup}.
 \begin{figure}[h]
 	\centering
 	\begin{subfigure}[b]{0.49\textwidth}
@@ -372,7 +372,7 @@ The measured data was then evaluated using the main lobe area and PAP ratio.
 Additionally to compare the real arrays to the simulated one, each measurement
 was also simulated.
 The result for a $\theta = 90^\circ$ and $\theta = 30^\circ$ are shown in
-Figure \ref*{fig:TestSim}.
+Figure \ref{fig:TestSim}.
 In most cases the simulated arrays performed better.
 This is probably due to lower background noise in the environment and other
 Quite extreme differences can be seen with the Archimedean array which is
@@ -398,7 +398,7 @@ suspected to be caused by the more reverberant measurement environment.
 \end{figure}
 
 All the two dimensional array geometries tested have the drawback
-that their performance is dependent on the \acrshort*{doa}.
+that their performance is dependent on the \acrshort{doa}.
 A directional independent array design is the spherical array \cite{Rafaely2010}.
 It uses the theory of spherical harmonics to sample the sound at specific points
 on a sphere.
@@ -422,7 +422,7 @@ reality this may not be the case.
 From the microphone to the Teensy4.1 the signals is dependent on different clocks and
 filters, which are not guaranteed to be synchronous.
 With a low spread of the microphones, a small error in the sampling times could
-induce a larger error in the measured \acrshort*{doa} than if
+induce a larger error in the measured \acrshort{doa} than if
 the microphones were more spread out.
 
 
@@ -439,13 +439,13 @@ The angle $\phi_o$ chosen to be the same as in the test array
 configurations.
 To find a suited $r_i$, the mainlobe area and PAP ratio was calculated for
 various $r_i$.
-The results are depicted in Figure \ref*{fig:finflat}.
+The results are depicted in Figure \ref{fig:finflat}.
 Figure \ref{fig:finpap} shows that the PAP does not
 steadily increase but rather peak at a specific radius and then
 begins to decrease again.
 A $r_i$ of 0.2m was chosen since it is a good tradeoff between
 mainlobe area and PAP ratio.
-Figure \ref*{fig:final_array_concept_design} shows the final
+Figure \ref{fig:final_array_concept_design} shows the final
 properties of the array.
 
 \begin{figure}[h!]
@@ -480,7 +480,7 @@ a mechanical system is used as described in Section \ref{chap:fin:Mech}.
 The performance of the array changes with the angle of the microphone arms.
 Since a bigger angle lowers the distances between the microphones it is to be
 expected, that the performance decreases due to the influence of the lower frequencies.
-Figure \ref*{fig:fintilt} shows how the metrics change with the arm angle.
+Figure \ref{fig:fintilt} shows how the metrics change with the arm angle.
 Up to an angle of $30^\circ$ performance decreases slowly.
 Therefore the predicted optimal angle range is between 0 and 30 degrees.
 
