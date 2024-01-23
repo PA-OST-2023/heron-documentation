@@ -398,7 +398,7 @@ uses a circular array with $r = 0.5$m and also 16 microphones.
 It can be seen that at around 1500hz more side lobes with a 
 high amplitude start to appear. 
 With this array geometry the smallest distance between two 
-microphones is $\approx 0.25 \pi/8 \approx 0.098$m, which is the wavelength
+microphones is $\approx 0.098$m, which is the wavelength
 of a sound wave with a frequency of approximately 3500hz.
 So the effect seen in Figure \ref*{ssl:fig:CircBmResponse} is 
 a kind of aliasing.
@@ -408,14 +408,15 @@ for each angle of the steering vector.
 However when they are more than $\lambda/2$ apart, phase shifts start to 
 repeat for different steering directions.
 
-Another effect seen in Figure \ref*{ssl:fig:CircBmResponse} is the increase
+Another effect seen in Figure \ref*{ssl:fig:f_dep0} is the increase
 of the main lobe width when the frequency approaches 0.
 This is consequence of a too small array. 
 In the used array the maximal distance between two microphones is 0.5m.
 For lower frequencies the phase difference between the first microphone and 
 the last microphone in the array is too small to get destructive
 interferences when the steering vector is not focused on the source.
-
+As expected the bigger array from Figure \ref*{ssl:fig:f_dep1} has a smaller 
+main lobe in the lower frequencies. 
 
 \begin{figure}[h]
 	\centering
@@ -439,7 +440,7 @@ interferences when the steering vector is not focused on the source.
 \section{Tracking}
 By now the \acrshort{doa} of a sound source can be estimated.
 But since drones expected to be moving, a source once it has been
-detected, need to be tracked.
+detected, needs to be tracked.
 
 In \cite{GuiAhmad} the tracking is done with by 
 updating the steering vector with an adaptive filter. 
@@ -451,9 +452,10 @@ narrow band beamformer.
 Developing a beamforming based tracker for a wide band beamformer was outside of the 
 scope of this thesis.
 
-Another popular tracker independent of beamforing is a Kalmann tracker.
-A Kalman tracker uses a Kalmann filter to filter out the measurement noise.
-The basic model is, that the source moves with a constant velocitiy leading to 
+Another popular object tracker independent of beamforing is a Kalman filter based tracker.
+It takes a measured position as an input and calculates the estimated position with
+a Kalman filter.
+The basic model for the Kalman filter is, that the source moves with a constant velocity leading to 
 the state and observation matrix
 \begin{equation*}
 	\bm{x}(n) = 
@@ -481,10 +483,9 @@ the state and observation matrix
 		0 & 0 & 1 & 0 & 0 & 0 \\	
 	\end{pmatrix}
 \end{equation*}
-With each new measurement, the Kalman filter is run and a new position is 
-estimated.
+The velocity in the state vector also enables blind prediction.
 
-To enable multi object tracking, another processign step is added.
+To enable multi object tracking, another processing step is added.
 First the new measured objects are assigned to the already
 existing trackers. 
 To make this assignment somehow optimal, the Hungarian algorithm 
@@ -500,7 +501,7 @@ covered in Section \ref*{chap:fin:sw}
 
 \newpage
 \section{Simulator}
-In order to experiment with different microphone arrangements and algorithms a simulator was developed.
+In order to experiment with different microphone arrangements and algorithms a simulator in Python was developed.
 Since the simulator wasn't the main focus of this Thesis, its functionality was kept simple.
 The simulator lets you place acoustic sources and microphones in a $\mathbb{R}^3$ space and calculates
 the measured signals at each microphone.
@@ -518,23 +519,38 @@ The perceived sound at any point $P$ can now be described as
 Where $S_i$ is the position of the nth Source and $x_i(t)$ is its output sound.
 Since the simulation is done numerically and with pre recorded audio files with a given
 samplingrate $f_s$ \eqref{ssl:eq:simcont} has to be discretized.
-Simply replacing $x_i(t - \lVert P - S_i\rVert/c)$ with
-$x_i(n - f_s \lVert P - S_i\rVert/c)$ with
-$n \in \mathbb{N}$ doesn't work because
+Simply replacing 
+\begin{equation*}
+	x_i(t - \lVert P - S_i\rVert/c)
+\end{equation*}
+with
+\begin{equation*}
+	x_i(t_n - f_s \lVert P - S_i\rVert/c),
+\end{equation*}
+with 
+\begin{equation*}
+	t_n = t_0 + n f_s, n \in \mathbb{N}
+\end{equation*}
+doesn't work because
 $f_s \lVert P - S_i\rVert/c \not \in \mathbb{N}$ in most cases.
 To implement this $f_s \lVert P - S_i\rVert/c$ is rounded to
 its nearest integer $d_{P,S_i}$.
-Now the delayed signal is $x_i(n - d_{P,S_i})$.
+Now the delayed signal is $x_i(t_n - d_{P,S_i})$.
 To achieve sub sample delays this signal is then filtered
-with a Fractional Delay FIR Filter with a delay of
+with a Fractional Delay FIR Filter \cite{FracFil} with a delay of
 $f_s \lVert P - S_i\rVert/c - d_{P,S_i}$.
 
 \subsubsection{Reflections}
 The simulator also allows the reflective surfaces to be placed into the room.
-These surfaces are defined with \todo{wiauimeer} and have a infinite size.
+These surfaces are defined with a base vector and two directional vectors and have a infinite size.
 Additionally a dampening factor can be defined which defines how much 
 a reflecting sound signal is damped when getting reflected.
 By this stage the simulator can only handle single reflective path. 
 An already reflected sound signal can not be reflected by a second surface.
 
-
+\subsection{Output}
+The simulator saves WAV files for each microphone, with the audio signal from 
+each source as a single chanel.
+It can also be installed as a python package with its Github link.
+In this case, the simulator can also return the recorded signals as an 
+Numpy array.
