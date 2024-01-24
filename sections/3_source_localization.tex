@@ -99,7 +99,7 @@ Given such a planar wave, only the direction in which the source is placed can b
 \begin{figure}[ht]
 	\centering
 	\includegraphics[]{images/3_source_localization/FarField.pdf}
-	\caption{Far-Field case. The Curvature of the sound-waves from S at the array
+	\caption{Far-Field case. The curvature of the sound waves from S at the array
 		is almost zero.}
 	\label{ssl:fig:far field}
 \end{figure}
@@ -130,13 +130,13 @@ Figure \ref{ssl:fig:beamforming1} illustrates such a case in $\mathbb{R}^2$,
 where a linear array of N sound sources beam a sine wave $x(t) = \sin(\omega_0 t)$
 in the direction of $\varphi$.
 This is achieved by adding a phase shift to the sine wave
-at each microphone, resulting in $x_n(t) = sin(\omega_0 t - \omega_0t_n)$.
+at each microphone, resulting in $x_n(t) = \sin(\omega_0 t - \omega_0t_n)$.
 If the phase shifts are properly selected the points where the waves positively
 interfere form a beam.
 Using this example with a narrow band signal, the output at each source
 can be written as
 \begin{equation}
-	x_n(t) = \Re(sin(\omega_0 t) e^{-j\omega t_n})
+	x_n(t) = \Re(\sin(\omega_0 t) e^{-j\omega t_n})
 \end{equation}
 and more generalized as
 \begin{equation}
@@ -383,9 +383,9 @@ Delaying each signal in the time domain is equivalent.
 \subsubsection{Spatial Sampling}
 \label{sec:spatSam}
 Beamforming can be seen as spatial sampling, where the microphones
-are the samplingpoints.
+are the sampling points.
 So some of the concepts used in digital sampling such as
-the samplingtheorem and the uncertainty principle can also
+the sampling theorem and the uncertainty principle can also
 occur in some way in beamforming.
 Figure \ref{ssl:fig:f_deps} shows the beam pattern for different frequencies.
 The array used in Figure \ref{ssl:fig:f_dep0} is the same array
@@ -509,34 +509,29 @@ For sake of simplicity the sources were modeled as omnidirectional point-sources
 microphones are omnidirectional as well.
 The Sound Pressure Level of a source is defined at one meter distance from their position and decreases
 squarely with the distance.
-The perceived sound at any point $P$ can now be described as
+The perceived sound at any point $\bm{P}$ can now be described as
 \begin{equation}
 	\label[type]{ssl:eq:simcont}
-	y(P, t) = \sum_{I} \frac{x_i(t - \lVert P - S_i\rVert/c)}{\lVert P - S_i\rVert}.
+	y(\bm{P}, t) = 
+	\sum_{I} \frac{
+		x_i(t - \lVert \bm{P} - \bm{S}_i\rVert/c)}
+		{\lVert \bm{P} - \bm{S}_i\rVert}.
 \end{equation}
-Where $S_i$ is the position of the nth Source and $x_i(t)$ is its output sound.
+Where $\bm{S}_i$ is the position of the nth Source and $x_i(t)$ is its output sound.
 Since the simulation is done numerically and with pre recorded audio files with a given
-samplingrate $f_s$ \eqref{ssl:eq:simcont} has to be discretized.
-Simply replacing
+sampling rate $f_s$ \eqref{ssl:eq:simcont} has to be discretized.
+This is done by discretize $t$ to
 \begin{equation*}
-	x_i(t - \lVert P - S_i\rVert/c)
+	t_n = t_0 + n/f_s, \quad n \in \mathbb{N}.
 \end{equation*}
-with
-\begin{equation*}
-	x_i(t_n - f_s \lVert P - S_i\rVert/c),
-\end{equation*}
-with
-\begin{equation*}
-	t_n = t_0 + n f_s, n \in \mathbb{N}
-\end{equation*}
-doesn't work because
-$f_s \lVert P - S_i\rVert/c \not \in \mathbb{N}$ in most cases.
-To implement this $f_s \lVert P - S_i\rVert/c$ is rounded to
-its nearest integer $d_{P,S_i}$.
+The time delay also needs to be discretized to 
+be an integer multiple of $1/f_s$.
+By rounding it to the nearest number that fulfills this 
+condition results in a new delay $d_{P,S_i}$.
 Now the delayed signal is $x_i(t_n - d_{P,S_i})$.
-To achieve sub sample delays this signal is then filtered
+To achieve sub sample delays, this signal is then filtered
 with a Fractional Delay FIR Filter \cite{FracFil} with a delay of
-$f_s \lVert P - S_i\rVert/c - d_{P,S_i}$.
+$f_s \lVert \bm{P} - \bm{S}_i\rVert/c - d_{P,S_i}$.
 
 \subsubsection{Reflections}
 The simulator also allows the reflective surfaces to be placed into the room.

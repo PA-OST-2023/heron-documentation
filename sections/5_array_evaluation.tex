@@ -55,11 +55,11 @@ between the main lobe power and average power over the whole grid.
 
 \subsection{Area Ratio}
 Since the grid resulting from the beamforming represents a function on a sphere,
-simply taking the sum of all the gridpoints from the mainlobe
+simply taking the sum of all the grid points from the main lobe
 would deliver false results.
 So each grid point is normalized by the surface element of a sphere
 \begin{equation}
-	dA = r \sin\theta \, d\phi \cdot r d\theta.
+	dA = r \sin\theta \, d\phi \cdot r\,d\theta.
 \end{equation}
 Since only the angles and not the radius are of interest, a radius of one is used for all
 calculations.
@@ -68,7 +68,7 @@ by the area of the semisphere.
 So the area ratio shows how much of the whole search space is taken by the main lobe.
 
 The area of the main lobe determines how good different sources can be separated.
-With a big main lobe area two close sources may lead to one bigger mainlobe instead
+With a big main lobe area two close sources may lead to one bigger main lobe instead
 of two separable ones.
 Since the area is calculated for $\theta \leq 90^\circ$, the areas calculated
 of peaks close to that border are not the actual areas when looking at the
@@ -204,7 +204,7 @@ more than 20 can be reached.
 The areas however are generally larger and can lie in ranges
 between one and four percent.
 
-This tradeoff reminds of the windowing functions for discrete
+This tradeoff reminds of windowing functions for the discrete
 Fourier transform.
 \begin{figure}[h]
 	\centering
@@ -266,7 +266,7 @@ Based on simulation results, two specific array types were explored: The multi c
 		\label{fig:prototype_array_multi_circular}
 	\end{wrapfigure}
 	This array setup allows to build two different multi-circular arrays with four rings.
-	One with an $\phi_o = \pi/16$ and the second one with $\phi_o = \pi / 8$.
+	One with an $\phi_o = 11.25^\circ$ and the second one with $\phi_o = 22.5^\circ$.
 	On the three outer circles a total of 32 microphones can be installed, to
 	build circular arrays with radiuses of 20\,cm, 25\,cm and 30\,cm.
 	The inner circle can mount up to 16 microphones.
@@ -321,11 +321,11 @@ The performance of the physical arrays were evaluated with outdoor measurement.
 To simulate a drone the sound of a DJI Mavic Pro drone was played back on
 UE BOOM loudspeakers.
 Various angles were tested by turning and tilting the array such that
-the loudspeakers are in the direction to bes tested.
+the loudspeakers are in the direction to be tested.
 The distance of the loudspeaker to the array was set to
 15\,m.
 All of the tests except the archimedean were made in an open field with little reverberation.
-The archimedean array had to be tested between buildings due to rain.
+The archimedean array tests were cut short and had to be carried out between buildings due to rain.
 In Table \ref{eval:arrs} the tested arrays and their parameter are listed.
 
 \begin{table}[h]
@@ -338,45 +338,45 @@ In Table \ref{eval:arrs} the tested arrays and their parameter are listed.
 		\thickhline
 		Circ 20                   &
 		\makecell{Circular}       &
-		\makecell{0.2m}           &
+		\makecell{0.2\,m}           &
 		\makecell{-}                                  \\
 		\hline
 		Circ 25                   &
 		\makecell{Circular}       &
-		\makecell{0.25m}          &
+		\makecell{0.25\,m}          &
 		\makecell{-}                                  \\
 		\hline
 		Circ 30                   &
 		\makecell{Circular}       &
-		\makecell{0.3m}           &
+		\makecell{0.3\,m}           &
 		\makecell{-}                                  \\
 		\hline
 		Multi circ 1              &
 		\makecell{Multi-circular} &
-		\makecell{0.3m}           &
-		\makecell{$\phi_o = \pi/16$}                  \\
+		\makecell{0.3\,m}           &
+		\makecell{$\phi_o = 11.25^\circ$}                  \\
 		\hline
 		Multi circ 2              &
 		\makecell{Mutli-circular} &
-		\makecell{0.3m}           &
-		\makecell{$\phi_o = \pi/8$}                   \\
+		\makecell{0.3\,m}           &
+		\makecell{$\phi_o = 22.5^\circ$}                   \\
 		\hline
 		Arch                      &
 		\makecell{Archimedean}    &
 		\makecell{0.3m}           &
-		\makecell{$r_i = 0.05$m, $d = 0.0625$m}       \\
+		\makecell{$r_i = 0.05$\,m, $d = 0.0625$\,m}       \\
 		\hline
 	\end{tabular}
 	\caption{Test arrays.}
 	\label{eval:arrs}
 \end{table}
 
-During the first tests, the wind caused the microphone to overdrive
+During the first tests, the wind caused the microphone to overdrive,
 thus making the signal useless.
 To reduce this a RØDE DeadWombat microphone cover was cut into small pieces
 and glued onto the microphones.
 This lead to significantly less wind noises.
-Two examples of test configurations are depicted in Figure \ref{fig:testSetup}.
+Two examples of test configurations with the wind covers are depicted in Figure \ref{fig:testSetup}.
 \begin{figure}[ht]
 	\centering
 	\begin{subfigure}[b]{0.49\textwidth}
@@ -394,8 +394,9 @@ Two examples of test configurations are depicted in Figure \ref{fig:testSetup}.
 	\caption{Two examples of the test arrays used for the measurement.}
 	\label{fig:testSetup}
 \end{figure}
-The measured data was then evaluated using the main lobe area and PAP ratio.
-Additionally to compare the real arrays to the simulated one, each measurement
+
+The measured data was evaluated using the main lobe area and PAP ratio.
+Additionally, to compare the real arrays to the simulated one, each measurement
 was also simulated.
 The result for a $\theta = 90^\circ$ and $\theta = 30^\circ$ are shown in
 Figure \ref{fig:TestSim}.
@@ -418,13 +419,13 @@ suspected to be caused by the more reverberant measurement environment.
 		\caption{Comparison of the mainlobe area}
 		\label{fig:comp2}
 	\end{subfigure}
-	\caption{Measurements and simulation comparisons with a a source located at $(r, \phi, \theta) = (15, 0, \theta)$.
+	\caption{Measurements and simulation comparisons with a a source located at $(r, \phi, \theta) = (15\,m, 0, \theta)$.
 		A test measurement for $\theta = 30^\circ$ was not performed with the Archimedean array.}
 	\label{fig:TestSim}
 \end{figure}
 
 All the two dimensional array geometries tested have the drawback
-that their performance is dependent on the \acrshort{doa}.
+that their performance is dependent on $\theta_s$.
 A directional independent array design is the spherical array \cite{Rafaely2010}.
 It uses the theory of spherical harmonics to sample the sound at specific points
 on a sphere.
@@ -454,23 +455,24 @@ the microphones were more spread out.
 
 \newpage
 \section{Final Array Geometry} \label{sec:final_array_geometry}
-Finally the idea of a multicircular array where the circles can be
+Finally, the idea of a multicircular array where the circles can be
 set to a different height came up.
 In the measurements the multicircular array performed well.
-To get an optimal array geometry, the maximal radius of 0.38m was first set.
+To get an optimal array geometry, the maximal radius of 0.38\,m was first set.
 Even though a larger radius would yield better results, it also
 comes with more mechanical challenges.
 The angle $\phi_o$ chosen to be the same as in the test array
 \textit{Multi circ 1} as it performed the best of the two multicircular
 configurations.
-To find a suited $r_i$, the mainlobe area and PAP ratio was calculated for
+
+To find a suited $r_i$, the main lobe area and PAP ratio was calculated for
 various $r_i$.
 The results are depicted in Figure \ref{fig:finflat}.
 Figure \ref{fig:finpap} shows that the PAP does not
 steadily increase but rather peak at a specific radius and then
 begins to decrease again.
-A $r_i$ of 0.2m was chosen since it is a good tradeoff between
-mainlobe area and PAP ratio.
+A $r_i$ of 0.2\,m was chosen since it is a good tradeoff between
+main lobe area and PAP ratio.
 Figure \ref{fig:final_array_concept_design} shows the final
 properties of the array.
 
@@ -489,7 +491,7 @@ properties of the array.
 		\caption{Peak average power ratio of the array}
 		\label{fig:finpap}
 	\end{subfigure}
-	\caption{Metrics of a four circles multi circular array with $r_o=0.38$m,
+	\caption{Metrics of a four circles multi circular array with $r_o=0.38$\,m,
 		$\phi_o = 11.25^\circ$ and 32 Microphones, depending on $r_i$ }
 	\label{fig:finflat}
 \end{figure}
@@ -509,7 +511,7 @@ Since a bigger angle lowers the distances between the microphones it is to be
 expected, that the performance decreases due to the influence of the lower frequencies.
 Figure \ref{fig:fintilt} shows how the metrics change with the arm angle.
 Up to an angle of $30^\circ$ performance decreases slowly.
-Therefore the predicted optimal angle range is between 0 and 30 degrees.
+Therefore the predicted optimal angle range is between $0^\circ$ and $30^\circ$.
 \begin{figure}[h!]
 	\centering
 	\begin{subfigure}[b]{1\textwidth}
