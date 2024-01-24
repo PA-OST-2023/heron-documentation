@@ -29,12 +29,12 @@ $0^\circ \leq \theta \leq 90^\circ$ with a spacing of $1^\circ$.
 For each point in this grid the power in the desired frequency band is calculated.
 Displaying the result leads to an image like Figure \ref{aev:fig:gridEx} shows.
 The visualizations may be misleading, as they show a projection of
-a function defined on a semisphere onto a two dimensional surface.
+a function defined on a semisphere onto a flat surface.
 \begin{figure}[h]
 	\centering
 	\includegraphics[]{images/5_array_evaluation/0.3_0.79.pdf}
 	\caption{$G(\phi, \theta)$ for $-180 \leq \phi \leq 180$ and $0 \leq \theta \leq 90$.
-		Red blob represents the mainlobe where the power is bigger than the half of the
+		Red blob represents the main lobe where the power is bigger than the half of the
 		maximum power.}
 	\label{aev:fig:gridEx}
 \end{figure}
@@ -61,7 +61,7 @@ So each grid point is normalized by the surface element of a sphere
 \begin{equation}
 	dA = r \sin\theta \, d\phi \cdot r d\theta.
 \end{equation}
-Since the radius of the sphere does not matter, a radius of one is used for all
+Since only the angles and not the radius are of interest, a radius of one is used for all
 calculations.
 To make the resulting numbers easier to understand, the calculated area is divided
 by the area of the semisphere.
@@ -70,7 +70,7 @@ So the area ratio shows how much of the whole search space is taken by the main 
 The area of the main lobe determines how good different sources can be separated.
 With a big main lobe area two close sources may lead to one bigger mainlobe instead
 of two separable ones.
-Since the area is calculated for $\theta < 90^\circ$, the areas calculated
+Since the area is calculated for $\theta \leq 90^\circ$, the areas calculated
 of peaks close to that border are not the actual areas when looking at the
 full angular range.
 
@@ -90,13 +90,13 @@ into other directions than the real \acrshort{doa}.
 
 \section{Array Geometry}
 In \cite{GuiAhmad} the authors use a circular array to detect and track drones.
-They however did not gave any reasoning no why the chose a circular array.
-In \cite{array_comp} different array types are compared and measured.
+They however did not gave any reasoning on why the chose a circular array.
+The authors of \cite{array_comp} measured and compared different array types.
 The best scores are reached with the Underbrink style array, a combination
 of multiple circular arrays.
 They also included several spiral based arrays.
 Based on this three main groups of arrays were further analyzed,
-the circular array, an adaption of the Underbrink array, and a archimedes
+the circular array, an adaption of the Underbrink array, and a Archimedean
 spiral array.
 
 \newpage
@@ -118,13 +118,13 @@ which introduces aliasing.
 \end{figure}
 \vspace{-0.3cm}
 Looking at Figure \ref{aev:fig:areaCirc} and Figure \ref{aev:fig:papCirc}
-the change of the main lobe area and PAP ration can be seen for
+the change of the main lobe area and PAP ratio can be seen for
 an array with 32 microphones and varying radius.
 As expected the area decreases with increasing radius, since the lower frequencies will be
 sampled better.
 Also the PAP ratio becomes better with an increase of the radius.
-At a radius of 0.8m however, the curve begins to flatten and even starts to decrease.
-It can as well be observed that for smaller source angles the main lobe area is smaller.
+At a radius of 0.8\,m however, the curve begins to flatten and even starts to decrease.
+It can as well be observed, that for smaller source angles the main lobe area is smaller.
 This is mostly an effect of the main lobe smearing in the $\theta$ direction.
 Recalling equation \eqref{ssl:eq:beamr3} with a fixed $\phi$
 the time delay at a microphone is $t_n = C \sin(\theta)$ with $C=const$.
@@ -135,7 +135,7 @@ changed.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.93\textwidth, trim={0 0.2cm 0 0.2cm}]{images/5_array_evaluation/area_circ.pdf}
-	\caption{Main lobe area ratio.}
+	\caption{Main lobe area ratio aof circular arrays with different radius.}
 	\label{aev:fig:areaCirc}
 \end{figure}
 
@@ -143,7 +143,7 @@ changed.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.93\textwidth, trim={0 0.2cm 0 0.2cm}]{images/5_array_evaluation/PAP_circ.pdf}
-	\caption{Peak Average power ratio}
+	\caption{Peak Average power ratio of circular arrays with different radius}
 	\label{aev:fig:papCirc}
 \end{figure}
 
@@ -177,7 +177,7 @@ An example of such an array is shown in Figure \ref{aev:fig:FancyArr}.
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.75\textwidth]{images/5_array_evaluation/fancy_arr.pdf}
-	\caption{Multi circular array that consists of 4 circular arrays
+	\caption{A Multi circular array that consists of 4 circular arrays
 		with an offset angle $\phi_o$ between them.}
 	\label{aev:fig:FancyArr}
 \end{figure}

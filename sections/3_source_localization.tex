@@ -332,7 +332,7 @@ however there are also side lobes pointing to directions without sources.
 		\label{ssl:fig:CircBmTheta}
 	\end{subfigure}
 	\caption{Beam patterns of delay and sum beamforming using a circular array with $N=16$ microphones
-		and a radius $r = 0.25$m. Note that the gains are applied on the amplitudes, so the
+		and a radius $r = 0.25$\,m. Note that the gains are applied on the amplitudes, so the
 		power levels are multiplied by $G(\dots)^2$}
 	\label{ssl:fig:CircBmResponse}
 \end{figure}
@@ -390,11 +390,11 @@ occur in some way in beamforming.
 Figure \ref{ssl:fig:f_deps} shows the beam pattern for different frequencies.
 The array used in Figure \ref{ssl:fig:f_dep0} is the same array
 as in Figure \ref{ssl:fig:CircBmResponse} whereas Figure \ref{ssl:fig:f_dep0}
-uses a circular array with $r = 0.5$m and also 16 microphones.
+uses a circular array with $r = 0.5$\,m and also 16 microphones.
 It can be seen that at around 1500hz more side lobes with a
 high amplitude start to appear.
 With this array geometry the smallest distance between two
-microphones is $\approx 0.098$m, which is the wavelength
+microphones is $\approx 0.098$\,m, which is the wavelength
 of a sound wave with a frequency of approximately 3500hz.
 So the effect seen in Figure \ref{ssl:fig:CircBmResponse} is
 a kind of aliasing.
@@ -419,18 +419,18 @@ main lobe in the lower frequencies.
 	\begin{subfigure}[t]{0.45\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/3_source_localization/circ_f_sweep_0.pdf}
-		\caption{$G(0, 90^\circ)$ for a circular array with a radius of 0.25m.}
+		\caption{$G(0, 90^\circ)$ for a circular array with a radius of 0.25\,m.}
 		\label{ssl:fig:f_dep0}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[t]{0.45\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/3_source_localization/circ_f_sweep_1.pdf}
-		\caption{$G(0, 90^\circ)$ for a circular array with a radius of 0.5m.}
+		\caption{$G(0, 90^\circ)$ for a circular array with a radius of 0.5\,m.}
 		\label{ssl:fig:f_dep1}
 	\end{subfigure}
 	\caption{Delay and Sum Beamformer response for two circular arrays with $N=16$ microphones
-		and a radiuses of 0.25m an 0.5m. }
+		and a radiuses of 0.25\,m an 0.5\,m. }
 	\label{ssl:fig:f_deps}
 \end{figure}
 \section{Tracking}
@@ -482,9 +482,11 @@ the state and observation matrix
 The velocity in the state vector also enables blind prediction.
 
 To enable multi object tracking, another processing step is added.
+This idea resulted from a conversation in December 2023 with 
+Hannes Badertscher.
 First the new measured objects are assigned to the already
-existing trackers.
-To make this assignment somehow optimal, the Hungarian algorithm
+existing trackers. 
+To make this assignment somehow optimal, the Hungarian algorithm \cite{mathsem}
 with the measurement and blind prediction of each Kalman filter as input, is used.
 If the distance between the prediction and measured object position of a pair is close enough
 the Kalman filter is run with the measured position as input.
