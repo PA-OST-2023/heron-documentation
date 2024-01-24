@@ -143,7 +143,7 @@ and more generalized as
 	\label{ssl:eq:beamSteerOut}
 	\bm{X}(t, \varphi) =
 	\Re\left(
-	sin(\omega_0 t)
+	\sin(\omega_0 t)
 	\underbrace{
 		\begin{pmatrix}
 			e^{-j\omega_0 t_0(\varphi)} \\
@@ -301,7 +301,7 @@ now be calculated with
 \begin{equation}
 	G(\phi, \theta) =
 	\frac{
-		\lvert X(0, \phi_s, \theta_s) \cdot W(\phi, \theta) \rvert}
+		\lvert \bm{X}(0, \phi_s, \theta_s) \cdot \bm{W}(\phi, \theta) \rvert}
 	{
 		N
 	}.
@@ -317,23 +317,23 @@ however there are also side lobes pointing to directions without sources.
 	\begin{subfigure}[t]{0.45\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/3_source_localization/radial_1200_circ_single.pdf}
-		\caption{\(G(\phi, \theta, \omega)\) with $\theta = \pi/2$ for $\omega_0 = 2\pi 1000$.
-			The source is placed in the direction of $(\phi=0, \theta = \pi/2)$}
+		\caption{\(G(\phi, \theta, \omega)\) with $\theta = 90^\circ$ for $\omega_0 = 2\pi \, 1000$\,rad/s.
+			The source is placed in the direction of $(\phi=0^\circ, \theta = 90^\circ)$}
 		\label{ssl:fig:CircBmPhi}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[t]{0.45\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/3_source_localization/radial_1200_circ_theta_single.pdf}
-		\caption{\(G(\phi, \theta, \omega)\) with $\phi = 0$ for for $\omega_0 = 2\pi 1000$.
-			$(\phi= 0, \theta = -45^\circ)$ is the same as $(\phi= 180^\circ, \theta = 45^\circ)$.
+		\caption{\(G(\phi, \theta, \omega)\) with $\phi = 0^\circ$ for for $\omega_0 = 2\pi\, 1000$\,rad/s.
+			$(\phi= 0^\circ, \theta = -45^\circ)$ is the same as $(\phi= 180^\circ, \theta = 45^\circ)$.
 			The mirror along the horizontal axis comes from the flat geometry of the array which makes
-			it impossible to distinguish if a sound comes from $\theta$ or $180 + \theta$.}
+			it impossible to distinguish if a sound comes from $\theta$ or $180^\circ + \theta$.}
 		\label{ssl:fig:CircBmTheta}
 	\end{subfigure}
 	\caption{Beam patterns of delay and sum beamforming using a circular array with $N=16$ microphones
 		and a radius $r = 0.25$\,m. Note that the gains are applied on the amplitudes, so the
-		power levels are multiplied by $G(\dots)^2$}
+		power levels are multiplied by $G(\phi, \theta, \omega)^2$}
 	\label{ssl:fig:CircBmResponse}
 \end{figure}
 
@@ -353,8 +353,9 @@ The frequency domain has the advantage that an IIR Filter can be constructed, to
 make a different phase shift for every frequency
 \begin{equation}
 	\label[type]{ssl:eq:iirbeam1}
-	Y_n(t) = \mathscr{F}^{-1}(e^{-j\omega t_n} X_n(\omega)).
+	Y_n(t) = \mathscr{F}^{-1}(e^{-j\omega t_n} X_n(\omega)),
 \end{equation}
+where $X_n(\omega) = \mathscr{F}(x_n(t))$.
 By using a discrete fourier transform the beamformer can be written
 in matrix form
 \begin{equation}
@@ -374,7 +375,7 @@ in matrix form
 with a total of $M$ frequency points of interest between $\omega_l$ and $\omega_h$.
 The power of the signal is now calculated with
 \begin{equation}
-	P(\phi, \theta) =  \sum_{m=0}^{M-1}\lvert \sum_{n=0}^{N-1} \bm{Y}_{m, n} \rvert^2
+	P(\phi, \theta) =  \sum_{m=0}^{M-1}\lvert \sum_{n=0}^{N-1} \bm{Y}_{n, m} \rvert^2
 \end{equation}
 using Parsevals' Theorem.
 This beamformer does not need to be implemented in the frequency domain.
@@ -391,23 +392,23 @@ Figure \ref{ssl:fig:f_deps} shows the beam pattern for different frequencies.
 The array used in Figure \ref{ssl:fig:f_dep0} is the same array
 as in Figure \ref{ssl:fig:CircBmResponse} whereas Figure \ref{ssl:fig:f_dep0}
 uses a circular array with $r = 0.5$\,m and also 16 microphones.
-It can be seen that at around 1500hz more side lobes with a
+It can be seen that at around 1500\,hz more side lobes with a
 high amplitude start to appear.
 With this array geometry the smallest distance between two
 microphones is $\approx 0.098$\,m, which is the wavelength
-of a sound wave with a frequency of approximately 3500hz.
+of a sound wave with a frequency of approximately 3500\,hz.
 So the effect seen in Figure \ref{ssl:fig:CircBmResponse} is
 a kind of aliasing.
 This results from ambiguity in the phases of the steering vector.
 Ideally the phase shift between two neighboring microphones is unique
 for each angle of the steering vector.
-However when they are more than $\lambda/2$ apart, phase shifts start to
+However when they are more than $\lambda/2$\,m apart, phase shifts start to
 repeat for different steering directions.
 
 Another effect seen in Figure \ref{ssl:fig:f_dep0} is the increase
-of the main lobe width when the frequency approaches 0.
+of the main lobe width when the frequency approaches 0\,hz.
 This is consequence of a too small array.
-In the used array the maximal distance between two microphones is 0.5m.
+In the used array the maximal distance between two microphones is 0.5\,m.
 For lower frequencies the phase difference between the first microphone and
 the last microphone in the array is too small to get destructive
 interferences when the steering vector is not focused on the source.
