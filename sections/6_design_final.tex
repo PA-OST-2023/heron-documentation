@@ -922,11 +922,11 @@ a communicator class was created.
 It continuously reads the JSON containing various data
 via a POST request from the microphone array.
 
-\subsection{Sound source tracking}
+\subsection{Sound Source Tracking}
 The sound source tracking consists of three parts, the beamforming, peak detector and
 Kalman Tracker.
 
-\subsubsection*{Beamforming}
+\subsubsection{Beamforming}
 First a data block is ran through the beamforming filterbank.
 Contrary to prior beamforming grid, a pseudo uniformly sampled
 semisphere is used to define the steering angles.
@@ -938,7 +938,7 @@ calculated.
 The beamforming used is the Delay and Sum beamforming,
 which gives a power level for each steering direction.
 
-\subsubsection*{Peak Detection}
+\subsubsection{Peak Detection}
 To detect where possible sound source are, a peak detector was implemented.
 If only one source needs to be tracked, a simple argmax on the beamforming
 response is sufficient.
@@ -962,7 +962,7 @@ The resulting peaks can be further filtered by minimal height and
 minimal ratio to the maximum value.
 Other filters may be useful in the future, but were not implemented in this version.
 
-\subsubsection*{Kalman Tracker}
+\subsubsection{Kalman Tracker}
 The found peaks are given to the Kalman Tracker.
 With the Hungarian method the peaks are assigned to their corresponding
 trackers.
@@ -971,11 +971,11 @@ Filter can predict it's new position.
 By default it makes ten such blind predictions until the track is discarded.
 
 \subsection{GUI}
-To visualize the beamforming responses and control the tracker a web based \acrshort*{gui} with
+To visualize the beamforming responses and control the tracker a web based \acrshort{gui} with
 Plotly and Dash was created.
-Figure \ref*{fin:fig:gui} shows a screenshot of the \acrshort*{gui} while tracking is performed
+Figure \ref{fin:fig:gui} shows a screenshot of the \acrshort{gui} while tracking is performed
 on a pre recorder WAV file.
-With the \acrshort*{gui} and the current tracker settings the software runs on 5 \acrshort{fps}.
+With the \acrshort{gui} and the current tracker settings the software runs on 5 \acrshort{fps}.
 \begin{figure}
 	\centering
 	%    \includegraphics[width=0.25\textwidth]{mesh}
@@ -984,7 +984,7 @@ With the \acrshort*{gui} and the current tracker settings the software runs on 5
 	\label{fin:fig:gui}
 \end{figure}
 
-\subsubsection*{Connections}
+\subsubsection{Connections}
 On the left side the user can manage the connections to the audio streamer.
 New connections to a Wav streamer can be established by providing a audio file
 and an array configuration. To open a TCP connection, the IP address and port
@@ -997,7 +997,7 @@ the displayed connection can be selected.
 The streamed audio data can be recorded to a WAV file with the \textit{Start Recording}
 button.
 
-\subsubsection*{Beamforming}
+\subsubsection{Beamforming}
 The beamforming response is shown in two different ways.
 The top plot shows the mapped beamforming response in a surface plot, where
 the z-axis represents the beamformed power.
@@ -1005,14 +1005,14 @@ To increase readability the power is normalized between zero and one.
 The bottom plot displays the sampled semisphere where the color
 represents the beamformed power.
 
-\subsubsection*{Map}
+\subsubsection{Map}
 The map shows the current position of the array.
 If no GPS data is available the default position is by the
 building 8 at OST in Rapperswil.
 The tracks are also displayed on the map.
 Since with one array the exact position of the sound source
 can not be determined, the directions are mapped onto the map with
-\ref*{eq:maping}.
+\ref{eq:maping}.
 To make the circle bigger, $\theta$ is multiplied by 30 before mapping it.
 The red circle indicates a $\theta = 90^\circ$.
 By using the compass data, the alignment of the array does not matter
