@@ -259,7 +259,7 @@ Based on simulation results, two specific array types were explored: The multi c
 \subsection{Multi Circular Array}
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{r}{7.5cm}
-		\vspace{-0.8cm}
+		\vspace{-0.9cm}
 		\includegraphics[width=7cm]{images/5_array_evaluation/prototype_array_multi_circular.pdf}
 		\centering
 		\caption{Multi-Circular Array}
@@ -268,23 +268,29 @@ Based on simulation results, two specific array types were explored: The multi c
 	This array setup allows to build two different multi-circular arrays with four rings.
 	One with an $\phi_o = \pi/16$ and the second one with $\phi_o = \pi / 8$.
 	On the three outer circles a total of 32 microphones can be installed, to
-	build circular arrays with radiuses of 20\,cm, 25\,cm and 30\,cm
+	build circular arrays with radiuses of 20\,cm, 25\,cm and 30\,cm.
+	The inner circle can mount up to 16 microphones.
+	It has a radius of 15\,cm.
+	The orange marked dots in Figure \ref{fig:prototype_array_multi_circular} show a possible microphone arrangement of a multi circular array,
+	where each ring has an increased angle offset.
+	The resulting pattern clearly shows an arm shaped structure.
 \end{minipage}
-\vspace{5cm}    % Adjust this depending on the length of the text above
+\vspace{1.4cm}    % Adjust this depending on the length of the text above
 
 \subsection{Archimedean Spiral Array}
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{r}{7.5cm}
-		\vspace{-0.8cm}
+		\vspace{-0.9cm}
 		\includegraphics[width=7cm]{images/5_array_evaluation/prototype_array_archimedian_spiral.pdf}
 		\centering
 		\caption{Archimedean Spiral Array}
 		\label{fig:prototype_array_archimedian_spiral}
 	\end{wrapfigure}
-	The archimedean Spiral Array was made with a inner radius of 5cm and an outer radius of
-	30\,cm. The spiral makes a total of four turns which leads to a
-	separation distance of 6.25\,cm.
-
+	The archimedean Spiral Array was made with a inner radius $r_i$ of 5\,cm and an outer radius $r_o$ of 30\,cm.
+	The spiral makes a total of four turns which leads to a separation distance $d$ of 6.25\,cm.
+	The 32 microphones are placed in equal angle offsets on the spiral.
+	In this particular setup the angle between microphones is $(4 \cdot 360^\circ) / (32 - 1) = 46^\circ$.
+	Since the spiral has a distinct start and end point, the number of sections is one less than the number of microphones.
 \end{minipage}
 \newpage
 
