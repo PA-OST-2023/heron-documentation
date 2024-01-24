@@ -98,7 +98,7 @@ The following list provides an overview of all custom manufactured metal parts:
 \subsection{Microphone Arm Design}
 Figure \ref{fig:mechanical_dimensions_microphone_arm} shows the mechanical dimensions of the microphone arm.
 The pivot point is located at 95\,mm from the axial center of the microphone array.
-Each microphone arm is oriented at an angle of 45\,° to the center pole.
+Each microphone arm is oriented at an angle of $45^\circ$ to the center pole.
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=1.0\textwidth, trim={0 4.9cm 0 0}]{images/6_design_final/array_final_design_mechanical_dimensions.pdf}
@@ -108,7 +108,7 @@ Each microphone arm is oriented at an angle of 45\,° to the center pole.
 \pagebreak
 
 \subsection{Folding Mechanism}
-The microphone arms can be fully extended to achive a planar array geometry or folded towards the center pole to a minimum angle of 90\,°.
+The microphone arms can be fully extended to achive a planar array geometry or folded towards the center pole to a minimum angle of $90^\circ$.
 As figure \ref{fig:microphone_arm_folding_mechanism} shows, a cone shaped array structure results from this design.
 The angle can be freely adjusted or locked in place using a M6 knurled screw located at the lower mounting platform.
 \begin{figure}[h!]
@@ -141,7 +141,7 @@ Therefor, each microphone is equipped with specialized microphone wind protectio
 
 \newpage
 \section{Hardware Design}
-The hardware design of the final sound source localization system is characterized by its multi-\acrshort{pcb} construction.
+The hardware design of the final sound source localization system is characterized by its Multi-\acrshort{pcb} construction.
 The system's central component is the mainboard, which houses the processing unit, various sensors, and the power supply.
 In the center of the mainboard, a round touch display is mounted, which serves as the primary interface for user interaction.
 
@@ -314,10 +314,10 @@ Detailed information and guidelines for the calibration process can be found in 
 \subsubsection{Ambient Pressure \& Temperature Sensor}
 The \textit{BMP388} by \textit{Bosch Sensortec} was selected as the ambient pressure and temperature sensor.
 This sensor has a pressure measurement range of 300\,-\,1250\,hPa, with an accuracy of ±\,8\,Pa ($\approx$\,0.66\,m) within the typical operating range of 900\,-\,1100\,hPa.
-The integrated temperature sensor features a measurement accuracy of ±\,0.3\,°C in the range of 0\,-\,65\,°C.
+The integrated temperature sensor features a measurement accuracy of ±$\,0.3\,^\circ$C in the range of $0\,-\,65\,^\circ$C.
 
 During the \acrshort{pcb} design for the mainboard, however, the thermal placement of this sensor was not adequately considered.
-Consequently, heat-emitting components on the board affect the \textit{BMP388}'s temperature readings, leading to a temperature offset of approximately 2.5\,°C.
+Consequently, heat-emitting components on the board affect the \textit{BMP388}'s temperature readings, leading to a temperature offset of approximately $2.5\,^\circ$C.
 A better approach would have been to isolate the sensor thermally, e.g. by creating a slot around the sensor on the \acrshort{pcb}.
 
 \subsubsection{Angle Sensor}
@@ -477,9 +477,9 @@ The \acrshort{gnss} module sends periodically its timing information to the \acr
 Whenever a new time packet is received, the system logs the current internal system time in microseconds.
 This allows calculating the time offset to any subsequent \acrshort{api} call which asks for the current time.
 
-In situations where \acrshort{gnss} data isn't available, the system falls back to the \acrshort{rtc} time.
+In situations where \acrshort{gnss} data is not available, the system falls back to the \acrshort{rtc} time.
 While this ensures continuous timekeeping, the \acrshort{rtc}'s limitation to second-level resolution presents a challenge.
-It doesn't provide detailed information about the exact moment whenever a second has passed.
+It does not provide detailed information about the exact moment whenever a second has passed.
 To address this and achieve more precise timing information, a specific algorithm is required as described in the following section.
 
 \subsubsection{Phased Locked Loop (PLL)}
@@ -627,7 +627,7 @@ Table \ref{tab:system_status_led} provides an overview of the \acrshort{led} ind
 
 \subsection{Graphical User Interface (GUI)}
 The \acrshort{gui} provides a user-friendly interface for configuring the device and monitoring its status.
-It is based on the acquisition system's \acrshort{gui} and makes again use of the \textit{lvgl} framework.
+It is based on the acquisition system's \acrshort{gui} and makes again use of the \acrshort{lvgl} framework.
 
 \subsection{GUI Pages}
 In the following sections, the different \acrshort{gui} pages are explained in detail.
@@ -809,8 +809,8 @@ Figure \ref{fig:gui_pages_overview} shows an overview of all \acrshort{gui} page
 	\end{wrapfigure}
 	\subsubsection{Arm Angle}
 	The arm angle page displays the current angle of the microphone array arms in degree.
-	When the arms are fully unfolded (horizontal) the angle is 0.0\,°.
-	When the arms are fully folded towards the centre pole the angle is 90.0\,°.
+	When the arms are fully unfolded (horizontal) the angle is $0.0^\circ$.
+	When the arms are fully folded towards the centre pole the angle is $90.0^\circ$.
 	Below the angle indicator, the current status of the magnet detection is displayed.
 	When the magnet is detected, the status indicator turns green.
 	If the magnet is too weak or too strong, the corresponding status indicator turns yellow.
@@ -883,12 +883,12 @@ Figure \ref{fig:gui_pages_overview} shows an overview of all \acrshort{gui} page
 \section{Software Design}
 \label{chap:fin:sw}
 The software is made to perform the tracking of the sound sources.
-It runs on a external device, in this case a Dell Latitude 5310 Laptop
-with Ubuntu installed.
+It runs on a external device, in this case a \textit{Dell Latitude 5310} Laptop
+with \textit{Ubuntu} installed.
 
 \subsection{Audio Interface}
 The Audio Interface provides the application with the audio data
-from either the TCP stream or a pre recorded WAV File.
+from either the \acrshort{tcp} stream or a pre recorded WAV File.
 In both methods, the data is stored into an adapted ring buffer
 until it is used by the main application.
 \subsubsection{Ring Buffer}
@@ -905,25 +905,25 @@ Additionally the ring buffer is able to write newly input data into a
 WAV file.
 
 \subsubsection{TCP Stream}
-The TCP streamer allows to stream the audio directly via TCP form the microphone array.
+The \acrshort{tcp} streamer allows to stream the audio directly via \acrshort{tcp} form the microphone array.
 The streaming runs via a socket to which the application connects to.
 Using the control sequence the received data is preprocessed and then stored into
 the buffer.
 
 \subsubsection{WAV Stream}
-The WAV stream is made with the PYAudio and the WAVE library from python.
-With the WAVE library a .wav file is opened and then
-played back with PYAudio.
+The WAV stream is made with the \textit{PyAudio} and the \textit{WAVE} library from python.
+With the \textit{WAVE} library a \texttt{.wav} file is opened and then
+played back with \textit{PyAudio}.
 Via a callback in the played audio is also stored into the ring buffer.
-On windows and MacOs PYAudio could not stream a 32 channel WAV file.
-Hence the application needs to be run on Ubuntu.
+On \textit{Windows} and \textit{macOS} \textit{PyAudio} could not stream a 32 channel WAV file.
+Hence the application needs to be run on \textit{Ubuntu}.
 Other Linux distributions may also work, but were not tested during
 this thesis.
 
 \subsection{Communication}
 To retrieve the sensor data from the microphone array
 a communicator class was created.
-It continuously reads the JSON containing various data
+It continuously reads the \acrshort{json} containing various data
 via a POST request from the microphone array.
 
 \subsection{Sound Source Tracking}
@@ -958,7 +958,7 @@ a sphere is mapped onto a flat surface with
 \end{align}
 This mapping is later also used for the Kalman tracker.
 The mapped response is then converted to an image with linear interpolation.
-This image allows the use of a 2d peak detector like the one described in
+This image allows the use of a 2D peak detector like the one described in
 \cite{cvpeakdet}.
 The basic function is to use grayscale dilation to find local maxima
 and then filter out larger plateaus with a
@@ -980,7 +980,7 @@ To visualize the beamforming responses and control the tracker a web based \acrs
 Plotly and Dash was created.
 Figure \ref{fin:fig:gui} shows a screenshot of the \acrshort{gui} while tracking is performed
 on a pre recorder WAV file.
-With the \acrshort{gui} and the current tracker settings the software runs on 5 \acrshort{fps}.
+With the \acrshort{gui} and the current tracker settings the software runs on 5\,\acrshort{fps}.
 \begin{figure}
 	\centering
 	%    \includegraphics[width=0.25\textwidth]{mesh}
@@ -992,9 +992,9 @@ With the \acrshort{gui} and the current tracker settings the software runs on 5 
 \subsubsection{Connections}
 On the left side the user can manage the connections to the audio streamer.
 New connections to a Wav streamer can be established by providing a audio file
-and an array configuration. To open a TCP connection, the IP address and port
+and an array configuration. To open a \acrshort{tcp} connection, the \acrshort{ip} address and port
 of the array is needed.
-Connections can also be closed with the \textit{close connection} button.
+Connections can also be closed with the \textit{Disconnect} button.
 
 Open connections are listed below and via a dropdown list,
 the displayed connection can be selected.
@@ -1012,8 +1012,8 @@ represents the beamformed power.
 
 \subsubsection{Map}
 The map shows the current position of the array.
-If no GPS data is available the default position is by the
-building 8 at OST in Rapperswil.
+If no \acrshort{gnss} data is available the default position is by the
+building 8 at \acrshort{ost} in Rapperswil.
 The tracks are also displayed on the map.
 Since with one array the exact position of the sound source
 can not be determined, the directions are mapped onto the map with
@@ -1023,5 +1023,5 @@ The red circle indicates a $\theta = 90^\circ$.
 By using the compass data, the alignment of the array does not matter
 for the tracks to be displayed in the right compass direction.
 
-If the external does not have an internet connection to display the map,
+If the external system does not have an internet connection to display the map,
 the application can be run in an offline mode.

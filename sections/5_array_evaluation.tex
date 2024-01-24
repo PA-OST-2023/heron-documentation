@@ -33,7 +33,7 @@ a function defined on a semisphere onto a flat surface.
 \begin{figure}[h]
 	\centering
 	\includegraphics[]{images/5_array_evaluation/0.3_0.79.pdf}
-	\caption{$G(\phi, \theta)$ for $-180 \leq \phi \leq 180$ and $0 \leq \theta \leq 90$.
+	\caption{$G(\phi, \theta)$ for $-180^\circ \leq \phi \leq 180^\circ$ and $0^\circ \leq \theta \leq 90^\circ$.
 		Red blob represents the main lobe where the power is bigger than the half of the
 		maximum power.}
 	\label{aev:fig:gridEx}
@@ -75,16 +75,16 @@ of peaks close to that border are not the actual areas when looking at the
 full angular range.
 
 
-\subsection{Peak Average Power Ratio}
-The Peak Average Power ratio is the ratio between the peak power and
+\subsection{Peak-to-Average Power Ratio}
+The \acrfull{pap} ratio is the ratio between the peak power and
 the average power over the whole grid.
 The results from the projection are compensated by weighting
 the power at each grid cell with the area of that grid cell.
-With these considerations the PAP ratio is defined as
+With these considerations the \acrshort{pap} ratio is defined as
 \begin{equation}
 	PAP = \frac{\max \, P(\phi, \theta)}{\sum_{\phi, \theta}^{} P(\phi, \theta) dA(\phi, \theta)}.
 \end{equation}
-A high PAP ratio is desired, since it means that little power is leaking
+A high \acrshort{pap} ratio is desired, since it means that little power is leaking
 into other directions than the real \acrshort{doa}.
 
 
@@ -103,12 +103,13 @@ spiral array.
 \subsection{Circular Array}
 The circular array is the most simple shape of these three.
 It has two degrees of freedom, the circle radius and the number of microphones.
-Figure \ref{aev:fig:MicCirc} shows how the PAP ratio changes when
+Figure \ref{aev:fig:MicCirc} shows how the \acrshort{pap} ratio changes when
 more microphones are added to an array with a fixed radius.
-For smaller arrays, the best possible PAP is reached with less
+For smaller arrays, the best possible \acrshort{pap} is reached with less
 microphones than with bigger arrays.
 This is expected since a bigger radius means bigger spacings between microphones
 which introduces aliasing.
+
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1.0\textwidth, trim={0 0.2cm 0 0.2cm}]{images/5_array_evaluation/circ_m_pap.pdf}
@@ -117,12 +118,13 @@ which introduces aliasing.
 	\label{aev:fig:MicCirc}
 \end{figure}
 \vspace{-0.3cm}
+
 Looking at Figure \ref{aev:fig:areaCirc} and Figure \ref{aev:fig:papCirc}
-the change of the main lobe area and PAP ratio can be seen for
+the change of the main lobe area and \acrshort{pap} ratio can be seen for
 an array with 32 microphones and varying radius.
 As expected the area decreases with increasing radius, since the lower frequencies will be
 sampled better.
-Also the PAP ratio becomes better with an increase of the radius.
+Also the \acrshort{pap} ratio becomes better with an increase of the radius.
 At a radius of 0.8\,m however, the curve begins to flatten and even starts to decrease.
 It can as well be observed, that for smaller source angles the main lobe area is smaller.
 This is mostly an effect of the main lobe smearing in the $\theta$ direction.
@@ -135,7 +137,7 @@ changed.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.93\textwidth, trim={0 0.2cm 0 0.2cm}]{images/5_array_evaluation/area_circ.pdf}
-	\caption{Main lobe area ratio aof circular arrays with different radius.}
+	\caption{Main lobe area ratio of circular arrays with different radius.}
 	\label{aev:fig:areaCirc}
 \end{figure}
 
@@ -147,26 +149,6 @@ changed.
 	\label{aev:fig:papCirc}
 \end{figure}
 
-
-% \begin{figure}
-% 	\centering
-% 	\begin{subfigure}[b]{1\textwidth}
-% 		\centering
-% 		\includegraphics[]{images/5_array_evaluation/area_circ.pdf}
-% 		\caption{Main lobe area ratio.}
-% 		\label{aev:fig:areaCirc}
-% 	\end{subfigure}
-% 	\begin{subfigure}[b]{1\textwidth}
-% 		\centering
-% 		\includegraphics[]{images/5_array_evaluation/PAP_circ.pdf}
-% 		\caption{Peak Average power ratio}
-% 		\label{aev:fig:papCirc}
-% 	\end{subfigure}
-% 	\caption{Metrics for circular microphone arrays with different radiuses and 32 microphones.}
-% 	\label{aev:fig:metrCirc}
-% \end{figure}
-
-% \newpage
 \subsection{Multi Circular Array}
 The multi circular array is an simplified Undebrink array.
 In the original paper, the Underbrink array is designed, so that each
@@ -177,7 +159,7 @@ An example of such an array is shown in Figure \ref{aev:fig:FancyArr}.
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.75\textwidth]{images/5_array_evaluation/fancy_arr.pdf}
-	\caption{A Multi circular array that consists of 4 circular arrays
+	\caption{A Multi circular array that consists of four circular arrays
 		with an offset angle $\phi_o$ between them.}
 	\label{aev:fig:FancyArr}
 \end{figure}
@@ -198,8 +180,8 @@ in figures \ref{aev:fig:FancyArea} and \ref{aev:fig:FancyPap}.
 To compare this geometry to the circular a maximum radius is set.
 In this example 0.4m.
 For a circular array the area ranges from $\approx 0.9\%$ to
-$\approx 2.1\%$ an the PAP ratio is between 14 and 16.
-Comparing this to the multicircular array a PAP ratio of up
+$\approx 2.1\%$ an the \acrshort{pap} ratio is between 14 and 16.
+Comparing this to the multicircular array a \acrshort{pap} ratio of up
 more than 20 can be reached.
 The areas however are generally larger and can lie in ranges
 between one and four percent.
@@ -318,12 +300,11 @@ In the centre of each array, a mechanical mount for the Acquisition-System hardw
 
 \section{Measurements \& Findings} \label{sec:array_prototype_measurements}
 The performance of the physical arrays were evaluated with outdoor measurement.
-To simulate a drone the sound of a DJI Mavic Pro drone was played back on
-UE BOOM loudspeakers.
+To simulate a drone the sound of a \textit{DJI Mavic Pro} drone was played back on
+\textit{UE BOOM} loudspeakers.
 Various angles were tested by turning and tilting the array such that
 the loudspeakers are in the direction to be tested.
-The distance of the loudspeaker to the array was set to
-15\,m.
+The distance of the loudspeaker to the array was set to 15\,m.
 All of the tests except the archimedean were made in an open field with little reverberation.
 The archimedean array tests were cut short and had to be carried out between buildings due to rain.
 In Table \ref{eval:arrs} the tested arrays and their parameter are listed.
@@ -332,39 +313,39 @@ In Table \ref{eval:arrs} the tested arrays and their parameter are listed.
 	\centering
 	\begin{tabular}{ |c"c|c|c| }
 		\hline
-		*                         & \makecell{Type} &
+		                          & \makecell{Type} &
 		\makecell{Max radius}     &
 		\makecell{Other parameters}                   \\
 		\thickhline
 		Circ 20                   &
 		\makecell{Circular}       &
-		\makecell{0.2\,m}           &
+		\makecell{0.2\,m}         &
 		\makecell{-}                                  \\
 		\hline
 		Circ 25                   &
 		\makecell{Circular}       &
-		\makecell{0.25\,m}          &
+		\makecell{0.25\,m}        &
 		\makecell{-}                                  \\
 		\hline
 		Circ 30                   &
 		\makecell{Circular}       &
-		\makecell{0.3\,m}           &
+		\makecell{0.3\,m}         &
 		\makecell{-}                                  \\
 		\hline
 		Multi circ 1              &
 		\makecell{Multi-circular} &
-		\makecell{0.3\,m}           &
-		\makecell{$\phi_o = 11.25^\circ$}                  \\
+		\makecell{0.3\,m}         &
+		\makecell{$\phi_o = 11.25^\circ$}             \\
 		\hline
 		Multi circ 2              &
 		\makecell{Mutli-circular} &
-		\makecell{0.3\,m}           &
-		\makecell{$\phi_o = 22.5^\circ$}                   \\
+		\makecell{0.3\,m}         &
+		\makecell{$\phi_o = 22.5^\circ$}              \\
 		\hline
 		Arch                      &
 		\makecell{Archimedean}    &
-		\makecell{0.3m}           &
-		\makecell{$r_i = 0.05$\,m, $d = 0.0625$\,m}       \\
+		\makecell{0.3\,m}         &
+		\makecell{$r_i = 0.05$\,m, $d = 0.0625$\,m}   \\
 		\hline
 	\end{tabular}
 	\caption{Test arrays.}
@@ -373,7 +354,7 @@ In Table \ref{eval:arrs} the tested arrays and their parameter are listed.
 
 During the first tests, the wind caused the microphone to overdrive,
 thus making the signal useless.
-To reduce this a RØDE DeadWombat microphone cover was cut into small pieces
+To reduce this a \textit{RØDE DeadWombat} microphone cover was cut into small pieces
 and glued onto the microphones.
 This lead to significantly less wind noises.
 Two examples of test configurations with the wind covers are depicted in Figure \ref{fig:testSetup}.
@@ -395,7 +376,7 @@ Two examples of test configurations with the wind covers are depicted in Figure 
 	\label{fig:testSetup}
 \end{figure}
 
-The measured data was evaluated using the main lobe area and PAP ratio.
+The measured data was evaluated using the main lobe area and \acrshort{pap} ratio.
 Additionally, to compare the real arrays to the simulated one, each measurement
 was also simulated.
 The result for a $\theta = 90^\circ$ and $\theta = 30^\circ$ are shown in
@@ -419,7 +400,7 @@ suspected to be caused by the more reverberant measurement environment.
 		\caption{Comparison of the mainlobe area}
 		\label{fig:comp2}
 	\end{subfigure}
-	\caption{Measurements and simulation comparisons with a a source located at $(r, \phi, \theta) = (15\,m, 0, \theta)$.
+	\caption{Measurements and simulation comparisons with a a source located at $(r, \phi, \theta) = (15\,\text{m}, 0, \theta)$.
 		A test measurement for $\theta = 30^\circ$ was not performed with the Archimedean array.}
 	\label{fig:TestSim}
 \end{figure}
@@ -446,7 +427,7 @@ that the microphones are more spread out for sounds
 coming from low thetas.
 Ideally all the microphones are sampled at the exact same time, but in
 reality this may not be the case.
-From the microphone to the Teensy4.1 the signals is dependent on different clocks and
+From the microphone to the \textit{Teensy 4.1} the signals is dependent on different clocks and
 filters, which are not guaranteed to be synchronous.
 With a low spread of the microphones, a small error in the sampling times could
 induce a larger error in the measured \acrshort{doa} than if
@@ -465,14 +446,14 @@ The angle $\phi_o$ chosen to be the same as in the test array
 \textit{Multi circ 1} as it performed the best of the two multicircular
 configurations.
 
-To find a suited $r_i$, the main lobe area and PAP ratio was calculated for
+To find a suited $r_i$, the main lobe area and \acrshort{pap} ratio was calculated for
 various $r_i$.
 The results are depicted in Figure \ref{fig:finflat}.
-Figure \ref{fig:finpap} shows that the PAP does not
+Figure \ref{fig:finpap} shows that the \acrshort{pap} does not
 steadily increase but rather peak at a specific radius and then
 begins to decrease again.
 A $r_i$ of 0.2\,m was chosen since it is a good tradeoff between
-main lobe area and PAP ratio.
+main lobe area and \acrshort{pap} ratio.
 Figure \ref{fig:final_array_concept_design} shows the final
 properties of the array.
 
@@ -526,7 +507,7 @@ Therefore the predicted optimal angle range is between $0^\circ$ and $30^\circ$.
 		\caption{PAP ratio dependent on the arm angle}
 		\label{fig:finpaptilt}
 	\end{subfigure}
-	\caption{The metrics dependent on the Array arm angle and $\theta_s$, based
+	\caption{The metrics dependent on the Array arm angle and $\theta_s$ based
 		on simulated data.}
 	\label{fig:fintilt}
 \end{figure}

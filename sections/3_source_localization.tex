@@ -63,7 +63,7 @@ This approach only works if we can assume that the curvature of the incoming sou
 at the microphones is big enough. Figure \ref{ssl:fig:near field} shows such a arrangement,
 which is generally known as the near-field scenario.
 It is generally said, that the near-field assumption holds when the distance from the source
-to the array isn't much greater than the size of the array.
+to the array is not much greater than the size of the array.
 In Figure \ref{ssl:fig:hyperbola}, it can be seen how the resulting hyperbolas from the
 \acrshort{tdoa} intersect at the point $\bm{S}$.
 
@@ -92,9 +92,9 @@ In Figure \ref{ssl:fig:hyperbola}, it can be seen how the resulting hyperbolas f
 \subsubsection{Far-Field}
 When the source is much further away than the size of the Array, as depicted
 in Figure \ref{ssl:fig:far field}, the curvature of the sound wave at the array is negligible.
-This is generally known as the far-field case where the sound waves aren't
+This is generally known as the far-field case where the sound waves are not
 modeled as spherical waves but rather as planar waves.
-Given such a planar wave, only the direction in which the source is placed can be determined with the TDOAs.
+Given such a planar wave, only the direction in which the source is placed can be determined with the \acrshort{tdoa}s.
 
 \begin{figure}[ht]
 	\centering
@@ -116,7 +116,7 @@ can be determined with a single system.
 Lots of research has been made on how to estimate the \acrfull{doa} of a source
 with appropriate sensors.
 In \cite{s140201918} the authors built a Sound Compass
-using MEMS to find the directions of multiple sound sources.
+using \acrshort{mems} to find the directions of multiple sound sources.
 They also followed the approach to use multiple of their devices to
 find an exact position of a sound source.
 To estimate the \acrshort{doa} they used a Delay and Sum beamformer,
@@ -232,7 +232,7 @@ described in polar coordinates.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[]{images/3_source_localization/steering_vector.pdf}
+	\includegraphics[width=0.7\textwidth]{images/3_source_localization/steering_vector.pdf}
 	\caption{Distances between each microphone and the reference line in
 		a circualr microphone array.}
 	\label{ssl:fig:steering}
@@ -346,10 +346,10 @@ the same in the frequency domain
 \begin{equation}
 	e^{-j\omega_0 t_n} x_n(t) = \mathscr{F}^{-1}(e^{-j\omega_0 t_n} \mathscr{F}(x_n(t)))
 \end{equation}
-since it is just a multiplication with a scalar,.
+since it is just a multiplication with a scalar.
 The summation could also be done in the frequency domain due to the
 linearity of the Fourier transform.
-The frequency domain has the advantage that an IIR Filter can be constructed, to
+The frequency domain has the advantage that an \acrshort{iir} Filter can be constructed, to
 make a different phase shift for every frequency
 \begin{equation}
 	\label[type]{ssl:eq:iirbeam1}
@@ -392,11 +392,11 @@ Figure \ref{ssl:fig:f_deps} shows the beam pattern for different frequencies.
 The array used in Figure \ref{ssl:fig:f_dep0} is the same array
 as in Figure \ref{ssl:fig:CircBmResponse} whereas Figure \ref{ssl:fig:f_dep0}
 uses a circular array with $r = 0.5$\,m and also 16 microphones.
-It can be seen that at around 1500\,hz more side lobes with a
+It can be seen that at around 1500\,Hz more side lobes with a
 high amplitude start to appear.
 With this array geometry the smallest distance between two
 microphones is $\approx 0.098$\,m, which is the wavelength
-of a sound wave with a frequency of approximately 3500\,hz.
+of a sound wave with a frequency of approximately 3500\,Hz.
 So the effect seen in Figure \ref{ssl:fig:CircBmResponse} is
 a kind of aliasing.
 This results from ambiguity in the phases of the steering vector.
@@ -406,7 +406,7 @@ However when they are more than $\lambda/2$\,m apart, phase shifts start to
 repeat for different steering directions.
 
 Another effect seen in Figure \ref{ssl:fig:f_dep0} is the increase
-of the main lobe width when the frequency approaches 0\,hz.
+of the main lobe width when the frequency approaches 0\,Hz.
 This is consequence of a too small array.
 In the used array the maximal distance between two microphones is 0.5\,m.
 For lower frequencies the phase difference between the first microphone and
@@ -431,7 +431,7 @@ main lobe in the lower frequencies.
 		\label{ssl:fig:f_dep1}
 	\end{subfigure}
 	\caption{Delay and Sum Beamformer response for two circular arrays with $N=16$ microphones
-		and a radiuses of 0.25\,m an 0.5\,m. }
+		and a radiuses of 0.25\,m and 0.5\,m. }
 	\label{ssl:fig:f_deps}
 \end{figure}
 \section{Tracking}
@@ -479,16 +479,16 @@ The basic model for the Kalman filter is, that the source moves with a constant 
 		0 & 0 & 1 & 0 & 0 & 0 \\
 	\end{pmatrix}
 \end{equation*}
-with $\bm{x}(n)$ as the state vector, 
-$\bm{A}(n)$ as the state transition matrix 
+with $\bm{x}(n)$ as the state vector,
+$\bm{A}(n)$ as the state transition matrix
 and $\bm{C}(n)$ as the observation matrix.
 The velocity in the state vector also enables blind prediction.
 
 To enable multi object tracking, another processing step is added.
-This idea resulted from a conversation in December 2023 with 
+This idea resulted from a conversation in December 2023 with
 Hannes Badertscher.
 First the new measured objects are assigned to the already
-existing trackers. 
+existing trackers.
 To make this assignment somehow optimal, the Hungarian algorithm \cite{mathsem}
 with the measurement and blind prediction of each Kalman filter as input, is used.
 If the distance between the prediction and measured object position of a pair is close enough
@@ -503,7 +503,7 @@ covered in Section \ref{chap:fin:sw}
 \newpage
 \section{Simulator}
 In order to experiment with different microphone arrangements and algorithms a simulator in Python was developed.
-Since the simulator wasn't the main focus of this Thesis, its functionality was kept simple.
+Since the simulator was not the main focus of this Thesis, its functionality was kept simple.
 The simulator lets you place acoustic sources and microphones in a $\mathbb{R}^3$ space and calculates
 the measured signals at each microphone.
 
@@ -515,10 +515,10 @@ squarely with the distance.
 The perceived sound at any point $\bm{P}$ can now be described as
 \begin{equation}
 	\label[type]{ssl:eq:simcont}
-	y(\bm{P}, t) = 
+	y(\bm{P}, t) =
 	\sum_{I} \frac{
 		x_i(t - \lVert \bm{P} - \bm{S}_i\rVert/c)}
-		{\lVert \bm{P} - \bm{S}_i\rVert}.
+	{\lVert \bm{P} - \bm{S}_i\rVert}.
 \end{equation}
 Where $\bm{S}_i$ is the position of the nth Source and $x_i(t)$ is its output sound.
 Since the simulation is done numerically and with pre recorded audio files with a given
@@ -527,13 +527,13 @@ This is done by discretize $t$ to
 \begin{equation*}
 	t_n = t_0 + n/f_s, \quad n \in \mathbb{N}.
 \end{equation*}
-The time delay also needs to be discretized to 
+The time delay also needs to be discretized to
 be an integer multiple of $1/f_s$.
-By rounding it to the nearest number that fulfills this 
+By rounding it to the nearest number that fulfills this
 condition results in a new delay $d_{P,S_i}$.
 Now the delayed signal is $x_i(t_n - d_{P,S_i})$.
 To achieve sub sample delays, this signal is then filtered
-with a Fractional Delay FIR Filter \cite{FracFil} with a delay of
+with a Fractional Delay \acrshort{fir} Filter \cite{FracFil} with a delay of
 $f_s \lVert \bm{P} - \bm{S}_i\rVert/c - d_{P,S_i}$.
 
 \subsubsection{Reflections}
@@ -547,6 +547,6 @@ An already reflected sound signal can not be reflected by a second surface.
 \subsection{Output}
 The simulator saves WAV files for each microphone, with the audio signal from
 each source as a single chanel.
-It can also be installed as a python package with its Github link.
+It can also be installed as a python package with its GitHub link.
 In this case, the simulator can also return the recorded signals as an
 Numpy array.
