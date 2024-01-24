@@ -453,7 +453,6 @@ Another popular object tracker independent of beamforing is a Kalman filter base
 It takes a measured position as an input and calculates the estimated position with
 a Kalman filter.
 The basic model for the Kalman filter is, that the source moves with a constant velocity leading to
-the state and observation matrix
 \begin{equation*}
 	\bm{x}(n) =
 	\begin{pmatrix}
@@ -480,6 +479,9 @@ the state and observation matrix
 		0 & 0 & 1 & 0 & 0 & 0 \\
 	\end{pmatrix}
 \end{equation*}
+with $\bm{x}(n)$ as the state vector, 
+$\bm{A}(n)$ as the state transition matrix 
+and $\bm{C}(n)$ as the observation matrix.
 The velocity in the state vector also enables blind prediction.
 
 To enable multi object tracking, another processing step is added.
