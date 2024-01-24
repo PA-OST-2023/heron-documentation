@@ -884,7 +884,7 @@ with Ubuntu installed.
 
 \subsection{Audio Interface}
 The Audio Interface provides the application with the audio data
-from either the TCP stream or a pre recorded WAV FIle.
+from either the TCP stream or a pre recorded WAV File.
 In both methods, the data is stored into an adapted ring buffer
 until it is used by the main application.
 \subsubsection{Ring Buffer}
@@ -892,12 +892,12 @@ A slightly modified ring buffer has been implemented to buffer the
 audio data.
 It is thread save since the storing and reading functions are called from
 different threads.
-The main difference to a conventional ring buffer is that the data is not
-read from the tail but rather from the head.
+The main difference to a conventional ring buffer is, that the data is not
+read from the tail, but rather from the head.
 This allows the application to always read the last $N$ samples while the data
 in the buffer does not get split up.
 
-Additionally the ringbuffer is able to write newly input data into a
+Additionally the ring buffer is able to write newly input data into a
 WAV file.
 
 \subsubsection{TCP Stream}
@@ -912,8 +912,8 @@ With the WAVE library a .wav file is opened and then
 played back with PYAudio.
 Via a callback in the played audio is also stored into the ring buffer.
 On windows and MacOs PYAudio could not stream a 32 channel WAV file.
-Hence the application needs to be ran on Ubuntu.
-Other Linux distributions may also work but were not tested during
+Hence the application needs to be run on Ubuntu.
+Other Linux distributions may also work, but were not tested during
 this thesis.
 
 \subsection{Communication}
@@ -927,13 +927,14 @@ The sound source tracking consists of three parts, the beamforming, peak detecto
 Kalman Tracker.
 
 \subsubsection{Beamforming}
-First a data block is ran through the beamforming filterbank.
+First a data block is ran through the beamforming filter bank.
 Contrary to prior beamforming grid, a pseudo uniformly sampled
 semisphere is used to define the steering angles.
-During testing, a samplenumber of 1700 points, which
+During testing, a sample size of 1700 points, which
 gives an angle resolution of $\approx 2^\circ$, was used.
-The number can be adjusted if higher resolution is necessary.
-With these samples and the current array arm angle, the filterbank can be
+The number can be adjusted if higher resolution is necessary, however
+the computation time increases with a finer resolution.
+With these samples and the current array arm angle, the filter bank can be
 calculated.
 The beamforming used is the Delay and Sum beamforming,
 which gives a power level for each steering direction.
@@ -943,15 +944,15 @@ To detect where possible sound source are, a peak detector was implemented.
 If only one source needs to be tracked, a simple argmax on the beamforming
 response is sufficient.
 
-For the case of multiple sources a more elaborate peakdetector is used.
-To simplify the peakdetector, the beamformer response, which is defined on
+For the case of multiple sources a more elaborate peak detector is used.
+To simplify the peak detector, the beamformer response, which is defined on
 a sphere is mapped onto a flat surface with
 \begin{align}
 	x & = \theta \cos\phi  \\
 	y & = \theta \sin\phi.
 	\label{eq:maping}
 \end{align}
-This mapping is later also used for the Kalmann tracker.
+This mapping is later also used for the Kalman tracker.
 The mapped response is then converted to an image with linear interpolation.
 This image allows the use of a 2d peak detector like the one described in
 \cite{cvpeakdet}.

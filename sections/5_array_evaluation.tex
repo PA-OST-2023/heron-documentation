@@ -55,11 +55,11 @@ between the main lobe power and average power over the whole grid.
 
 \subsection{Area Ratio}
 Since the grid resulting from the beamforming represents a function on a sphere,
-simply taking the sum of all the gridpoints from the mainlobe
+simply taking the sum of all the grid points from the main lobe
 would deliver false results.
 So each grid point is normalized by the surface element of a sphere
 \begin{equation}
-	dA = r \sin\theta \, d\phi \cdot r d\theta.
+	dA = r \sin\theta \, d\phi \cdot r\,d\theta.
 \end{equation}
 Since only the angles and not the radius are of interest, a radius of one is used for all
 calculations.
@@ -68,7 +68,7 @@ by the area of the semisphere.
 So the area ratio shows how much of the whole search space is taken by the main lobe.
 
 The area of the main lobe determines how good different sources can be separated.
-With a big main lobe area two close sources may lead to one bigger mainlobe instead
+With a big main lobe area two close sources may lead to one bigger main lobe instead
 of two separable ones.
 Since the area is calculated for $\theta \leq 90^\circ$, the areas calculated
 of peaks close to that border are not the actual areas when looking at the
