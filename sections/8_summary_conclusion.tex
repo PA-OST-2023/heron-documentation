@@ -1,30 +1,38 @@
 \chapter{Conclusion}
-In conclusion, this thesis has delved into the task of
-localizing and tracking a drone utilizing a microphone array.
-Through a comprehensive evaluation of both software and hardware aspects,
-new insights into the field have been gained, and
-a custom built system has been developed.
-With qualitative and quantitative measurements it has been shown,
-that the proposed system is able to localize and track
-drones in the open field.
+This Master's project delved into the complex task of localizing and tracking drones using a microphone array,
+exploring both hardware and software aspects to gain new insights and develop a custom-built system.
+The choice of \acrshort{mems} microphones proved to be advantageous, as they offer high audio quality and are easy to integrate.
 
+A key strategy was the development of a simulation environment for testing various array geometries.
+This approach led to the accumulation of in-depth knowledge and the identification of an optimized microphone array.
+This array is distinguished by its unique cone-shaped, three-dimensional structure with adjustable arms.
+
+Through qualitative and quantitative measurements, it has been demonstrated that the proposed system is capable of effectively localizing and tracking drones in open fields.
+In conclusion, the structured methodology, evolving from research and prototyping to the final product development, proved to be highly successful.
+
+\newpage
 \section{Continuing Work}
+Although the final product is equipped with an extensive range of features, there remains room for improvement and the addition of new capabilities.
+One significant aspect of this system is its design, structured to accommodate future enhancements.
+A primary opportunity for advancement lies in incorporating more microphone arrays into the system,
+which could transform it into a more comprehensive drone detection and tracking solution.
 
-\bigskip
+Possible future developments include:
 \begin{itemize}
-	\item Build additional two arrays to allow exact localization
+	\item Adding more microphone arrays to the system
 	\item Integrating a camera to visually show the drone's position
-	\item Improve computation time of the beamforming
+	\item Improve computation time of the beamforming algorithm
 	\item More elaborate testing
 	\item Classifying sound sources to distinguish between drones and other sources
+	\item Testing new algorithms based on \acrshort{tdoa} between multiple arrays
 	\item Developement and evaluation of a beamforming based tracker
+	\item Utilizing \acrshort{gnss} \acrshort{rtk} compensation for more precise positioning
+	\item Building a stand-alone, battery-powered base station for greater mobility
 \end{itemize}
-\newpage
 
-\newpage
 \section{Personal Reflections}
 \subsubsection{Florian Baumgartner}
-Reflecting on this Master's project, I gained immense knowledge in audio processing, MEMS microphones, low-level networking, and GNSS RTK positioning.
+Reflecting on this Master's project, I gained immense knowledge in audio processing, \acrshort{mems} microphones, low-level networking, and \acrshort{gnss} \acrshort{rtk} positioning.
 Developing a fully functional microphone array in just four and a half months was a challenging yet rewarding experience that I'm very proud of.
 Working with Alain Keller was a great experience, as we each brought different skills that complemented each other, making for a productive collaboration.
 Although we faced some time management challenges, we were able to overcome them and deliver a working system.
