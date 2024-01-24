@@ -70,14 +70,14 @@ These components were fabricated by \textit{Blexon}, a Swiss metal manufacturing
 Other aluminum parts essential to the design were produced through \acrshort{cnc} machining at the university's workshop.
 
 Figure \ref{fig:final_design_3d_rendering} shows a 3D rendering of the final design.
-\begin{figure}[h!]
+\begin{figure}[h]
 	\centering
 	\vspace{0.4cm}
 	\includegraphics[width=1.0\textwidth]{images/6_design_final/final_design_3d_rendering.jpg}
 	\caption{3D Rendering of the Final Design}
 	\label{fig:final_design_3d_rendering}
 \end{figure}
-\pagebreak
+\clearpage
 
 \subsection{Part List}
 The following list provides an overview of all custom manufactured metal parts:
@@ -166,6 +166,7 @@ The entire hardware was designed using \textit{Altium Designer 23}, a leading so
 The system block diagram in figure \ref{fig:system_block_diagram} provides an overview of the hardware design.
 Note that components marked inside dashed boxes are located on separate \acrshort{pcb}s.
 \begin{figure}[h!]
+	\hfuzz=17.0pt
 	\hspace{-1.3cm}
 	\includegraphics[width=1.28\textwidth, angle=90]{images/6_design_final/final_design_block_diagram.pdf}
 	\vspace{-0.1cm}
@@ -516,7 +517,8 @@ This file, essential for remote management, details parameters such as the devic
 To retrieve this \acrshort{json} file, a simple \acrshort{http} GET request is made to the server's root \acrshort{url}.
 This should be done periodically to ensure the most up-to-date information.
 Table \ref{table:device_data_types} provides an overview of all data fields and their purpose.
-\begin{table}[h!]
+
+\begin{table}[h]
 	\centering
 	\tiny
 	\begin{tabular}{|l|l|l|l|l|}
@@ -555,6 +557,7 @@ Table \ref{table:device_data_types} provides an overview of all data fields and 
 	\caption{Device Data JSON File}
 	\label{table:device_data_types}
 \end{table}
+
 In addition to providing system information, the device is designed to receive commands from the host.
 This is achieved by sending a \acrshort{json} file to the web server via a POST request.
 As of now, the system demonstrates this functionality with a single implemented command (\texttt{"clear\_warning"}).
@@ -607,6 +610,7 @@ To provide acoustic feedback, a buzzer is integrated into the design.
 This buzzer is particularly useful for alerting users to specific events, such as an audio buffer overflow, by playing a distinctive beep sequence.
 Table \ref{tab:system_status_led} provides an overview of the \acrshort{led} indication patterns for the various system states.
 \begin{table}[h!]
+	\hfuzz=12.0pt
 	\centering
 	\begin{tabular}{ l l l l l}
 		\textbf{System Status} & \textbf{Blink Pattern} & \textbf{LED Color} & \textbf{Streaming State} & \textbf{GNSS Fix} \vspace{0.1cm} \\ \hline
@@ -775,7 +779,7 @@ Figure \ref{fig:gui_pages_overview} shows an overview of all \acrshort{gui} page
 	When the device is tilted, the circle turns red and the tilt angle is displayed in degrees (pitch and roll).
 	To calibrate the built-in magnetometer, the user can press the calibrate button.
 \end{minipage}
-\vspace{-0.2cm}
+\clearpage
 
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{l}{4.5cm}
@@ -847,7 +851,7 @@ Figure \ref{fig:gui_pages_overview} shows an overview of all \acrshort{gui} page
 	Note that the altitude is only an approximation and can be inaccurate.
 	It is strongly influenced by the current weather conditions.
 \end{minipage}
-\vspace{0.5cm}
+\clearpage
 
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{l}{4.5cm}
@@ -873,7 +877,7 @@ Figure \ref{fig:gui_pages_overview} shows an overview of all \acrshort{gui} page
 	Below the mode settings, the \acrshort{led} brightness can be adjusted.
 	All settings are saved in the internal flash memory of the device and are restored after a reboot.
 \end{minipage}
-\newpage
+\clearpage
 
 
 \section{Software Design}

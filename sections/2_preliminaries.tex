@@ -15,6 +15,7 @@ Their small footprint also enables design flexibility in increasingly miniaturiz
 	\caption{Internal Structure of a MEMS Microphone \cite{mems_microphone_construction}}
 	\label{fig:mems_microphone}
 \end{figure}
+\vfill
 
 \subsection{Analog Microphones} \label{sec:analog_microphones}
 Analog \acrshort{mems} microphones convert sound into an analog electrical signal.
@@ -94,6 +95,7 @@ This feedback mechanism averages out the quantization error, enhancing the accur
 	\caption{PDM Modulation Example}
 	\label{fig:pdm_modulation}
 \end{figure}
+\vfill
 
 
 \section{Time Division Multiplexing (TDM)}
@@ -124,7 +126,7 @@ The \acrshort{tdm} bus consists of three signals: \textit{fsync}, \textit{bclk} 
 	\item \textbf{Data}: The actual audio data is transmitted in a series of bits.
 	      In a 16-channel, 16-bit TDM system, each channel's data is represented by 16 bits (Left Justified).
 \end{itemize}
-
+\clearpage
 
 \section{GNSS Real-Time Kinematic (RTK)}
 The \acrfull{gnss} \acrfull{rtk} is an advanced technique used in geodesy and navigation
@@ -150,3 +152,5 @@ The correction data is typically transmitted via the internet directly to the us
 This method is convenient for users who do not have the resources to establish and maintain their own \acrshort{rtk} base station.
 By applying these corrections, which include compensating for atmospheric drift and other errors,
 the user's receiver can achieve a similar level of enhanced positional accuracy as with a custom anchor node.
+
+\clearpage

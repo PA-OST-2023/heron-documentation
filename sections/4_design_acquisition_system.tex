@@ -17,8 +17,9 @@ In addition to its primary purpose, this system enables possibilities for variou
 Its ability to handle multiple channels simultaneously and processing them in real-time makes it a versatile tool for various use cases.
 
 The subsequent sections describe the microphone evaluation and the development process, including hardware and firmware design of the audio acquisition system.
+\vfill
+\clearpage
 
-\newpage
 \section{Key Requirements}
 The goal of the acquisition system is to provide a flexible microphone recording infrastructure to easily aquiring audio signals from multiple microphones.
 
@@ -47,9 +48,10 @@ The following section describes the key decisions made during the development of
 	\item \textbf{Headphone Jack}: The addition of a headphone jack allows for real-time auditory monitoring of individual microphone channels, essential for troubleshooting.
 	\item \textbf{Real-Time Clock (RTC)}: An \acrshort{rtc} was integrated to tag each recording with the current time and date, simplifying the comparison of measurement results in post.
 \end{enumerate}
+\vfill
+\clearpage
 
 
-\newpage
 \section{Microphone Evaluation}
 \label{sec:microphone_evaluation}
 Although a variety of microphone technologies exists, such as condenser, dynamic, and electret, the focus has been set on \acrshort{mems} microphones due to several compelling reasons.
@@ -125,7 +127,7 @@ For the testing setup, cables measuring 40 cm in length were used (\gls{adafruit
 		\label{fig:stemma_qt_qwiic_cable}
 	\end{minipage}
 \end{figure}
-
+\vfill
 The table below outlines the pinout used for these microphone breakout boards:
 \begin{table}[h]
 	\centering
@@ -145,8 +147,9 @@ The table below outlines the pinout used for these microphone breakout boards:
 	\caption{Microphone Breakout Board Pinout}
 	\label{tab:mic_breakout_pinout}
 \end{table}
+\vfill
+\clearpage
 
-\newpage
 \section{Hardware Design}
 The hardware of the acquisition system is centralized around a 4-Layer \acrshort{pcb} with a size of 111.0\,mm x 136.0\,mm.
 The connectors for the microphone breakout boards are located on the left and right side of the \acrshort{pcb} (16 channels on each side).
@@ -160,13 +163,14 @@ On the lower segment of the \acrshort{pcb}, a 1.44" \acrshort{tft} touch display
 Adjacent to this display is the \textit{Record} button, which is used to start and stop the recording process.
 The upper part of the device houses a \acrshort{usb} Type-C and an RJ45 connector, providing data connectivity to external devices.
 Moreover, each corner of the \acrshort{pcb} is equipped with M3 surface-mounted standoff nuts, allowing for easy mounting of the acquisition system onto a microphone array frame.
+
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.92\textwidth, trim={0 0.5cm 0 0}]{images/4_design_acquisition_system/Acquisition_System_Front.png}
 	\caption{Front View of the Acquisition System}
 	\label{fig:acquisition_system_front}
 \end{figure}
-\newpage
+\clearpage
 
 \subsection{Block Diagram}
 In figure \ref{fig:acquisition_system_design_block_diagram} the system block diagram is shown.
@@ -203,6 +207,7 @@ They can conveniently be mounted on the backside of the \textit{Teensy 4.1} boar
 		\label{fig:teensy_psram}
 	\end{minipage}
 \end{figure}
+\vfill
 \newpage
 
 \subsection{Audio Input} \label{sec:acquisition_system_audio_input}
@@ -231,9 +236,9 @@ Additionally, its \acrshort{i2c} interface enables configuration adjustments, in
 
 However, it is important to note that, as of this writing, this headphones output feature has not been implemented in the firmware.
 Consequently, the hardware designed to support this functionality has not yet undergone testing.
+\clearpage
 
 
-\newpage
 \section{Firmware Design} \label{sec:acquisition_system_firmware_design}
 The firmware is written in C++ and is based on the \gls{arduino} framework that has been addopted to the Teensy microcontroller environment.
 As an \acrshort{ide}, the \acrshort{vscode} extension \textit{PlatfromIO} was used, as it provides powerful development tools and a great integration of the \gls{arduino} framework.
@@ -257,6 +262,7 @@ In total, 6 threads are running in parallel, as shown in table \ref{tab:acquisit
 	\caption{Overview of all Threads and their Purpose}
 	\label{tab:acquisition_system_threads}
 \end{table}
+\vfill
 
 \subsection{Audio Recording}
 The multichannel audio recording is achieved by a dual-context approach, focusing on capturing audio data and storing it on the \acrshort{sd}-Card.
@@ -273,6 +279,7 @@ This process rearranges the data from individual channels into a sequential stre
 	\caption{Interleaving of Audio Samples}
 	\label{fig:audio_interleaving}
 \end{figure}
+\vfill
 
 \newpage
 \subsubsection{SD-Card File Handling}
@@ -299,7 +306,7 @@ The \acrfull{lsb} represents channel 1, while the \acrfull{msb} represents chann
 If the bit is set to 1, the channel is active and therefore included in the recording.
 The following file name example illustrates a 16 channel recording with channels 8 - 24 active:
 \texttt{240118\_122417\_16\_00FFFF00.wav}
-
+\vfill
 
 \newpage
 \subsection{Graphical User Interface (GUI)}
@@ -349,7 +356,8 @@ Next, the individual pages are described in detail.
 	When an input is enabled, its associated channel number on the WAV file is displayed.
 	A speaker symbol shows if the channel is currently routed to the headphones monitor output (green means active, grey means inactive).
 \end{minipage}
-\newpage
+\vfill
+\clearpage
 
 \begin{minipage}{\linewidth}
 	\begin{wrapfigure}{l}{4.5cm}
@@ -398,4 +406,5 @@ Next, the individual pages are described in detail.
 	After clicking on the \textit{Update} button, the new time is set and the page is closed.
 	To abort the process, the user can click on the arrow in the header bar.
 \end{minipage}
+\vfill
 \clearpage
